@@ -5,14 +5,11 @@
  */
 package business;
 
-import java.util.Date;
-
 /**
- * Student object class
+ *
  * @author gerar
  */
-public class Student {
-    
+public class Instructor {
     private String id;
     private String firstName;
     private String lastName1;
@@ -20,9 +17,11 @@ public class Student {
     private String email;
     private String password;
     private String major;
-    private Date joinDate;
+    private String picPath;
 
-    public Student(String id, String firstName, String lastName1, String lastName2, String email, String password, String major, Date joinDate) {
+    public Instructor(String id, String firstName, String lastName1, 
+            String lastName2, String email, String password, 
+            String major, String picPath) {
         this.id = id;
         this.firstName = firstName;
         this.lastName1 = lastName1;
@@ -30,7 +29,7 @@ public class Student {
         this.email = email;
         this.password = password;
         this.major = major;
-        this.joinDate = joinDate;
+        this.picPath = picPath;
     }
     /**
      * @return the id
@@ -131,17 +130,16 @@ public class Student {
     }
 
     /**
-     * @return the joinDate
+     * @return the picPath
      */
-    public Date getJoinDate() {
-        return joinDate;
+    public String getPicPath() {
+        return picPath;
     }
 
     /**
-     * @param joinDate the joinDate to set
+     * @param picPath the picPath to set
      */
-    public void setJoinDate(Date joinDate) {
-        this.joinDate = joinDate;
+    public void setPicPath(String picPath) {
+        this.picPath = picPath;
     }
-    
 }
