@@ -1,460 +1,234 @@
-<%-- 
-    Document   : home.jsp
-    Created on : 2/11/2017, 09:10:26 AM
-    Author     : gerardodm
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
-    <jsp:include page="head.html" flush="true"></jsp:include>
+<head>
+    <!-- Meta information -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"><!-- Mobile Specific Metas -->
+    
+    <!-- Title -->
+    <title>Academy</title>
+    
+    <!-- favicon icon -->
+    <link rel="shortcut icon" href="images/Favicon.ico">
+    
+    <!-- CSS Stylesheet -->
+    <link href="css/bootstrap.css" rel="stylesheet"><!-- bootstrap css -->
+    <link href="css/owl.carousel.css" rel="stylesheet"><!-- carousel Slider -->
+    <link href="css/font-awesome.css" rel="stylesheet"><!-- font awesome -->
+    <link href="css/loader.css" rel="stylesheet"><!--  loader css -->
+    <link href="css/docs.css" rel="stylesheet"><!--  template structure css -->
+    <link href="https://fonts.googleapis.com/css?family=Arima+Madurai:100,200,300,400,500,700,800,900%7CPT+Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
 
-    <body>
-        <div class="wapper">
-            <div id="loader-wrapper">
-                <div id="loader"></div>
-                <div class="loader-section section-left"></div>
-                <div class="loader-section section-right"></div>
-            </div>
-            <jsp:include page="quicknav-2.jsp" flush="true"></jsp:include>
-            <header id="header" class="style2">
-                <jsp:include page="navbar.jsp" flush="true"></jsp:include>
-            </header>
-            <section class="banner style2">
-                <div class="left-slider">
-                    <div class="item">
-                        <img src="images/banner/index2-sliderImg1.jpg" alt="">
-                        <div class="slide-info">
-                            <h2>Education Needs  Complete Solution</h2>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <img src="images/banner/index2-sliderImg2.jpg" alt="">
-                        <div class="slide-info">
-                            <h2>Education Needs  Complete Solution</h2>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <img src="images/banner/index2-sliderImg3.jpg" alt="">
-                        <div class="slide-info">
-                            <h2>Education Needs  Complete Solution</h2>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="info-form">
-                    <h2>Request More Information</h2>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy type specimen book.</p>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="select-box">
-                                <select class="degree-select">
-                                    <option>Degree</option>
-                                    <option>B.C.A</option>
-                                    <option>M.C.A</option>
-                                    <option>B.E</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-sm-12">
-                            <div class="select-box">
-                                <select class="area-select">
-                                    <option>Area of study</option>
-                                    <option>American Studies</option>
-                                    <option>Anthropology</option>
-                                    <option>Arabic Studies</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-sm-12">
-                            <div class="select-box">
-                                <select class="specialization-select">
-                                    <option>Specialization</option>
-                                    <option>American Studies</option>
-                                    <option>Anthropology</option>
-                                    <option>Arabic Studies</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="input-box">
-                                <input type="text" placeholder="First Name">
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="input-box">
-                                <input type="text" placeholder="Last Name">
-                            </div>
-                        </div>
-                        <div class="col-sm-12">
-                            <div class="input-box">
-                                <input type="text" placeholder="Email">
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="input-box">
-                                <input type="text" placeholder="Phone Number">
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="input-box">
-                                <input type="text" placeholder="ZIP/Postal Code">
-                            </div>
-                        </div>
-                        <div class="col-sm-12">
-                            <div class="submit-box">
-                                <input type="submit" value="Request Information">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <section class="safe-environment">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-12 col-md-4">
-                            <div class="section-title2">
-                                <h2>Providing safe and educational environment</h2>
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-sm-6">
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since </p>
-                            <p>type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic</p>
-                        </div>
-                        <div class="col-md-4 col-sm-6">
-                            <p>type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into  </p>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's  </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <section class="our-advantages">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <div class="advantages-box">
-                                <div class="img"><img src="images/learn-icon.png" alt=""></div>
-                                <h3>Learn at your own place</h3>
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's stanypesetting, </p>
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="advantages-box">
-                                <div class="img"><img src="images/save-timeIcon.png" alt=""></div>
-                                <h3>Save time and money</h3>
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy </p>
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="advantages-box">
-                                <div class="img"><img src="images/online-learningIcon.png" alt=""></div>
-                                <h3>100% Online learning</h3>
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <section class="our-studies">
-                <div class="container">
-                    <div class="section-title2">
-                        <h2>Our Studies</h2>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6 col-md-4">
-                            <div class="studies-box color1">
-                                <div class="name"><a href="#">Bachelor in Architecture</a></div>
-                                <p>It has survived not only five</p>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-                            <div class="studies-box color2">
-                                <div class="name"><a href="#">Bachelor in International Relations</a></div>
-                                <p>Lorem Ipsum is simply dummy text</p>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-                            <div class="studies-box color3">
-                                <div class="name"><a href="#">Bachelor in Psychology</a></div>
-                                <p>It has survived not only five</p>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-                            <div class="studies-box color4">
-                                <div class="name"><a href="#">Bachelor in Business Administration</a></div>
-                                <p>Lorem Ipsum is simply dummy text</p>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-                            <div class="studies-box color5">
-                                <div class="name"><a href="#">Bachelor of Laws (LL.B.)</a></div>
-                                <p>It has survived not only five</p>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-                            <div class="studies-box color6">
-                                <div class="name"><a href="#">Bachelor in Information Systems Management</a></div>
-                                <p>Lorem Ipsum is simply dummy text</p>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-                            <div class="studies-box color7">
-                                <div class="name"><a href="#">Bachelor in Design</a></div>
-                                <p>It has survived not only five</p>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-                            <div class="studies-box color8">
-                                <div class="name"><a href="#">Bachelor in Architecture</a></div>
-                                <p>Lorem Ipsum is simply dummy text</p>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-                            <div class="studies-box color9">
-                                <div class="name"><a href="#">Bachelor in Politics, Law and Economics (PLE)</a></div>
-                                <p>It has survived not only five</p>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-                            <div class="studies-box color10">
-                                <div class="name"><a href="#">Bachelor in Architecture</a></div>
-                                <p>Lorem Ipsum is simply dummy text</p>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-                            <div class="studies-box color11">
-                                <div class="name"><a href="#">Bachelor in Architecture</a></div>
-                                <p>It has survived not only five</p>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-                            <div class="studies-box color12">
-                                <div class="name"><a href="#">Dual Degree in Laws & International Relations</a></div>
-                                <p>Lorem Ipsum is simply dummy text</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <section class="sign-upBox" style="background-image:url(images/parallax/sign-upBg.jpg);">
-                <img src="images/parallax/sign-upBg.jpg" alt="">
-                <div class="sign-upText">
-                    <h3><span>Like what youâ€™re learning</span>Get Started Today!</h3>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry lorem Ipsum has been the industry's standard dummy </p>
-                    <div class="sign-btn">
-                        <a href="#">Sign Up</a>
-                    </div>
-                </div>
-            </section>
-            <section class="news-section">
-                <div class="container">
-                    <div class="section-title2">
-                        <h2>Latest News and Events </h2>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 col-sm-12">
-                            <div class="news-box img" style="background-image:url(images/news/news-img1.jpg);">
-                                <div class="category">News</div>
-                                <div class="name"><a href="#">Post with Image Here</a></div>
-                                <div class="date">24 Jan, 2017</div>
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                                <a href="#" class="read-more">Read More</a>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-3">
-                            <div class="news-box">
-                                <div class="category">Event</div>
-                                <div class="name"><a href="#">Post with Image Here</a></div>
-                                <div class="date">24 Jan, 2017</div>
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                                <a href="#" class="read-more">Read More</a>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-3">
-                            <div class="news-box">
-                                <div class="category">Event</div>
-                                <div class="name"><a href="#">Post with Image Here</a></div>
-                                <div class="date">24 Jan, 2017</div>
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                                <a href="#" class="read-more">Read More</a>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-3">
-                            <div class="news-box">
-                                <div class="category">Event</div>
-                                <div class="name"><a href="#">Post with Image Here</a></div>
-                                <div class="date">24 Jan, 2017</div>
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                                <a href="#" class="read-more">Read More</a>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-3">
-                            <div class="news-box">
-                                <div class="category">Event</div>
-                                <div class="name"><a href="#">Post with Image Here</a></div>
-                                <div class="date">24 Jan, 2017</div>
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                                <a href="#" class="read-more">Read More</a>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-sm-12">
-                            <div class="news-box img" style="background-image:url(images/news/news-img2.jpg);">
-                                <div class="category">News</div>
-                                <div class="name"><a href="#">Post with Image Here</a></div>
-                                <div class="date">24 Jan, 2017</div>
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                                <a href="#" class="read-more">Read More</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <section class="student-reviews">
-                <div class="container">
-                    <div class="section-title2">
-                        <h2>Our Student Say</h2>
-                    </div>
-                    <div class="reviews-slider">
-                        <div class="item">
-                            <div class="student-box">
-                                <div class="img"><img src="images/user-img/student-img2.png" alt=""></div>
-                                <p>"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
-                                <div class="name">- Avishek S</div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="student-box">
-                                <div class="img"><img src="images/user-img/student-img3.png" alt=""></div>
-                                <p>"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.  </p>
-                                <div class="name">- John Doe</div>
-                            </div>
-                        </div>
-
-                        <div class="item">
-                            <div class="student-box">
-                                <div class="img"><img src="images/user-img/student-img2.png" alt=""></div>
-                                <p>"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
-                                <div class="name">- Avishek S</div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="student-box">
-                                <div class="img"><img src="images/user-img/student-img3.png" alt=""></div>
-                                <p>"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.  </p>
-                                <div class="name">- John Doe</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section> 
-            <section class="newsletter-block" style="background-image:url(images/parallax/newsletter-bg.jpg);">
-                <div class="container">
-                    <label>SUBCRIBE WEEKLY NEWSLETTER</label>
-                    <div class="input-box">
-                        <input type="text" placeholder="Mobile Number for register">
-                        <input type="submit" value="Submit">
-                    </div>
-                </div>
-            </section>
-            <footer id="footer" class="style2">
-                <div class="footer-top">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-6 col-md-3">
-                                <div class="footer-logo"><a href="#"><img src="images/logo3.png" alt=""></a></div>
-                                <div class="footer-text">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et lobortis diam vestibulum eget varius id, vulputate et mi. Nullam feugiat, diam quis interdum varius </p>
-                                    <div class="read-more">
-                                        <a href="#">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-md-3">
-                                <h5>Popular Courses</h5>
-                                <ul class="footer-link courses-list">
-                                    <li><a href="#">Management</a></li>
-                                    <li><a href="#">Banking</a></li>
-                                    <li><a href="#">Government Recruitment</a></li>
-                                </ul>
-                            </div>
-                            <div class="col-sm-6 col-md-3">
-                                <h5>Quick Links</h5>
-                                <ul class="footer-link">
-                                    <li><a href="#">Summer Sessions</a></li>
-                                    <li><a href="#">Professional Courses</a></li>
-                                    <li><a href="#">Privacy Policy</a></li>
-                                    <li><a href="#">Terms of Use</a></li>
-                                </ul>
-                            </div>
-                            <div class="col-sm-6 col-md-3">
-                                <h5>Contact Us</h5>
-                                <div class="contact-view">
-                                    <div class="contact-slide">
-                                        <p><i class="fa fa-location-arrow"></i>76 Woodland Ave. Sherman Drive  <br>Fort Walton Beach,Harlingen</p>
-                                    </div>
-                                    <div class="contact-slide">
-                                        <p><i class="fa fa-phone"></i>+299 97 39 82</p>
-                                    </div>
-                                    <div class="contact-slide">
-                                        <p><i class="fa fa-fax"></i>(08) 8971 7450</p>
-                                    </div>
-                                    <div class="contact-slide">
-                                        <p><i class="fa fa-envelope"></i><a href="mailTo:academy@info.com">academy@info.com</a></p>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="footer-bottom">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-8">
-                                <div class="copy-right">
-                                    <p>Copyright Â© <span class="year">2016</span> Academy All Rights Reserved</p>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">	
-                                <div class="social-media">
-                                    <ul>
-                                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-skype"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-youtube"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </footer>
-            <div class="top-arrow" id="goTop">
-                <div class="arrow"><i class="fa fa-angle-up"></i></div>
-            </div>
-            <div class="search-blcok">
-                <div class="close-icon">
-                    <i class="fa fa-close"></i>
-                </div>
-                <div class="input-box">
-                    <input type="text" placeholder="Enter Keyword">
-                    <div class="note">Input your search keywords and press Enter.</div>
-                </div>
-            </div>
+</head>
+    
+<body>
+    <div class="wapper">
+    	<div id="loader-wrapper">
+            <div id="loader"></div>
+            <div class="loader-section section-left"></div>
+            <div class="loader-section section-right"></div>
         </div>
-        <!-- Bootstrap core JavaScript
-        ================================================== -->
-        <!-- Placed at the end of the document so the pages load faster -->
-
-        <script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
-        <script type="text/javascript" src="js/bootstrap.js"></script>
-        <script type="text/javascript" src="js/owl.carousel.js"></script>
-        <script type="text/javascript" src="js/jquery.form-validator.min.js"></script>
-        <script type="text/javascript" src="js/jquery.selectbox-0.2.js"></script>
-        <script type="text/javascript" src="js/placeholder.js"></script>
-        <script type="text/javascript" src="js/coustem.js"></script>
-    </body>
+        <jsp:include page="quicknav-2.jsp" flush="true"></jsp:include>
+        <header id="header">
+            <div class="container">
+                <jsp:include page="navbar.jsp" flush="true"></jsp:include>
+            </div>
+        </header>
+        <section class="banner">
+        	<div class="banner-img"><img src="images/banner/banner-img1.jpg" alt=""></div>
+            <div class="banner-text">
+            	<div class="container">
+                	<h1>Aprendizaje Híbrido, aprende web.</h1>
+                    <p>¡Ánimo y adelante!  </p>
+                    <div class="search-box">
+                        <form action="platform">
+                            <input type="hidden" name="action" value="search">
+                            <input type="text" placeholder="Buscar ahora">
+                            <input type="submit" value="">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="our-course">
+        	<div class="container">
+            	<div class="section-title">
+                	<h2>Sugerencias</h2>
+                </div>
+            	<div class="row">
+                	<div class="col-md-4 col-sm-6">
+                    	<div class="course-box">
+                        	<div class="img">
+                            	<img src="images/courses/courses-img1.jpg" alt="">
+                                <div class="course-info">
+                                	<div class="date"><i class="fa fa-calendar"></i>16-09-2016</div>
+                                    <div class="date"><i class="fa fa-clock-o"></i>2 Days </div>
+                                    <div class="favorite"><a href="#"><i class="fa fa-heart-o"></i></a></div>
+                                </div>
+                                <div class="price">Math</div>
+                           	</div>
+                            <div class="course-name">Derivadas<span><em>De: </em>Ramiro Saldaña</span></div>
+                            <div class="comment-row">
+                            	<div class="rating">
+                                    <div class="fill" style="width:95%"></div>
+                                </div>
+                                <div class="box"><i class="fa fa-users"></i>32 Student</div>
+                                <div class="enroll-btn">	
+                                	<a href="#" class="btn">Ver ahora</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                    	<div class="course-box">
+                        	<div class="img">
+                            	<img src="images/courses/courses-img2.jpg" alt="">
+                                <div class="course-info">
+                                	<div class="date"><i class="fa fa-calendar"></i>17-09-2016</div>
+                                    <div class="date"><i class="fa fa-clock-o"></i>1 Days </div>
+                                    <div class="favorite"><a href="#"><i class="fa fa-heart"></i></a></div>
+                                </div>
+                                <div class="price free">free</div>
+                           	</div>
+                            <div class="course-name">Banking<span><em>By </em>Michael Windzor</span></div>
+                            <div class="comment-row">
+                            	<div class="rating">
+                                    <div class="fill" style="width:45%"></div>
+                                </div>
+                                <div class="box"><i class="fa fa-users"></i>30 Student</div>
+                                <div class="enroll-btn">	
+                                	<a href="#" class="btn">Enroll</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                    	<div class="course-box">
+                        	<div class="img">
+                            	<img src="images/courses/courses-img3.jpg" alt="">
+                                <div class="course-info">
+                                	<div class="date"><i class="fa fa-calendar"></i>17-09-2016</div>
+                                    <div class="date"><i class="fa fa-clock-o"></i>1 Days </div>
+                                    <div class="favorite"><a href="#"><i class="fa fa-heart-o"></i></a></div>
+                                </div>
+                                <div class="price">$276</div>
+                           	</div>
+                            <div class="course-name">Government Recruitment<span><em>By </em>Peter Parker</span></div>
+                            <div class="comment-row">
+                            	<div class="rating">
+                                    <div class="fill" style="width:45%"></div>
+                                </div>
+                                <div class="box"><i class="fa fa-users"></i>30 Student</div>
+                                <div class="enroll-btn">	
+                                	<a href="#" class="btn">Ver ahora</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="student-feedback">
+        	<div class="container">
+            	<div class="section-title">
+                	<h2>Testimonios de estudiantes</h2>
+                </div>
+                <div class="feedback-slider">
+                	<div class="item">
+                    	<div class="student-img"><img src="images/user-img/student-img1.png" alt=""></div>
+                        <div class="student-name">John Doe</div>
+                        <div class="student-designation">ITIC</div>
+                        <p><i class="fa fa-quote-left"></i> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic. <i class="fa fa-quote-right"></i> </p>
+                    </div>
+                    <div class="item">
+                    	<div class="student-img"><img src="images/user-img/student-img1.png" alt=""></div>
+                        <div class="student-name">Hardik Davaria</div>
+                        <div class="student-designation">software engineer</div>
+                        <p><i class="fa fa-quote-left"></i> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic. <i class="fa fa-quote-right"></i> </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="our-team">
+        	<div class="section-title">
+            	<h2>Colaboradores</h2>
+            </div>
+            <div class="member-slider">	
+            	<div class="item">
+                	<div class="member-info">
+                    	<div class="img"><img src="images/team-member/member-img1.png" alt=""></div>
+                        <p>Que linda es España!!</p>
+                        <div class="member-name">-José Manuel Pardo<span>Física</span></div>
+                    </div>
+                </div>
+                <div class="item">
+                	<div class="member-info">
+                    	<div class="img"><img src="images/team-member/member-img2.png" alt=""></div>
+                        <p>?Lorem Ipsum is simply dummy text of the printing and typesetting industry it has survived not only five centuries, but also the leap into electronic typesetting, unchanged...</p>
+                        <p>It was popularised in the 1960s with the release of recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                        <div class="member-name">-Dhruv Patel<span>Geek-in-charge, Coder extraordinaire</span></div>
+                    </div>
+                </div>
+                <div class="item">
+                	<div class="member-info">
+                    	<div class="img"><img src="images/team-member/member-img3.png" alt=""></div>
+                        <p>?Lorem Ipsum is simply dummy text of the printing and typesetting industry it has survived not only five centuries, but also the leap into electronic typesetting, unchanged...</p>
+                        <p>It was popularised in the 1960s with the release of recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                        <div class="member-name">-Ravi Chauhan<span>A.K.A Freshie </span></div>
+                    </div>
+                </div>
+                <div class="item">
+                	<div class="member-info">
+                    	<div class="img"><img src="images/team-member/member-img1.png" alt=""></div>
+                        <p>?Lorem Ipsum is simply dummy text of the printing and typesetting industry it has survived not only five centuries, but also the leap into electronic typesetting, unchanged...</p>
+                        <p>It was popularised in the 1960s with the release of recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                        <div class="member-name">-Hardik Chauhan<span>Strategizer</span></div>
+                    </div>
+                </div>
+                <div class="item">
+                	<div class="member-info">
+                    	<div class="img"><img src="images/team-member/member-img2.png" alt=""></div>
+                        <p>?Lorem Ipsum is simply dummy text of the printing and typesetting industry it has survived not only five centuries, but also the leap into electronic typesetting, unchanged...</p>
+                        <p>It was popularised in the 1960s with the release of recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                        <div class="member-name">-Dhruv Patel<span>Geek-in-charge, Coder extraordinaire</span></div>
+                    </div>
+                </div>
+                <div class="item">
+                	<div class="member-info">
+                    	<div class="img"><img src="images/team-member/member-img3.png" alt=""></div>
+                        <p>?Lorem Ipsum is simply dummy text of the printing and typesetting industry it has survived not only five centuries, but also the leap into electronic typesetting, unchanged...</p>
+                        <p>It was popularised in the 1960s with the release of recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                        <div class="member-name">-Ravi Chauhan<span>A.K.A Freshie </span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="start-learning">
+        	<div class="container">
+            	<p>¡Me siento preparado!</p>
+                <a href="#" class="btn">Quiz</a>
+            </div>
+        </section>
+        
+        <jsp:include page="footer.jsp" flush="true"></jsp:include>
+    </div>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    
+    <script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <script type="text/javascript" src="js/owl.carousel.js"></script>
+    <script type="text/javascript" src="js/jquery.form-validator.min.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript" src="js/map-styleMain.js"></script>
+    <script type="text/javascript" src="js/placeholder.js"></script>
+    <script type="text/javascript" src="js/coustem.js"></script>
+</body>
 </html>
+
