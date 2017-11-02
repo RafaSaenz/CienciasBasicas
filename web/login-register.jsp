@@ -342,9 +342,10 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="section-title">
-                            <h2>Login</h2>
+                            <h2>Iniciar sesión</h2>
                             <p>Login to your account below</p>
                         </div>
+                        
                         <div class="input-box">
                             <input type="text" placeholder="User Name">
                         </div>
@@ -366,7 +367,7 @@
                     <div class="col-sm-6">
                         <form action="register" method="post">
                             <div class="section-title">
-                                <h2>REGISTER</h2>
+                                <h2>Crea una cuenta</h2>
                                 <p>Register now - Completely free</p>
                             </div>
                             <div class="input-box">
