@@ -25,9 +25,21 @@ public class Resource {
     private float review;
     private Date addedDate;
 
-    private Resource(){
-        
+    public Resource(String id, String title, String description, String type, String subtopic, String level, String filePath, String link, String instructor, String references, float review, Date addedDate) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.type = type;
+        this.subtopic = subtopic;
+        this.level = level;
+        this.filePath = filePath;
+        this.link = link;
+        this.instructor = instructor;
+        this.references = references;
+        this.review = review;
+        this.addedDate = addedDate;
     }
+    
     /**
      * @return the id
      */
