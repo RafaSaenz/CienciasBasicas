@@ -5,9 +5,13 @@
  */
 package servlets;
 
+import dataAccess.ConnectionDB;
+import dataAccess.ResourceDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author gerar
  */
+@WebServlet(name = "ResourceListServlet", urlPatterns = ("/Resources"))
 public class ResourceListServlet extends HttpServlet {
 
     /**
@@ -29,19 +34,42 @@ public class ResourceListServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ResourceListServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ResourceListServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        String url = "/index.jsp";
+        String mode = request.getParameter("mode");
+        String ID = request.getParameter("ID");
+        if (true) {
+            try {
+                ConnectionDB connectionDB = new ConnectionDB();
+                Connection connection = connectionDB.getConnection();
+
+                ResourceDAO resourceDao = new ResourceDAO(connection);
+                if (!resourceDao.getResources().isEmpty()) {
+                    request.setAttribute("resources", resourceDao.getResources());
+                    switch(mode){
+                        case "grid": url = "/courses-gride.jsp"; break;
+                        case "list": url = "/courses-list.jsp"; break;
+                        default: url = "/page-404.jsp";
+                    }                
+                }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        } /*else {
+            try {
+                ConnectionDB connectionDB = new ConnectionDB();
+                Connection connection = connectionDB.getConnection();
+
+                ResourceDAO resourceDao = new ResourceDAO(connection);
+                if (!resourceDao.getResourceByID(ID).isEmpty()) {
+                    request.setAttribute("resources", resourceDao.getResources());
+                    url = "/courses-detail.jsp";
+                }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }*/
+
+        getServletContext().getRequestDispatcher(url).forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

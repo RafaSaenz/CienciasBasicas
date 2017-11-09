@@ -31,6 +31,10 @@ public class Instructor {
         this.major = major;
         this.picPath = picPath;
     }
+    
+    public Instructor(){
+        
+    }
     /**
      * @return the id
      */
