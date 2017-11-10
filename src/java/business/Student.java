@@ -5,6 +5,7 @@
  */
 package business;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -20,18 +21,9 @@ public class Student {
     private String email;
     private String password;
     private String major;
-    private Date joinDate;
+    private LocalDate joinDate;
+    public boolean valid;
 
-    public Student(String id, String firstName, String lastName1, String lastName2, String email, String password, String major, Date joinDate) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName1 = lastName1;
-        this.lastName2 = lastName2;
-        this.email = email;
-        this.password = password;
-        this.major = major;
-        this.joinDate = joinDate;
-    }
     /**
      * @return the id
      */
@@ -133,15 +125,23 @@ public class Student {
     /**
      * @return the joinDate
      */
-    public Date getJoinDate() {
+    public LocalDate getJoinDate() {
         return joinDate;
     }
 
     /**
      * @param joinDate the joinDate to set
      */
-    public void setJoinDate(Date joinDate) {
+    public void setJoinDate(LocalDate joinDate) {
         this.joinDate = joinDate;
     }
+    
+     public boolean isValid() {
+         return valid;
+    }
+
+      public void setValid(boolean newValid) {
+         valid = newValid;
+    }	
     
 }

@@ -70,16 +70,17 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-6">
+                        <form action="LoginServlet" method = "post">
                         <div class="section-title">
                             <h2>Iniciar sesión</h2>
                             <p>Login to your account below</p>
                         </div>
                         
                         <div class="input-box">
-                            <input type="text" placeholder="User Name">
+                            <input type="text" placeholder="User Name" name="un">
                         </div>
                         <div class="input-box">
-                            <input type="text" placeholder="Password">
+                            <input type="text" placeholder="Password" name ="pw">
                         </div>
                         <div class="check-slide">
                             <label class="label_check" for="checkbox-01">
@@ -90,11 +91,11 @@
                         </div>
                         <div class="submit-slide">
                             <input type="submit" value="Login" class="btn">
-
                         </div>
+                        </form>
                     </div>
                     <div class="col-sm-6">
-                        <form action="register" method="post">
+                        <form action="RegisterServlet" method="post" onsubmit="return validate()" >
                             <div class="section-title">
                                 <h2>Crea una cuenta</h2>
                                 <p>Register now - Completely free</p>
@@ -120,8 +121,8 @@
                             <div class="input-box">
                                 <input type="password" name="confirm-password" required placeholder="Re-Password">
                             </div>
-                            <div class="select-box">
-                                    <select class="degree-select">
+                            <div class="select">
+                                    <select class="select" name = "major">
                                         <option>ITIC</option>
                                         <option>IIS</option>
                                         <option>IBN</option>
@@ -129,7 +130,7 @@
                                     </select>
                                 </div>
                             <div class="submit-slide">
-                                <input type="submit" value="SIGN UP" class="btn">
+                                <input type="submit" value="Register" class="btn">
                             </div>
                         </form>
                     </div>

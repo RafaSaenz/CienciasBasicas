@@ -13,4 +13,19 @@
             30
         </session-timeout>
     </session-config>
+    
+    <display-name>RegistrationMVC</display-name>
+        <welcome-file-list>
+            <welcome-file>login-register.jsp</welcome-file>
+        </welcome-file-list>
+        <servlet>
+            <description></description>
+            <display-name>RegisterServlet</display-name>
+            <servlet-name>RegisterServlet</servlet-name>
+            <servlet-class>servlets.RegisterServlet</servlet-class>
+        </servlet>
+        <servlet-mapping>
+            <servlet-name>RegisterServlet</servlet-name>
+            <url-pattern>/RegisterServlet</url-pattern>
+        </servlet-mapping>
 </web-app>
