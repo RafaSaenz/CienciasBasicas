@@ -5,7 +5,9 @@
  */
 package servlets;
 
+import business.Instructor;
 import dataAccess.ConnectionDB;
+import dataAccess.InstructorDAO;
 import dataAccess.ResourceDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -20,8 +22,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author gerar
  */
-@WebServlet(name = "ResourceListServlet", urlPatterns = ("/Resources"))
-public class ResourceListServlet extends HttpServlet {
+@WebServlet(name = "Instructors", urlPatterns = {"/Instructors"})
+public class InstructorsServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,40 +37,25 @@ public class ResourceListServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String url = "/index.jsp";
-        String mode = request.getParameter("mode");
-        String ID = request.getParameter("ID");
+        String id = request.getParameter("id");
         if (true) {
             try {
                 ConnectionDB connectionDB = new ConnectionDB();
                 Connection connection = connectionDB.getConnection();
 
-                ResourceDAO resourceDao = new ResourceDAO(connection);
-                if (!resourceDao.getResources().isEmpty()) {
-                    request.setAttribute("resources", resourceDao.getResources());
-                    switch(mode){
-                        case "grid": url = "/courses-gride.jsp"; break;
-                        case "list": url = "/courses-list.jsp"; break;
-                        default: url = "/page-404.jsp";
-                    }                
+                InstructorDAO instructorDao = new InstructorDAO(connection);
+                Instructor instructor = instructorDao.findById(id);
+                if (instructor != null) {
+                    request.setAttribute("instructor", instructorDao.findById(id));
+                    url = "/instructor-profile.jsp";
+                }
+                else {
+                    url = "/page-404.jsp";
                 }
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
-        } /*else {
-            try {
-                ConnectionDB connectionDB = new ConnectionDB();
-                Connection connection = connectionDB.getConnection();
-
-                ResourceDAO resourceDao = new ResourceDAO(connection);
-                if (!resourceDao.getResourceByID(ID).isEmpty()) {
-                    request.setAttribute("resources", resourceDao.getResources());
-                    url = "/courses-detail.jsp";
-                }
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-        }*/
-
+        }
         getServletContext().getRequestDispatcher(url).forward(request, response);
     }
 

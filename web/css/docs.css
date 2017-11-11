@@ -204,7 +204,7 @@ input[type="text"]:focus {border:none; outline:none; }
 .our-course .course-box .img {width:100%; position:relative;}
 .our-course .course-box .img:after {position:absolute; top:0px; left:0px; width:100%; height:100%; background:url(../images/courses-bg.png) no-repeat bottom left; content:""; }
 .our-course .course-box .img img {width:100%; }
-.our-course .course-box .img .price {position:absolute; top:30px; left:-8px; background:#02cbf7; color:#fff; text-align:center; width:58px; line-height:40px; font-size:18px; font-weight:bold; border-radius:0 5px 5px 0; text-transform:uppercase; z-index:3; font-family: 'Arima Madurai';}
+.our-course .course-box .img .price {position:absolute; top:30px; left:-8px; background:#02cbf7; color:#fff; text-align:center; width:180px; line-height:40px; font-size:18px; font-weight:bold; border-radius:0 5px 5px 0; text-transform:uppercase; z-index:3; font-family: 'Arima Madurai';}
 .our-course .course-box .img .price:after {position:absolute; top:-8px; left:0px; content:""; border-left: 8px solid transparent; border-bottom: 8px solid #029ec0;}
 .our-course .course-box .img .price.free {background:#fe5969;}
 .our-course .course-box .img .price.free:after{ border-bottom: 8px solid #da3243}
@@ -393,7 +393,7 @@ input[type="text"]:focus {border:none; outline:none; }
 .courses-view .course-post .img .icon {position:absolute; top:50%; left:50%; margin:-40px 0 0 -15px; z-index:4; opacity:0; -moz-transition:opacity 0.2s ease-in-out 0.1s, margin 0.4s ease-in-out 0.1s, transform 0.4s ease-in-out 0.1s; -ms-transition:opacity 0.2s ease-in-out 0.1s, margin 0.4s ease-in-out 0.1s, transform 0.4s ease-in-out 0.1s; -o-transition:opacity 0.2s ease-in-out 0.1s, margin 0.4s ease-in-out 0.1s, transform 0.4s ease-in-out 0.1s; -webkit-transition:opacity 0.2s ease-in-out 0.1s, margin 0.4s ease-in-out 0.1s, transform 0.4s ease-in-out 0.1s; transition:opacity 0.2s ease-in-out 0.1s, margin 0.4s ease-in-out 0.1s, transform 0.4s ease-in-out 0.1s; -moz-transform:rotateY(180deg); -ms-transform:rotateY(180deg); -o-transform:rotateY(180deg); -webkit-transform:rotateY(180deg); transform:rotateY(180deg);  }
 .courses-view .course-post .img:hover .icon {opacity:1; margin-top:-15px;  -moz-transform:rotateY(0deg); -ms-transform:rotateY(0deg); -o-transform:rotateY(0deg); -webkit-transform:rotateY(0deg); transform:rotateY(0deg);}
 .courses-view .course-post .img:hover:after {background:rgba(61, 61, 71, 0.85); position:absolute; top:0px; left:0px; width:100%; content:""; height:100%;}
-.courses-view .course-post .price {position:absolute; top:30px; left:-8px; background:#02cbf7; color:#fff; text-align:center; width:58px; line-height:40px; font-size:18px; font-weight:bold; border-radius:0 5px 5px 0; text-transform:uppercase; z-index:3; font-family: 'Arima Madurai';}
+.courses-view .course-post .price {position:absolute; top:30px; left:-8px; background:#02cbf7; color:#fff; text-align:center; width:120px; line-height:40px; font-size:18px; font-weight:bold; border-radius:0 5px 5px 0; text-transform:uppercase; z-index:3; font-family: 'Arima Madurai';}
 .courses-view .course-post .price:after {position:absolute; top:-8px; left:0px; content:""; border-left: 8px solid transparent; border-bottom: 8px solid #029ec0;}
 .courses-view .course-post .price.free {background:#fe5969;}
 .courses-view .course-post .price.free:after{ border-bottom: 8px solid #da3243}

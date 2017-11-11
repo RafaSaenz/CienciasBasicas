@@ -22,10 +22,14 @@ public class Resource {
     private String link;
     private String instructor;
     private String references;
-    private float review;
+    private int review;
     private Date addedDate;
-
-    public Resource(String id, String title, String description, String type, String subtopic, String level, String filePath, String link, String instructor, String references, float review, Date addedDate) {
+    
+    public Resource(){
+        
+    }
+    
+    public Resource(String id, String title, String description, String type, String subtopic, String level, String filePath, String link, String instructor, String references, int review, Date addedDate) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -183,14 +187,14 @@ public class Resource {
     /**
      * @return the review
      */
-    public float getReview() {
+    public int getReview() {
         return review;
     }
 
     /**
      * @param review the review to set
      */
-    public void setReview(float review) {
+    public void setReview(int review) {
         this.review = review;
     }
 

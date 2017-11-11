@@ -22,7 +22,7 @@
                 <div class="col-sm-6 col-md-3">
                     <h5>Accesos directos</h5>
                     <ul class="footer-link">
-                        <li><a href="#">Sesiones</a></li>
+                        <li><a href="faq.jsp">Preguntas frecuentes</a></li>
                         <li><a href="#">Cursos profesionales</a></li>
                         <li><a href="#">Políticas de privacidad</a></li>
                         <li><a href="#">Términos de uso</a></li>

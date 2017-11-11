@@ -44,16 +44,6 @@
                 <jsp:include page="navbar.jsp" flush="true"></jsp:include>
             </div>
         </header>
-        <section class="banner inner-page">
-            <div class="banner-img">
-                <img src="images/banner/register-bannerImg.jpg" alt="">
-            </div>
-            <div class="page-title">
-                <div class="container">
-                    <h1>Login</h1>
-                </div>
-            </div>
-        </section>
         <section class="breadcrumb">
             <div class="container">
                 <ul>
@@ -135,25 +125,6 @@
                         </form>
                     </div>
                 </div>
-                <div class="sosiyal-login">
-                    <div class="row">
-                        <div class="col-sm-3 col-md-3">
-                            <a href="#" class="facebook">
-                                <i class="fa fa-facebook"></i>Facebook</a>
-                        </div>
-                        <div class="col-sm-3 col-md-3">
-                            <a href="#" class="google-pluse">
-                                <i class="fa fa-google-plus"></i>Google</a>
-                        </div>
-                        <div class="col-sm-3 col-md-3">
-                            <a href="#" class="twitter">
-                                <i class="fa fa-twitter"></i>Twitter</a>
-                        </div>
-                        <div class="col-sm-3 col-md-3">
-                            <a href="#" class="linkedin">
-                                <i class="fa fa-linkedin"></i>Linkedin</a>
-                        </div>
-                    </div>
                 </div>
             </div>
         </section>

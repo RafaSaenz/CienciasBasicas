@@ -8,7 +8,7 @@
 <nav id="nav-main">
     <div class="navbar navbar-inverse">
         <div class="navbar-header">
-            <a href="index.html" class="navbar-brand"><img src="images/logo.png" alt=""></a>
+            <a href="/CienciasBasicas/" class="navbar-brand"><img src="images/logo.png" alt=""></a>
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -22,7 +22,7 @@
                     <a href="index.jsp">Inicio </a>
                 </li>
                 <li class="mega-menu sub-menu">
-                    <a href="">Recursos</a>
+                    <a href="Resources?mode=grid">Recursos</a>
                     <div class="menu-view">
                         <div class="row">
                             <div class="col-sm-4">
