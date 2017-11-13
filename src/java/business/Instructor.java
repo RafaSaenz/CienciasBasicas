@@ -10,6 +10,7 @@ package business;
  * @author gerar
  */
 public class Instructor {
+
     private String id;
     private String firstName;
     private String lastName1;
@@ -19,22 +20,22 @@ public class Instructor {
     private String major;
     private String picPath;
 
-    public Instructor(String id, String firstName, String lastName1, 
-            String lastName2, String email, String password, 
-            String major, String picPath) {
+    public Instructor(String id, String firstName, String lastName1,
+            String lastName2) {
         this.id = id;
         this.firstName = firstName;
         this.lastName1 = lastName1;
         this.lastName2 = lastName2;
-        this.email = email;
-        this.password = password;
-        this.major = major;
-        this.picPath = picPath;
     }
-    
-    public Instructor(){
-        
+
+    public Instructor() {
+
     }
+
+    public Instructor(String id) {
+        this.id = id;
+    }
+
     /**
      * @return the id
      */

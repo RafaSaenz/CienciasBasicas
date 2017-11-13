@@ -40,7 +40,7 @@
                     <div class="container">
                         <ul>
                             <li><a href="/CienciasBasicas/">Inicio</a></li>
-                            <li><a href="/CienciasBasicas/Resources?mode=list">Recursos</a></li>
+                            <li><a href="/CienciasBasicas/Resources?action=view&mode=list">Recursos</a></li>
                         </ul>
                     </div>
                 </section>
@@ -48,8 +48,8 @@
                     <div class="container">
                         <div class="filter-row">
                             <div class="view-type">
-                                <a href="/CienciasBasicas/Resources?mode=grid"><i class="fa fa-th-large"></i></a>
-                                <a href="/CienciasBasicas/Resources?mode=list" class="active"><i class="fa fa-list"></i></a>
+                                <a href="/CienciasBasicas/Resources?action=view&mode=grid"><i class="fa fa-th-large"></i></a>
+                                <a href="/CienciasBasicas/Resources?action=view&mode=list" class="active"><i class="fa fa-list"></i></a>
                             </div>
                             <div class="search">
                                 <input type="text" placeholder="Search">
@@ -61,13 +61,13 @@
                                 <div class="img">
                                     <img src="images/courses/courses-img4.jpg" alt="">
                                     <div class="icon">
-                                        <a href="Resources?ID=${resource.id}"><img src="images/book-icon.png" alt=""></a>
+                                        <a href="Resources?action=view&mode=detail&id=${resource.id}"><img src="images/book-icon.png" alt=""></a>
                                     </div>
                                     <div class="price">${resource.level}</div>
                                 </div>
                                 <div class="info">
                                     <div class="name">${resource.title}</div>
-                                    <div class="expert"><span>Autor: </span>${resource.instructor}</div>
+                                    <div class="expert"><span>Autor: </span>${resource.instructor.firstName} ${resource.instructor.lastName1} ${resource.instructor.lastName2}</div>
                                     <div class="product-footer">
                                         <div class="comment-box">	
                                             <div class="box"><i class="fa fa-users"></i>0 Enrolled</div>
@@ -75,9 +75,9 @@
                                         <div class="rating">
                                             <div class="fill" style="width:${resource.review}%"></div>
                                         </div>
-                                        <p>${resource.description}</p>
+                                            <p><b>${resource.area.area}</b></p>
                                         <div class="view-btn2">
-                                            <a href="Resources?ID=${resource.id}" class="btn">Ver más</a>
+                                            <a href="Resources?action=view&mode=detail&id=${resource.id}" class="btn">Ver más</a>
                                         </div>
                                     </div>
                                 </div>

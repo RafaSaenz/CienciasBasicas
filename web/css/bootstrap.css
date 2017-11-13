@@ -3019,7 +3019,7 @@ select[multiple].input-lg {
   -ms-touch-action: manipulation;
       touch-action: manipulation;
   cursor: pointer;
-  background-color:#02cbf7;
+  background-color:#001489;
   color:#fff; 
   border: none;
   border-radius: 5px;
@@ -4604,13 +4604,13 @@ fieldset[disabled] .navbar-default .btn-link:focus {
 }
 .navbar-inverse .navbar-nav > li > a:hover,
 .navbar-inverse .navbar-nav > li > a:focus {
-  color: #fe5969;
+  color: #140089;
   background:none;
 }
 .navbar-inverse .navbar-nav > .active > a,
 .navbar-inverse .navbar-nav > .active > a:hover,
 .navbar-inverse .navbar-nav > .active > a:focus {
-  color: #fe5969;
+  color: #001489;
   background:none;
 }
 .navbar-inverse .navbar-nav > .disabled > a,

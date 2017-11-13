@@ -38,24 +38,7 @@
 <body>
     <div class="wapper">
         <jsp:include page="quicknav-2.jsp" flush="true"></jsp:include>
-        </div>
-        <header id="header">
-            <div class="container">
-                <jsp:include page="navbar.jsp" flush="true"></jsp:include>
-            </div>
-        </header>
-        <section class="breadcrumb">
-            <div class="container">
-                <ul>
-                    <li>
-                        <a href="#">Home</a>
-                    </li>
-                    <li>
-                        <a href="#">Login & Register</a>
-                    </li>
-                </ul>
-            </div>
-        </section>
+        </div>      
         <section class="login-view">
             <div class="container">
                 <div class="row">
@@ -63,7 +46,7 @@
                         <form action="LoginServlet" method = "post">
                         <div class="section-title">
                             <h2>Iniciar sesión</h2>
-                            <p>Login to your account below</p>
+                            <p>Ingresa tu email y contraseña</p>
                         </div>
                         
                         <div class="input-box">
@@ -74,13 +57,13 @@
                         </div>
                         <div class="check-slide">
                             <label class="label_check" for="checkbox-01">
-                                <input id="checkbox-01" type="checkbox"> Remember Me</label>
+                                <input id="checkbox-01" type="checkbox">Recordar</label>
                             <div class="right-link">
-                                <a href="#">Lost Password? </a>
+                                <a href="#">Recuperar contraseña</a>
                             </div>
                         </div>
                         <div class="submit-slide">
-                            <input type="submit" value="Login" class="btn">
+                            <input type="submit" value="Ingresar" class="btn">
                         </div>
                         </form>
                     </div>
@@ -88,7 +71,7 @@
                         <form action="RegisterServlet" method="post" onsubmit="return validate()" >
                             <div class="section-title">
                                 <h2>Crea una cuenta</h2>
-                                <p>Register now - Completely free</p>
+                                <p>Registrate ahora con tu correo institucional</p>
                             </div>
                             <div class="input-box">
                                 <input type="text" name="id" required placeholder="Matricula AXXXXXXX">
@@ -111,16 +94,16 @@
                             <div class="input-box">
                                 <input type="password" name="confirm-password" required placeholder="Re-Password">
                             </div>
-                            <div class="select">
+                            <div class="input-box select">
                                     <select class="select" name = "major">
                                         <option>ITIC</option>
                                         <option>IIS</option>
                                         <option>IBN</option>
                                         <option>IMT</option>
                                     </select>
-                                </div>
+                            </div>
                             <div class="submit-slide">
-                                <input type="submit" value="Register" class="btn">
+                                <input type="submit" value="Registrar" class="btn">
                             </div>
                         </form>
                     </div>
@@ -145,7 +128,10 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-
+    <style>
+        select, textarea {width:100%; max-width:550px; border:solid 1px #d8d8d8; background:#fff; border-radius:5px; height:41px; line-height:29px; padding:5px 10px;}
+        textarea { height: 150px;}
+    </style>
     <script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.js"></script>
     <script type="text/javascript" src="js/owl.carousel.js"></script>

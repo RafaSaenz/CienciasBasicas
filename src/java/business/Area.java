@@ -17,6 +17,14 @@ public class Area {
         this.id = id;
         this.area = area;
     }
+    
+    public Area(String id){
+        this.id = id;
+    }
+    
+    public Area(){
+        
+    }
 
     /**
      * @return the id

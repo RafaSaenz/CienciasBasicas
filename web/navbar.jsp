@@ -22,25 +22,25 @@
                     <a href="index.jsp">Inicio </a>
                 </li>
                 <li class="mega-menu sub-menu">
-                    <a href="Resources?mode=grid">Recursos</a>
+                    <a href="Resources?action=view&mode=grid">Recursos</a>
                     <div class="menu-view">
                         <div class="row">
                             <div class="col-sm-4">
                                 <div class="menu-title">Física</div>
                                 <ul>
-                                    <li><a href="#">Courses Grid</a></li>
+                                    <li><a href="#">--</a></li>
                                 </ul>
                             </div>
                             <div class="col-sm-4">
                                 <div class="menu-title">Matemáticas</div>
                                 <ul>
-                                    <li><a href="#">Quiz Intro</a></li>
+                                    <li><a href="#">--</a></li>
                                 </ul>
                             </div>
                             <div class="col-sm-4">
                                 <div class="menu-title">Programación</div>
                                 <ul>
-                                    <li><a href="#">Quiz Intro</a></li>
+                                    <li><a href="#">--</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -59,6 +59,14 @@
                     <ul>
                         <li><a href="#">Por recurso</a></li>
                         <li><a href="#">Por alumno</li></a>
+                        <li><a href="#">Por tema</a></li>
+                    </ul>
+                </li>
+                <li class="sub-menu">
+                    <a href="#">Administrar</a>
+                    <ul>
+                        <li><a href="Resources?action=add&mode=">Agregar Recurso</a></li>
+                        <li><a href="Instructors?id=L00000002">Agregar instructor</li></a>
                         <li><a href="#">Por tema</a></li>
                     </ul>
                 </li>

@@ -42,7 +42,7 @@ public class LogoutServlet extends HttpServlet {
         {	           
                 HttpSession session = request.getSession();
                 session.setAttribute("currentSessionUser",null);        
-                response.sendRedirect("index.jsp"); //Change for index after user has logged out   		
+                response.sendRedirect("/CienciasBasicas/"); //Change for index after user has logged out   		
         } catch (Throwable theException)  
         {
              System.out.println(theException); 

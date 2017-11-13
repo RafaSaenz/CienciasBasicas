@@ -1,3 +1,4 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -29,51 +30,67 @@
     <body>
         <div class="wapper">
             <jsp:include page="quicknav-2.jsp" flush="true"></jsp:include>
-            <header id="header">
-                <div class="container">
+                <header id="header">
+                    <div class="container">
                     <jsp:include page="navbar.jsp" flush="true"></jsp:include>
-                </div>
-            </header>
-            <section class="breadcrumb">
-                <div class="container">
-                    <ul>
-                        <li><a href="/CienciasBasicas/">Inicio</a></li>
-                        <li><a href="Instructors?id=L00000002">Instructores</a></li>
-                        <li><a href="Instructors?id=${instructor.id}">${instructor.firstName} ${instructor.lastName1}</a></li>
-                    </ul>
-                </div>
-            </section>
-            <section class="teacher-profile">
-                <div class="container">
-                    <div class="teacher-name">
-                        <h3>${instructor.firstName} ${instructor.lastName1} ${instructor.lastName2}</h3>
-                        <span>Profesor de planta</span>
+                    </div>
+                </header>
+                <section class="breadcrumb">
+                    <div class="container">
+                        <ul>
+                            <li><a href="/CienciasBasicas/">Inicio</a></li>
+                            <li><a href="/CienciasBasicas/Resources?action=view&mode=grid">Recursos</a></li>
+                            <li><a href="/CienciasBasicas/Resources?action=view&mode=detail&id=${resource.id}">${resource.title}</a></li>
+                        </ul>
+                    </div>
+                </section>
+                <section class="teacher-profile">
+                    <div class="container">
+                        <div class="teacher-name">
+                            <h3>${resource.title}</h3>
+                        <span>${resource.area.area}</span>
                     </div>
                     <div class="row">
                         <div class="col-md-8">
-                            <div class="img"><img src="images/team-member/member-img7.jpg" alt=""></div>
+                            <div class="img"><img src="images/news/news-img1.jpg" alt=""></div>
                             <div class="teacher-info">
-                                <p>Breve CV del profesor</p>
+                                <p>${resource.description}</p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="profile-details">
-                                <h4>Detalles del profesor</h4>
+                                <h4>InformaciÃ³n:</h4>
                                 <div class="details-slide">
-                                    <span>Departamento:</span>
-                                    <p>Ingeniería</p>
+                                    <span>Autor:</span>
+                                    <p>${resource.instructor.firstName} ${resource.instructor.lastName1} ${resource.instructor.lastName2}</p>
                                 </div>
                                 <div class="details-slide">
-                                    <span>Teléfono:</span>
-                                    <p>123 4564 1234</p>
+                                    <span>Area:</span>
+                                    <p>${resource.area.area}</p>
                                 </div>
                                 <div class="details-slide">
-                                    <span>Correo electrónico:</span>
-                                    <p><a href="MailTo:${instructor.email}">${instructor.email}</a></p>
+                                    <span>Tema:</span>
+                                    <p>${resource.topic.name}</p>
+                                </div>
+                                <div class="details-slide">
+                                    <span>Subtema:</span>
+                                    <p>${resource.subtopic.name}</p>
+                                </div>
+                                <div class="details-slide">
+                                    <span>Nivel:</span>
+                                    <p>${resource.level}</p>
+                                </div>
+                                <div class="details-slide">
+                                    <span>Referencias:</span>
+                                    <p>${resource.references}</p>
+                                </div>
+                                <div class="details-slide">
+                                    <span>Link:</span>
+                                    <p><a href="${resource.link}">${resource.link}</a></p>
                                 </div>
                                 <div class="details-slide last">
-                                    <span>Me gusta:</span>
-                                    <p><i class="fa fa-heart-o"></i> 5 Like</p>
+                                   <span>Subido:</span>
+                                    <p>${resource.addedDate}</p>
                                 </div>
                             </div>
                         </div>

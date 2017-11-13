@@ -19,6 +19,19 @@ public class Topic {
         this.name = name;
         this.area = area;
     }
+    
+    public Topic(String id, String name){
+        this.id = id;
+        this.name = name;
+    }
+    
+    public Topic(String id){
+        this.id = id;
+    }
+    
+    public Topic(){
+        
+    }
     /**
      * @return the id
      */

@@ -15,33 +15,20 @@ public class Resource {
     private String id;
     private String title;
     private String description;
-    private String type;
-    private String subtopic;
+    private ResourceType type;
+    private Subtopic subtopic;
+    private Area area;
+    private Topic topic;
     private String level;
     private String filePath;
     private String link;
-    private String instructor;
+    private Instructor instructor;
     private String references;
     private int review;
     private Date addedDate;
     
     public Resource(){
         
-    }
-    
-    public Resource(String id, String title, String description, String type, String subtopic, String level, String filePath, String link, String instructor, String references, int review, Date addedDate) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.type = type;
-        this.subtopic = subtopic;
-        this.level = level;
-        this.filePath = filePath;
-        this.link = link;
-        this.instructor = instructor;
-        this.references = references;
-        this.review = review;
-        this.addedDate = addedDate;
     }
     
     /**
@@ -89,28 +76,28 @@ public class Resource {
     /**
      * @return the type
      */
-    public String getType() {
+    public ResourceType getType() {
         return type;
     }
 
     /**
      * @param type the type to set
      */
-    public void setType(String type) {
+    public void setType(ResourceType type) {
         this.type = type;
     }
 
     /**
      * @return the subtopic
      */
-    public String getSubtopic() {
+    public Subtopic getSubtopic() {
         return subtopic;
     }
 
     /**
      * @param subtopic the subtopic to set
      */
-    public void setSubtopic(String subtopic) {
+    public void setSubtopic(Subtopic subtopic) {
         this.subtopic = subtopic;
     }
 
@@ -159,14 +146,14 @@ public class Resource {
     /**
      * @return the instructor
      */
-    public String getInstructor() {
+    public Instructor getInstructor() {
         return instructor;
     }
 
     /**
      * @param instructor the instructor to set
      */
-    public void setInstructor(String instructor) {
+    public void setInstructor(Instructor instructor) {
         this.instructor = instructor;
     }
 
@@ -210,5 +197,33 @@ public class Resource {
      */
     public void setAddedDate(Date addedDate) {
         this.addedDate = addedDate;
+    }
+
+    /**
+     * @return the area
+     */
+    public Area getArea() {
+        return area;
+    }
+
+    /**
+     * @param area the area to set
+     */
+    public void setArea(Area area) {
+        this.area = area;
+    }
+
+    /**
+     * @return the topic
+     */
+    public Topic getTopic() {
+        return topic;
+    }
+
+    /**
+     * @param topic the topic to set
+     */
+    public void setTopic(Topic topic) {
+        this.topic = topic;
     }
 }

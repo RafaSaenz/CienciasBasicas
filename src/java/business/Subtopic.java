@@ -10,27 +10,40 @@ package business;
  * @author gerar
  */
 public class Subtopic {
-    private String id;
+    private int id;
     private String name;
-    private String subtopic;
+    private String topic;
 
-    public Subtopic(String id, String name, String subtopic){
+    public Subtopic(int id, String name, String topic){
         this.id = id;
         this.name = name;
-        this.subtopic = subtopic;
+        this.topic = topic;
+    }
+    
+    public Subtopic(int id, String name){
+        this.id = id;
+        this.name = name;
+    }
+    
+    public Subtopic(int id){
+        this.id = id;
+    }
+
+    public Subtopic() {
+        
     }
 
     /**
      * @return the id
      */
-    public String getId() {
+    public int getId() {
         return id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -51,14 +64,14 @@ public class Subtopic {
     /**
      * @return the subtopic
      */
-    public String getSubtopic() {
-        return subtopic;
+    public String getTopic() {
+        return topic;
     }
 
     /**
-     * @param subtopic the subtopic to set
+     * @param topic the subtopic to set
      */
-    public void setSubtopic(String subtopic) {
-        this.subtopic = subtopic;
+    public void setTopic(String topic) {
+        this.topic = topic;
     }
 }

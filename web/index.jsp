@@ -84,9 +84,10 @@
             <div class="member-slider">	
             	<div class="item">
                 	<div class="member-info">
-                    	<div class="img"><img src="images/team-member/member-img1.png" alt=""></div>
-                        <p>Que linda es España!!</p>
-                        <div class="member-name">-José Manuel Pardo<span>Física</span></div>
+                    	<div class="img"><img src="images/team-member/member-img2.png" alt=""></div>
+                        <p>?Lorem Ipsum is simply dummy text of the printing and typesetting industry it has survived not only five centuries, but also the leap into electronic typesetting, unchanged...</p>
+                        <p>It was popularised in the 1960s with the release of recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                        <div class="member-name">-Dhruv Patel<span>Geek-in-charge, Coder extraordinaire</span></div>
                     </div>
                 </div>
                 <div class="item">
@@ -130,14 +131,7 @@
                     </div>
                 </div>
             </div>
-        </section>
-        <section class="start-learning">
-        	<div class="container">
-            	<p>¡Me siento preparado!</p>
-                <a href="#" class="btn">Quiz</a>
-            </div>
-        </section>
-        
+        </section>        
         <jsp:include page="footer.jsp" flush="true"></jsp:include>
     </div>
     <!-- Bootstrap core JavaScript
