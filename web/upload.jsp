@@ -141,7 +141,7 @@
         <!-- Placed at the end of the document so the pages load faster -->
         <style>
             select, textarea {width:100%; max-width:350px; border:solid 1px #d8d8d8; background:#fff; border-radius:5px; height:41px; line-height:29px; padding:5px 10px;}
-            textarea { height: 150px;}
+            textarea { height: 130px;}
         </style>
 
         <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
