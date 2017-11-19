@@ -10,19 +10,36 @@ import dataAccess.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.List;
 import java.sql.Connection;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemIterator;
+import org.apache.commons.fileupload.FileItemStream;
+import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.fileupload.util.Streams;
 
 /**
  *
@@ -32,10 +49,8 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 public class ResourceListServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-
     // location to store file uploaded
     private static final String UPLOAD_DIRECTORY = "C:\\data";
-
     // upload settings
     private static final int MEMORY_THRESHOLD = 1024 * 1024 * 3;  // 3MB
     private static final int MAX_FILE_SIZE = 1024 * 1024 * 40; // 40MB
@@ -74,9 +89,13 @@ public class ResourceListServlet extends HttpServlet {
                             url = "/courses-list.jsp";
                             break;
                         case "detail":
-                            request.setAttribute("resource", resourceDao.getById(
-                                    request.getParameter("id")));
-                            url = "/course-detail.jsp";
+                            if (resourceDao.getById(request.getParameter("id")).getId() != null) {
+                                request.setAttribute("resource", resourceDao.getById(
+                                        request.getParameter("id")));
+                                url = "/course-detail.jsp";
+                            } else {
+                                url = "/page-404.jsp";
+                            }
                             break;
                         default:
                             url = "/page-404.jsp";
@@ -95,7 +114,21 @@ public class ResourceListServlet extends HttpServlet {
                 /*Areas for the select box*/
                 AreaDAO areaDao = new AreaDAO(connection);
                 request.setAttribute("areas", areaDao.getAreas());
-                url = "/upload.jsp";
+                url = "/newResource.jsp";
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        } else if (action.equals("manage")) {
+            try {
+                ConnectionDB connectionDB = new ConnectionDB();
+                Connection connection = connectionDB.getConnection();
+                /*Types for the select box
+                ResourceTypeDAO typeDao = new ResourceTypeDAO(connection);
+                request.setAttribute("types", typeDao.getTypes());
+                /*Areas for the select box*/
+                AreaDAO areaDao = new AreaDAO(connection);
+                request.setAttribute("areas", areaDao.getAreas());
+                url = "/adminPanel.jsp";
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
@@ -129,65 +162,50 @@ public class ResourceListServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // checks if the request actually contains upload file
+
         if (!ServletFileUpload.isMultipartContent(request)) {
-            // if not, we stop here
             PrintWriter writer = response.getWriter();
             writer.println("Error: Form must has enctype=multipart/form-data.");
             writer.flush();
             return;
         }
-        // configures upload settings
+
         DiskFileItemFactory factory = new DiskFileItemFactory();
-        // sets memory threshold - beyond which files are stored in disk
         factory.setSizeThreshold(MEMORY_THRESHOLD);
-        // sets temporary location to store files
         factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
+
         ServletFileUpload upload = new ServletFileUpload(factory);
-        // sets maximum size of upload file
+        upload.setHeaderEncoding("UTF-8");
         upload.setFileSizeMax(MAX_FILE_SIZE);
-        // sets maximum size of request (include file + form data)
         upload.setSizeMax(MAX_REQUEST_SIZE);
-        // constructs the directory path to store upload file
-        // this path is relative to application's directory
+
         String uploadPath = UPLOAD_DIRECTORY;
-        //getServletContext().getRealPath("")
-        //+ File.separator + UPLOAD_DIRECTORY;
-        // creates the directory if it does not exist
-        File uploadDir = new File(uploadPath);
-        if (!uploadDir.exists()) {
-            uploadDir.mkdir();
-        }
+
         try {
             ConnectionDB connectionDB = new ConnectionDB();
             Connection connection = connectionDB.getConnection();
-            ResourceDAO resourceDao = new ResourceDAO(connection);
-            Resource resource = new Resource();
-            resource.setId(String.valueOf(resourceDao.getCount() + 1));
-            resource.setInstructor(new Instructor("L00000001"));
-            resource.setAddedDate(new java.sql.Date(117, 10, 12));
 
-            // parses the request's content to extract file data
+            ResourceDAO resourceDao = new ResourceDAO(connection);
+
+            Resource resource = new Resource();
+            SubtopicDAO subtopicDao = new SubtopicDAO(connection);
+            Date date = new Date();
+
+            resource.setInstructor(new Instructor("L00000001"));
+            resource.setAddedDate(new java.sql.Date(date.getTime()));
+
             @SuppressWarnings("unchecked")
             List<FileItem> formItems = upload.parseRequest(request);
+            List<FileItem> fileItems = new ArrayList<>();
+
             if (formItems != null && formItems.size() > 0) {
                 // iterates over form's fields
                 for (FileItem item : formItems) {
-                    // processes only fields that are not form fields
-                    if (!item.isFormField()) {
-                        String fileName = new File(item.getName()).getName();
-                        String filePath = uploadPath + File.separator + fileName;
-                        File storeFile = new File(filePath);
-                        // saves the file on diskfile
-                        item.write(storeFile);
-                        resource.setFilePath(uploadPath += "\\" + fileName);
-                        resourceDao.add(resource);
-                        request.setAttribute("message",
-                                "Recurso guardado con éxito.");
-                        request.setAttribute("resource","7");
-                    } else {
+                    // processes only fields that are  form fields
+                    if (item.isFormField()) {
+                        //String fieldValue = Streams.asString((InputStream) item, "UTF-8");
                         String fieldName = item.getFieldName();
-                        String fieldValue = item.getString();
+                        String fieldValue = item.getString("UTF-8");
                         switch (fieldName) {
                             case "title":
                                 resource.setTitle(fieldValue);
@@ -209,25 +227,48 @@ public class ResourceListServlet extends HttpServlet {
                                 break;
                             case "area":
                                 resource.setArea(new Area(fieldValue));
-                                uploadPath += "\\" + fieldValue;
                                 break;
                             case "topic":
                                 resource.setTopic(new Topic(fieldValue));
                                 break;
                             case "subtopic":
-                                resource.setSubtopic(new Subtopic(Integer.parseInt(fieldValue)));
+                                resource.setSubtopic(new Subtopic(fieldValue));
                                 break;
                         }
+                    } else {
+                        fileItems.add(item);
                     }
                 }
             }
+            resource.setId(resource.getSubtopic().getId() + "_R" + String.format("%03d",
+                                                (resourceDao.getCountBySubtopic(resource.getSubtopic())+1)));
+            //Aqui procesar los archivos
+            uploadPath += "\\" + resource.getArea().getId() + "\\" + resource.getId();
+            // creates the directory if it does not exist
+            File uploadDir = new File(uploadPath);
+            if (!uploadDir.exists()) {
+                uploadDir.mkdir();
+            }
+            for (FileItem item : fileItems) {
+                String fileName = new File(item.getName()).getName();
+                String filePath = uploadPath + File.separator + fileName;
+                File storeFile = new File(filePath);
+                // saves the file on diskfile
+                item.write(storeFile);
+                resource.setFilePath(resource.getArea().getId() + "/" + resource.getId() + "/" + fileName);
+            }
+            resourceDao.add(resource);
+            request.setAttribute("message",
+                    "Recurso guardado con éxito.");
+            request.setAttribute("resource", resource.getId());
+
         } catch (Exception ex) {
             request.setAttribute("message", "Hubo un problema...");
             request.setAttribute("information",
                     "There was an error: " + ex.getMessage());
         }
-        // redirects client to message page
-        getServletContext().getRequestDispatcher("/uploaded.jsp").forward(
+        getServletContext()
+                .getRequestDispatcher("/uploaded.jsp").forward(
                 request, response);
     }
 

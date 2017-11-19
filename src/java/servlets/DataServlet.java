@@ -5,8 +5,10 @@
  */
 package servlets;
 
+import business.Area;
 import business.Subtopic;
 import business.Topic;
+import dataAccess.AreaDAO;
 import dataAccess.ConnectionDB;
 import dataAccess.SubtopicDAO;
 import dataAccess.TopicDAO;
@@ -37,28 +39,75 @@ public class DataServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ConnectionDB connectionDB = new ConnectionDB();
-        Connection connection = connectionDB.getConnection();
-        String items = request.getParameter("items");
+
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+
+        ConnectionDB connectionDB = new ConnectionDB();
+        Connection connection = connectionDB.getConnection();
+
+        String area, topic, mode, newTopic, items = request.getParameter("items");
         String data = "<option style=\"display:none\"></option>";
 
+        TopicDAO topicDao;
+        AreaDAO areaDao;
+        SubtopicDAO subtopicDao;
         switch (items) {
             case "topics":
-                String area = request.getParameter("area");
-                TopicDAO topicDao = new TopicDAO(connection);
-                for (Topic topic1 : topicDao.findByArea(area)) {                  
+                area = request.getParameter("area");
+                topicDao = new TopicDAO(connection);
+                for (Topic topic1 : topicDao.findByArea(area)) {
                     data += "<option value='" + topic1.getId() + "'>"
                             + topic1.getName() + "</option>";
                 }
                 break;
             case "subtopics":
-                String topic = request.getParameter("topic");
-                SubtopicDAO subtopicDao = new SubtopicDAO(connection);
-                for (Subtopic subtopic : subtopicDao.findByTopic(topic)) {                    
+                topic = request.getParameter("topic");
+                subtopicDao = new SubtopicDAO(connection);
+                for (Subtopic subtopic : subtopicDao.findByTopic(topic)) {
                     data += "<option value='" + subtopic.getId() + "'>"
                             + subtopic.getName() + "</option>";
+                }
+                break;
+            case "topics_table":
+                areaDao = new AreaDAO(connection);
+                topicDao = new TopicDAO(connection);
+
+                mode = request.getParameter("mode");
+                area = request.getParameter("area");
+                newTopic = request.getParameter("newTopic");
+
+                switch (mode) {
+                    case "show":
+                        request.setAttribute("area", areaDao.getById(area));
+                        request.setAttribute("topics", topicDao.findByArea(area));
+                        getServletContext().getRequestDispatcher("/table.jsp").forward(request, response);
+                        break;
+                    case "input":
+                        request.setAttribute("area", area);
+                        getServletContext().getRequestDispatcher("/adding.jsp").forward(request, response);
+                        break;
+                    case "add":
+                        topicDao.add(
+                                new Topic(area + "_T"
+                                        + String.format("%03d",
+                                                (topicDao.getCountByArea(new Area(area)) + 1)),
+                                        newTopic, area));
+                        request.setAttribute("area", areaDao.getById(area));
+                        request.setAttribute("topics", topicDao.findByArea(area));
+                        getServletContext().getRequestDispatcher("/table.jsp").forward(request, response);
+                        break;
+                    case "delete":
+                        try {
+                            topicDao.delete(newTopic);
+                            request.setAttribute("area", areaDao.getById(area));
+                            request.setAttribute("topics", topicDao.findByArea(area));
+                            getServletContext().getRequestDispatcher("/table.jsp").forward(request, response);
+                        } catch (Exception e) {
+                            request.setAttribute("message", "Error, registros de subtemas asociados.");
+                            getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
+                        }
+                        break;
                 }
                 break;
         }

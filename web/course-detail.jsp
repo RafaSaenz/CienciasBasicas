@@ -52,7 +52,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-8">
-                            <div class="img"><img src="images/news/news-img1.jpg" alt=""></div>
+                            <div class="img"><img src="${pageContext.request.contextPath}/image/${resource.filePath}" alt="" height="275" width="570"></div>
                             <div class="teacher-info">
                                 <p>${resource.description}</p>
                             </div>

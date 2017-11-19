@@ -44,13 +44,14 @@ public class ResourceDAO {
         this.connection = connection;
     }
     
-    public int getCount(){
+    public int getCountByArea(Area area){
         int count = 0;
         try {
-            statement = connection.prepareStatement("SELECT \"max\"(id) FROM \"Resource\"");
+            statement = connection.prepareStatement("SELECT \"count\"(*) FROM \"Resource\" WHERE "
+                    + "area='" + area.getId() + "'");
             ResultSet results = statement.executeQuery();
                 while (results.next()) {
-                    count = results.getInt("max");
+                    count = results.getInt("count");
                 }
         } catch (SQLException sqle) {
             logger.log(Level.SEVERE, sqle.toString(), sqle);
@@ -91,9 +92,7 @@ public class ResourceDAO {
                     + "JOIN \"ResourceType\" rt ON r.type = rt.id\n"
                     + "JOIN \"Area\" a ON r.area = a.id\n"
                     + "JOIN \"Topic\" t ON r.topic = t.id\n"
-                    + "JOIN \"Subtopic\" s ON r.subtopic = s.id\n"
-                    + "ORDER BY\n"
-                    + "	r. ID");
+                    + "JOIN \"Subtopic\" s ON r.subtopic = s.id");
             synchronized (statement) {
                 ResultSet results = statement.executeQuery();
                 while (results.next()) {
@@ -116,7 +115,7 @@ public class ResourceDAO {
                             results.getString("area")));
                     resource.setTopic(new Topic(results.getString("t_id"),
                             results.getString("name")));
-                    resource.setSubtopic(new Subtopic(results.getInt("s_id"),
+                    resource.setSubtopic(new Subtopic(results.getString("s_id"),
                             results.getString("subtopic")));
                     resources.add(resource);
                 }
@@ -184,15 +183,16 @@ public class ResourceDAO {
                             results.getString("area")));
                     resource.setTopic(new Topic(results.getString("t_id"),
                             results.getString("name")));
-                    resource.setSubtopic(new Subtopic(results.getInt("s_id"),
+                    resource.setSubtopic(new Subtopic(results.getString("s_id"),
                             results.getString("subtopic")));
                 }
             }
             statement.close();
+            return resource;
         } catch (SQLException e) {
             System.err.println(e);
+            return null;
         }
-        return resource;
     }
 
     public void add(Resource resource) {
@@ -207,7 +207,7 @@ public class ResourceDAO {
                 statement.setString(2, resource.getTitle());
                 statement.setString(3, resource.getDescription());
                 statement.setString(4, resource.getType().getId());
-                statement.setInt(5, resource.getSubtopic().getId());
+                statement.setString(5, resource.getSubtopic().getId());
                 statement.setString(6, resource.getLevel());
                 statement.setString(7, resource.getFilePath());
                 statement.setString(8, resource.getLink());
@@ -223,5 +223,20 @@ public class ResourceDAO {
             logger.log(Level.SEVERE, sqle.toString(), sqle);
             throw new RuntimeException(sqle);
         }
+    }
+    
+    public int getCountBySubtopic(Subtopic subtopic) {
+        int count = 0;
+        try {
+            statement = connection.prepareStatement("select count(*) from \"Resource\" where subtopic='"+subtopic.getId()+"'");
+            ResultSet results = statement.executeQuery();
+            while (results.next()) {
+                count = results.getInt("count");
+            }
+        } catch (SQLException sqle) {
+            logger.log(Level.SEVERE, sqle.toString(), sqle);
+            throw new RuntimeException(sqle);
+        }
+        return count;
     }
 }

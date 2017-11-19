@@ -66,8 +66,9 @@
                     <a href="#">Administrar</a>
                     <ul>
                         <li><a href="Resources?action=add&mode=">Agregar Recurso</a></li>
-                        <li><a href="Instructors?id=L00000002">Agregar instructor</li></a>
-                        <li><a href="#">Por tema</a></li>
+                        <li><a href="Instructors?id=L00000002">Ver instructor</li></a>
+                        <li><a href="newInstructor.jsp">Agregar Instructor</a></li>
+                        <li><a href="Resources?action=manage">Admin Panel</a></li>
                     </ul>
                 </li>
             </ul>

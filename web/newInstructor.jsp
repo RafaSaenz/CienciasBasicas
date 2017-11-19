@@ -48,84 +48,45 @@
                 <section class="checkout-content">
                     <div class="container">
                         <div class="step-box fill">
-                            <div class="title"><span>Registrar nuevo recurso</span> </div>
+                            <div class="title"><span>Registrar nuevo instructor</span> </div>
                         </div>
                         <div class="step-box">
-                            <div class="title">Datos del recurso</div>
+                            <div class="title">Datos del instructor</div>
                             <div class="step2 step-content">
                                 <div class="fill-address">
                                     <div class="row">
-                                        <form action="Resources" method="post" id="addForm" enctype="multipart/form-data">
-                                            <div class="col-sm-6">
-                                                <div class="input-filde">   
-                                                    <div class="input-box">
-                                                        <label>Título:</label>
-                                                        <input type="text" name="title" required maxlength="255" placeholder="Ingrese título del recurso">
-                                                    </div>
-                                                    <div class="input-box">
-                                                        <label>Descripción:</label>
-                                                        <textarea rows="5" cols="35" name="description" maxlength="255" required form="addForm" placeholder="Descripción detallada del recurso"></textarea>
-                                                    </div>
-                                                    <div class="input-box">
-                                                        <label>Referencias</label>
-                                                        <input type="text" maxlength="255" name="references">
-                                                    </div>
-                                                    <div class="input-box">
-                                                        <label>Hipervínculos: </label>
-                                                        <input type="text" maxlength="255" name="link">
-                                                    </div>
-
-                                                </div>
-                                            </div>
+                                        <form action="Instructor" method="post" id="addForm" onsubmit="return checkFile();" enctype="multipart/form-data">
                                             <div class="col-sm-6">
                                                 <div class="input-filde">
                                                     <div class="input-box">
-                                                        <label>Tipo de recurso: </label>
-                                                        <select  required name="type">
-                                                            <option style="display:none"></option>
-                                                        <c:forEach var="type" items="${types}">
-                                                            <option value="${type.id}">${type.description}</opt>
-                                                            </c:forEach>
-                                                    </select>
-                                                </div>
-                                                <div class="input-box">
-                                                    <label>Nivel: </label>
-                                                    <select required name="level">
-                                                        <option style="display:none"></option>
-                                                        <option value="Básico">Básico</opt>
-                                                        <option value="Intermedio">Intermedio</opt>
-                                                        <option value="Avanzado">Avanzado</opt>
-                                                    </select>
-                                                </div>
-                                                <div class="input-box">
-                                                    <label>Área: </label>
-                                                    <select required id="area" name="area">
-                                                        <option style="display:none"></option>
-                                                        <c:forEach var="area" items="${areas}">
-                                                            <option value="${area.id}">${area.area}</opt>
-                                                            </c:forEach>
-                                                    </select>
-                                                </div>
-                                                <div class="input-box">
-                                                    <label>Tema: </label>
-                                                    <select required id="topic" name="topic">
-
-                                                    </select>
-                                                </div>
-                                                <div class="input-box">
-                                                    <label>Subtema: </label>
-                                                    <select required id="subtopic" name="subtopic">
-
-                                                    </select>
-                                                </div>
-                                                <div class="input-box file">
-                                                    <label>Archivo: </label>
-                                                    <input id="file" required type="file" name="file" size="50"/>
+                                                        <label>Nómina: </label>
+                                                        <input type="text" name="id" required maxlength="10" placeholder="L00000000">
+                                                    </div>
+                                                    <div class="input-box">
+                                                        <label>Nombre:</label>
+                                                        <input type="text" name="firstname" required maxlength="255" placeholder="Nombre(s)">
+                                                    </div>
+                                                    <div class="input-box">
+                                                        <label>Apellido Paterno:</label>
+                                                        <input type="text" name="lastname1" required maxlength="255" placeholder="Apellido Paterno">
+                                                    </div>
+                                                    <div class="input-box">
+                                                        <label>Apellido Materno:</label>
+                                                        <input type="text" name="lastname2" required maxlength="255" placeholder="Apellido Materno">
+                                                    </div>
+                                                    <div class="input-box">
+                                                        <label>Email: </label>
+                                                        <input type="email" maxlength="255" name="email" placeholder="Correo electrónico">
+                                                    </div>
+                                                    <div class="input-box file">
+                                                        <label>Foto de perfil: </label>
+                                                        <input id="file" required type="file" name="picPath     " size="50"/>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="add-btn">
-                                            <button class="btn" form="addForm" type="submit"><i class="fa fa-plus"></i>Cargar</button>                                    
+                                            <button class="btn" form="addForm" type="submit"><i class="fa fa-plus"></i>Registrar</button>                                    
                                         </div>
                                     </form>
                                 </div>            
@@ -151,21 +112,21 @@
         <script type="text/javascript" src="js/placeholder.js"></script>
         <script type="text/javascript" src="js/coustem.js"></script>
         <script type="text/javascript">
-            $area = $('#area');
-            $area.change(
-                    function () {
-                        $.ajax({
-                            type: "GET",
-                            url: "/CienciasBasicas/DataServlet?items=topics",
-                            data: {area: $area.val()},
-                            success: function (data) {
-                                $("#topic").html(data),
-                                        $("#topic").focus(),
-                                        $("#topic").select()
-                            }
-                        });
-                    }
-            );
+                                            $area = $('#area');
+                                            $area.change(
+                                                    function () {
+                                                        $.ajax({
+                                                            type: "GET",
+                                                            url: "/CienciasBasicas/DataServlet?items=topics",
+                                                            data: {area: $area.val()},
+                                                            success: function (data) {
+                                                                $("#topic").html(data),
+                                                                        $("#topic").focus(),
+                                                                        $("#topic").select()
+                                                            }
+                                                        });
+                                                    }
+                                            );
         </script>
         <script type="text/javascript">
             $topic = $('#topic');
@@ -183,6 +144,21 @@
                         });
                     }
             );
+        </script>
+        <script type="text/javascript">
+            function checkFile() {
+                var fileElement = document.getElementById("file");
+                var fileExtension = "";
+                if (fileElement.value.lastIndexOf(".") > 0) {
+                    fileExtension = fileElement.value.substring(fileElement.value.lastIndexOf(".") + 1, fileElement.value.length);
+                }
+                if (fileExtension.toLowerCase() == "jpg" || fileExtension.toLowerCase() == "png") {
+                    return true;
+                } else {
+                    alert("You must select a JPG or PNG file for upload");
+                    return false;
+                }
+            }
         </script>
     </body>
 </html>

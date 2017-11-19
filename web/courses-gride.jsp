@@ -62,7 +62,7 @@
                         <div class="col-sm-6 col-md-3">
                             <div class="course-post">
                                 <div class="img">
-                                    <img src="images/courses/courses-img6.jpg" alt="">
+                                    <img src="${pageContext.request.contextPath}/image/${resource.filePath}" alt="No Image Available" height="270px" width="270px">
                                     <div class="price">${resource.level}</div>    
                                     <div class="icon">
                                         <a href="Resources?action=view&mode=detail&id=${resource.id}"><img src="images/book-icon.png" alt=""></a>

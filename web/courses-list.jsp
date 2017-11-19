@@ -59,7 +59,7 @@
                         <c:forEach var="resource" items="${resources}" >
                             <div class="course-post">
                                 <div class="img">
-                                    <img src="images/courses/courses-img4.jpg" alt="">
+                                    <img src="${pageContext.request.contextPath}/image/${resource.filePath}" alt="">
                                     <div class="icon">
                                         <a href="Resources?action=view&mode=detail&id=${resource.id}"><img src="images/book-icon.png" alt=""></a>
                                     </div>

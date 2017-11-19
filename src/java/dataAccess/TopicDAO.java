@@ -5,8 +5,7 @@
  */
 package dataAccess;
 
-import business.Instructor;
-import business.Topic;
+import business.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,11 +20,12 @@ import java.util.logging.Logger;
  * @author gerar
  */
 public class TopicDAO {
+
     private PreparedStatement statement;
     private Connection connection;
     private static final Logger logger = Logger.getLogger(StudentDAO.class.getName());
-    
-    public TopicDAO (Connection connection) {
+
+    public TopicDAO(Connection connection) {
         this.connection = connection;
     }
 
@@ -42,13 +42,13 @@ public class TopicDAO {
     public void setConnection(Connection connection) {
         this.connection = connection;
     }
-    
-    public List<Topic> findByArea(String area){
+
+    public List<Topic> findByArea(String area) {
         List<Topic> topics = new ArrayList<>();
         Topic topic = null;
         try {
-            statement = connection.prepareStatement("select * from \"Topic\" where area='"+area+"';");
-            
+            statement = connection.prepareStatement("select * from \"Topic\" where area='" + area + "';");
+
             synchronized (statement) {
                 ResultSet results = statement.executeQuery();
                 while (results.next()) {
@@ -65,5 +65,69 @@ public class TopicDAO {
             throw new RuntimeException(sqle);
         }
         return topics;
+    }
+
+    public int getCountByArea(Area area) {
+        int count = 0;
+        try {
+            statement = connection.prepareStatement("select count(*) from \"Topic\" where area='" + area.getId() + "'");
+            ResultSet results = statement.executeQuery();
+            while (results.next()) {
+                count = results.getInt("count");
+            }
+        } catch (SQLException sqle) {
+            logger.log(Level.SEVERE, sqle.toString(), sqle);
+            throw new RuntimeException(sqle);
+        }
+        return count;
+    }
+
+    public void add(Topic topic) {
+        try {
+            statement = connection.prepareStatement("INSERT INTO public.\"Topic\"(\n"
+                    + "	id, name, area)\n"
+                    + "	VALUES (?, ?, ?);");
+            synchronized (statement) {
+                statement.setString(1, topic.getId());
+                statement.setString(2, topic.getName());
+                statement.setString(3, topic.getArea());
+                statement.executeUpdate();
+            }
+            statement.close();
+        } catch (SQLException sqle) {
+            logger.log(Level.SEVERE, sqle.toString(), sqle);
+            throw new RuntimeException(sqle);
+        }
+    }
+
+    public void update(Topic topic) {
+        try {
+            statement = connection.prepareStatement("UPDATE public.\"Topic\"\n"
+                    + "	SET name='?'\n"
+                    + "	WHERE id='?';");
+            synchronized (statement) {
+                statement.setString(1, topic.getName());
+                statement.setString(2, topic.getId());
+                statement.executeUpdate();
+            }
+            statement.close();
+        } catch (SQLException sqle) {
+            logger.log(Level.SEVERE, sqle.toString(), sqle);
+            throw new RuntimeException(sqle);
+        }
+    }
+
+    public void delete(String id) {
+        try {
+            statement = connection.prepareStatement("DELETE FROM \"Topic\" WHERE id='" + id + "'");
+            synchronized (statement) {
+                
+                statement.executeUpdate();
+            }
+            statement.close();
+        } catch (SQLException sqle) {
+            logger.log(Level.SEVERE, sqle.toString(), sqle);
+            throw new RuntimeException(sqle);
+        }
     }
 }

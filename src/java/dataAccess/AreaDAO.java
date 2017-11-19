@@ -63,4 +63,24 @@ public class AreaDAO {
         }
         return areas;
     }
+    
+    public Area getById(String id) {
+        Area area = null;
+        try {
+            statement = connection.prepareStatement("select * from \"Area\" where id='" + id + "'");
+            synchronized (statement) {
+                ResultSet results = statement.executeQuery();
+
+                while (results.next()) {
+                    area = new Area();
+                    area.setId(results.getString("id"));
+                    area.setArea(results.getString("area"));
+                }
+            }
+            statement.close();
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        return area;
+    }
 }

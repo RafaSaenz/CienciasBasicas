@@ -5,9 +5,7 @@
  */
 package dataAccess;
 
-import business.Instructor;
-import business.Subtopic;
-import business.Topic;
+import business.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -54,7 +52,7 @@ public class SubtopicDAO {
                 ResultSet results = statement.executeQuery();
                 while (results.next()) {
                     subtopic = new Subtopic();
-                    subtopic.setId(results.getInt("id"));
+                    subtopic.setId(results.getString("id"));
                     subtopic.setName(results.getString("name"));
                     subtopic.setTopic(results.getString("topic"));
                     subtopics.add(subtopic);

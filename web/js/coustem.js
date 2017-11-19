@@ -117,14 +117,25 @@ $(document).ready(function() {
     });
 	
 	// check Out address change
-	$(".step2 .check-slide .label_check").on('click',function(){
+	$("#checkbox-01").on('click',function(){
 		if($(this).hasClass("c_on"))
 		{
-			$(".step2 .billing-add").show();
+			$("#subtopic-add").show();
 		}
 		else
 		{
-			$(".step2 .billing-add").hide();
+			$("#subtopic-add").hide();
+		}
+	});
+        
+        $("checkbox_02").on('click',function(){
+		if($(this).hasClass("c_on"))
+		{
+			$("#topic-add").show();
+		}
+		else
+		{
+			$("#topic-add").hide();
 		}
 	});
 	
