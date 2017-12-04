@@ -24,6 +24,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -180,8 +181,10 @@ public class ResourceListServlet extends HttpServlet {
             Resource resource = new Resource();
             SubtopicDAO subtopicDao = new SubtopicDAO(connection);
             Date date = new Date();
-
-            resource.setInstructor(new Instructor("L00000001"));
+            
+            HttpSession session = request.getSession();
+            User currentUser = (User) session.getAttribute("currentSessionUser");
+            resource.setInstructor(new Instructor(currentUser.getId()));
             resource.setAddedDate(new java.sql.Date(date.getTime()));
 
             @SuppressWarnings("unchecked")

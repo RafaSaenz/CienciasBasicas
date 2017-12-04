@@ -44,7 +44,7 @@ public class InstructorDAO {
     public Instructor findById(String id){
         Instructor instructor = null;
         try {
-            statement = connection.prepareStatement("select * from \"Instructor\" where id='"+id+"';");
+            statement = connection.prepareStatement("select * from \"User\" where id='"+id+"';");
             
 
             synchronized (statement) {

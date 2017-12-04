@@ -36,8 +36,7 @@ public class ForgotPasswordServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try
-        {	   
+        try {
             response.sendRedirect("forgotPassword.jsp");
             /*
             ConnectionDB connectionDB = new ConnectionDB();
@@ -65,13 +64,10 @@ public class ForgotPasswordServlet extends HttpServlet {
              }
              else 
                   response.sendRedirect("login-register-error.jsp"); //error page */
-        } 
-        catch (Throwable theException) 	    
-        {
-             System.out.println(theException); 
+        } catch (Throwable theException) {
+            System.out.println(theException);
         }
-         
-               }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -100,7 +96,7 @@ public class ForgotPasswordServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
     }
 
     /**
@@ -112,5 +108,4 @@ public class ForgotPasswordServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }
