@@ -5,12 +5,12 @@
 --%>
 
 <%@ page language="java" 
-         import="business.Student"
+         import="business.User"
          import="javax.servlet.http.HttpSession"
-         %>
+%>
 <%
-    Student currentStudent = (Student) session.getAttribute("currentSessionUser");
-    if (currentStudent == null) { //No user has logged in
+    User currentUser = (User) session.getAttribute("currentSessionUser");
+    if (currentUser == null) { //No user has logged in
 %>
 <div class="quck-nav style2" style="padding: 10px 40px 10px 40px;">
     <%
@@ -28,7 +28,7 @@
         <div class="quck-right">
             <!--Verify if a user has logged in or not-->
             <%
-                if (currentStudent == null) { //No user has logged in
+                if (currentUser == null) { //No user has logged in
             %>
             <div class="right-link"><a href="login-register.jsp"><i class="fa  fa-user"></i>Login / Register</a></div>
             <%
@@ -36,7 +36,7 @@
             %>
             <div class="right-link user-profileLink">
                 <a href="javascript:void(0);"><i class="fa  fa-user"></i>
-                    Bienvenido <%=currentStudent.getFirstName() + " " + currentStudent.getLastName1()%>
+                    Bienvenido <%=currentUser.getFirstName() + " " + currentUser.getLastName1()%>
                 </a>
                 <ul class="accout-link">
                     <li><a href="account-settings.html">Mi cuenta</a></li>

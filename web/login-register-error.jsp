@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<%@ page language="java" 
-%>
+
 <head>
     <!-- Meta information -->
     <meta charset="utf-8">
@@ -55,12 +54,13 @@
                         </div>
                         <div class="input-box">
                             <input type="password" placeholder="Password" name ="pw">
+                            <p style="color:Tomato;">Usuario o contraseña incorrecta. Intenta de nuevo</p>
                         </div>
                         <div class="check-slide">
                             <label class="label_check" for="checkbox-01">
                                 <input id="checkbox-01" type="checkbox">Recordar</label>
                             <div class="right-link">
-                                <a href="forgotPassword.jsp">Recuperar contraseña</a>
+                                <a href="#">Recuperar contraseña</a>
                             </div>
                         </div>
                         <div class="submit-slide">
@@ -88,16 +88,14 @@
                             </div>
                             <div class="input-box">
                                 <input type="text" name="email" required placeholder="Email">
+                                <p style="color: Tomato;">Email no coincide con un dominio @itesm.mx</p> 
                             </div>
-                            
                             <div class="input-box">
                                 <input type="password" name="password" required placeholder="Password">
                             </div>
                             <div class="input-box">
                                 <input type="password" name="confirm-password" required placeholder="Re-Password">
-
                             </div>
-
                             <div class="input-box select">
                                     <select class="select" name = "major">
                                         <option>ITIC</option>
@@ -106,6 +104,7 @@
                                         <option>IMT</option>
                                     </select>
                             </div>
+                            
                             <div class="submit-slide">
                                 <input type="submit" value="Registrar" class="btn">
                             </div>

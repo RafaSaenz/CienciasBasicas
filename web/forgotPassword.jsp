@@ -40,76 +40,25 @@
     <div class="wapper">
         <jsp:include page="quicknav-2.jsp" flush="true"></jsp:include>
         </div>      
-        <section class="login-view">
-            <div class="container">
+        <section class="login-view" >
+            <div class="container" >
                 <div class="row">
                     <div class="col-sm-6">
                         <form action="LoginServlet" method = "post">
                         <div class="section-title">
-                            <h2>Iniciar sesión</h2>
-                            <p>Ingresa tus credenciales</p>
+                            <h2>Recupera tu contraseña</h2>
+                            <p>Ingresa el correo electronico usado al crear tu cuenta</p>
                         </div>
                         
                         <div class="input-box">
-                            <input type="text" placeholder="User Name" name="un">
-                        </div>
-                        <div class="input-box">
-                            <input type="password" placeholder="Password" name ="pw">
-                        </div>
-                        <div class="check-slide">
-                            <label class="label_check" for="checkbox-01">
-                                <input id="checkbox-01" type="checkbox">Recordar</label>
-                            <div class="right-link">
-                                <a href="forgotPassword.jsp">Recuperar contraseña</a>
-                            </div>
+                                <input type="text" name="email" required placeholder="Email">
                         </div>
                         <div class="submit-slide">
-                            <input type="submit" value="Ingresar" class="btn">
+                            <input type="submit" value="Recuperar" class="btn">
                         </div>
                         </form>
                     </div>
                     <div class="col-sm-6">
-                        <form action="RegisterServlet" method="post" onsubmit="return validate()" >
-                            <div class="section-title">
-                                <h2>Crea una cuenta</h2>
-                                <p>Registrate ahora con tu correo institucional</p>
-                            </div>
-                            <div class="input-box">
-                                <input type="text" name="id" required placeholder="Matricula AXXXXXXX">
-                            </div>
-                            <div class="input-box">
-                                <input type="text" name="firstName" required placeholder="Nombre(s)">
-                            </div>
-                            <div class="input-box">
-                                <input type="text" name="lastName1" required placeholder="Apellido Paterno">
-                            </div>
-                            <div class="input-box">
-                                <input type="text" name="lastName2" placeholder="Apellido Materno">
-                            </div>
-                            <div class="input-box">
-                                <input type="text" name="email" required placeholder="Email">
-                            </div>
-                            
-                            <div class="input-box">
-                                <input type="password" name="password" required placeholder="Password">
-                            </div>
-                            <div class="input-box">
-                                <input type="password" name="confirm-password" required placeholder="Re-Password">
-
-                            </div>
-
-                            <div class="input-box select">
-                                    <select class="select" name = "major">
-                                        <option>ITIC</option>
-                                        <option>IIS</option>
-                                        <option>IBN</option>
-                                        <option>IMT</option>
-                                    </select>
-                            </div>
-                            <div class="submit-slide">
-                                <input type="submit" value="Registrar" class="btn">
-                            </div>
-                        </form>
                     </div>
                 </div>
                 </div>

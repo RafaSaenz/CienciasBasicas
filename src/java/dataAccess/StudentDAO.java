@@ -136,6 +136,13 @@ public class StudentDAO {
                 statement.executeUpdate();       
             }
             statement.close();
+            statement = connection.prepareStatement("INSERT INTO public.\"User\" VALUES (?,?)");
+            synchronized(statement) {
+                statement.setString(1, student.getId());
+                statement.setString(2, "STUDENT");
+                statement.executeUpdate();       
+            }
+            statement.close();
             return "SUCCESS";
         }
 
