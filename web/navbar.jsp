@@ -3,8 +3,16 @@
     Created on : 2/11/2017, 09:14:35 AM
     Author     : gerardo
 --%>
-
+<%@ page language="java" 
+         import="business.User"
+         import="javax.servlet.http.HttpSession"
+%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    User currentUser = (User) session.getAttribute("currentSessionUser");
+
+%>
+<!--We modify the navbar according to an ADMIN, INSTRUCTOR or STUDENT-->
 <nav id="nav-main">
     <div class="navbar navbar-inverse">
         <div class="navbar-header">
@@ -46,6 +54,9 @@
                         </div>
                     </div>
                 </li>
+                <%
+                if ( currentUser.getRole().equals("3")) { //An Instructor is logged in
+                %>
                 <li class="sub-menu">
                     <a href="#">Dashboard</a>
                     <ul>
@@ -54,6 +65,9 @@
                         <li><a href="#">Mi progreso</a></li>
                     </ul>
                 </li>
+                <%
+                }if ( currentUser.getRole().equals("2")) { //An Instructor is logged in
+                %>
                 <li class="sub-menu">
                     <a href="#">Reportes</a>
                     <ul>
@@ -62,15 +76,20 @@
                         <li><a href="#">Por tema</a></li>
                     </ul>
                 </li>
+                <%
+                }if(currentUser.getRole().equals("1")) { //An admin is logged in
+                %>
                 <li class="sub-menu">
                     <a href="#">Administrar</a>
                     <ul>
                         <li><a href="Resources?action=add&mode=">Agregar Recurso</a></li>
-                        <li><a href="Instructors?id=L00000002">Ver instructor</li></a>
-                        <li><a href="newInstructor.jsp">Agregar Instructor</a></li>
-                        <li><a href="Resources?action=manage">Admin Panel</a></li>
+                        <li><a href="Instructors?id=L00000002">Agregar instructor</li></a>
+                        <li><a href="#">Por tema</a></li>
                     </ul>
                 </li>
+                <%  
+                    }
+                %>
             </ul>
         </div>
     </div>

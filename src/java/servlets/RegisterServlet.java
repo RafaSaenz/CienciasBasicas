@@ -5,6 +5,7 @@
  */
 package servlets;
 
+import business.EmailValidator;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -12,7 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import business.Student;
+import business.User;
 import dataAccess.*;
 import java.sql.*;
 import java.time.LocalDate;
@@ -46,34 +47,56 @@ public class RegisterServlet extends HttpServlet {
             String lastName1 = request.getParameter("lastName1");
             String lastName2 = request.getParameter("lastName2");
             String email = request.getParameter("email");
+            
             String password = request.getParameter("password");
-            String major= request.getParameter("major"); 
+            String confirmPassword = request.getParameter("confirm-password");
+            
+            String major= request.getParameter("major");
+            
+            //picPath will be empty for student
+            //And roll will be given from here
             
             //Get the current Date for joinDate
             LocalDate joinDate = LocalDate.now( ZoneId.of( "America/Montreal" ) );
         
             //Using Java Beans
-            Student newStudent = new Student();
+            User newStudent = new User();
             newStudent.setId(id);
             newStudent.setFirstName(firstName);
             newStudent.setLastName1(lastName1);
             newStudent.setLastName2(lastName2);
             newStudent.setEmail(email);
             newStudent.setPassword(password); 
+            newStudent.setPicPath(" ");
             newStudent.setMajor(major);
             newStudent.setJoinDate(joinDate);
+            newStudent.setRole("3");
             //After creating the object we connect to the DB
             ConnectionDB connectionDB = new ConnectionDB();
             Connection connection = connectionDB.getConnection();
             
+            
+            
+            //Validate email is from domain @itesm.mx
+            EmailValidator validator = new EmailValidator();
+            boolean validEmail = validator.validate(email);
+            if(!validEmail){
+                request.getRequestDispatcher("/login-register-error_1.jsp").forward(request, response);
+                return;
+            }
+            
+            //Validate if both password match
+            if(!password.equals(confirmPassword)){
+                request.getRequestDispatcher("/login-register-error_2.jsp").forward(request, response);
+                return;
+            }
+            
             //Call the method from StudentDAO to register a new student
-            StudentDAO studentDAO = new StudentDAO(connection);
-            String userRegistered = studentDAO.registerStudent(newStudent);
-            
-            
-            if(userRegistered.equals("SUCCESS"))    //On SUCCESS, it means that the registration was successful
+            UserDAO userDAO = new UserDAO(connection);
+            String userRegistered = userDAO.registerUser(newStudent);
+            if(userRegistered.equals("SUCCESS"))//On SUCCESS, it means that the registration was successful
             {
-                request.getRequestDispatcher("/index.jsp").forward(request, response);
+                request.getRequestDispatcher("/login-register.jsp").forward(request, response);
             }
             else   //On Failure TO-DO
             {
