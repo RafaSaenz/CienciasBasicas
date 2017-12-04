@@ -12,6 +12,7 @@ package business;
 public class Area {
     private String id;
     private String area;
+    private int status;
     
     public Area(String id, String area){
         this.id = id;
@@ -52,6 +53,20 @@ public class Area {
      */
     public void setArea(String area) {
         this.area = area;
+    }
+
+    /**
+     * @return the status
+     */
+    public int getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(int status) {
+        this.status = status;
     }
     
     

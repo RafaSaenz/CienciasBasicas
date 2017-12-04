@@ -5,12 +5,8 @@
  */
 package dataAccess;
 
-import business.Area;
-import business.ResourceType;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import business.*;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -54,6 +50,30 @@ public class AreaDAO {
                     area = new Area();
                     area.setId(results.getString("id"));
                     area.setArea(results.getString("area"));
+                    area.setStatus(results.getInt("status"));
+                    areas.add(area);
+                }
+            }
+            statement.close();
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        return areas;
+    }
+    
+    public List<Area> getEnabledAreas() {
+        List<Area> areas = new ArrayList<>();
+        Area area = null;
+        try {
+            statement = connection.prepareStatement("select * from \"Area\" where status='1'");
+            synchronized (statement) {
+                ResultSet results = statement.executeQuery();
+
+                while (results.next()) {
+                    area = new Area();
+                    area.setId(results.getString("id"));
+                    area.setArea(results.getString("area"));
+                    area.setStatus(results.getInt("status"));
                     areas.add(area);
                 }
             }
@@ -75,6 +95,7 @@ public class AreaDAO {
                     area = new Area();
                     area.setId(results.getString("id"));
                     area.setArea(results.getString("area"));
+                    area.setStatus(results.getInt("status"));
                 }
             }
             statement.close();

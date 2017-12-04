@@ -20,11 +20,12 @@ import java.util.logging.Logger;
  * @author gerar
  */
 public class SubtopicDAO {
+
     private PreparedStatement statement;
     private Connection connection;
     private static final Logger logger = Logger.getLogger(StudentDAO.class.getName());
-    
-    public SubtopicDAO (Connection connection) {
+
+    public SubtopicDAO(Connection connection) {
         this.connection = connection;
     }
 
@@ -41,13 +42,13 @@ public class SubtopicDAO {
     public void setConnection(Connection connection) {
         this.connection = connection;
     }
-    
-    public List<Subtopic> findByTopic(String topic){
+
+    public List<Subtopic> getEnabledByTopic(String topic) {
         List<Subtopic> subtopics = new ArrayList<>();
         Subtopic subtopic = null;
         try {
-            statement = connection.prepareStatement("select * from \"Subtopic\" where topic='"+topic+"';");
-            
+            statement = connection.prepareStatement("select * from \"Subtopic\" where topic='" + topic + "' and status='1';");
+
             synchronized (statement) {
                 ResultSet results = statement.executeQuery();
                 while (results.next()) {
@@ -55,6 +56,31 @@ public class SubtopicDAO {
                     subtopic.setId(results.getString("id"));
                     subtopic.setName(results.getString("name"));
                     subtopic.setTopic(results.getString("topic"));
+                    subtopic.setStatus(results.getInt("status"));
+                    subtopics.add(subtopic);
+                }
+                statement.close();
+            }
+        } catch (SQLException sqle) {
+            logger.log(Level.SEVERE, sqle.toString(), sqle);
+            throw new RuntimeException(sqle);
+        }
+        return subtopics;
+    }
+    public List<Subtopic> getByTopic(String topic) {
+        List<Subtopic> subtopics = new ArrayList<>();
+        Subtopic subtopic = null;
+        try {
+            statement = connection.prepareStatement("select * from \"Subtopic\" where topic='" + topic + "';");
+
+            synchronized (statement) {
+                ResultSet results = statement.executeQuery();
+                while (results.next()) {
+                    subtopic = new Subtopic();
+                    subtopic.setId(results.getString("id"));
+                    subtopic.setName(results.getString("name"));
+                    subtopic.setTopic(results.getString("topic"));
+                    subtopic.setStatus(results.getInt("status"));
                     subtopics.add(subtopic);
                 }
                 statement.close();

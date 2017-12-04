@@ -13,11 +13,13 @@ public class Topic {
     private String id;
     private String name;
     private String area;
+    private int status;
 
-    public Topic(String id, String name, String area){
+    public Topic(String id, String name, String area, int status){
         this.id = id;
         this.name = name;
         this.area = area;
+        this.status = status;
     }
     
     public Topic(String id, String name){
@@ -72,6 +74,20 @@ public class Topic {
      */
     public void setArea(String area) {
         this.area = area;
+    }
+
+    /**
+     * @return the status
+     */
+    public int getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(int status) {
+        this.status = status;
     }
     
     

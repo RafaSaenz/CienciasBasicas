@@ -55,6 +55,30 @@ public class ResourceTypeDAO {
                     type = new ResourceType();
                     type.setId(results.getString("id"));
                     type.setDescription(results.getString("description"));
+                    type.setStatus(results.getInt("status"));
+                    types.add(type);
+                }
+            }
+            statement.close();
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        return types;
+    }
+    
+    public List<ResourceType> getEnabledTypes() {
+        List<ResourceType> types = new ArrayList<>();
+        ResourceType type = null;
+        try {
+            statement = connection.prepareStatement("select * from \"ResourceType\" where status='1';");            
+            synchronized (statement) {
+                ResultSet results = statement.executeQuery();
+
+                while (results.next()) {
+                    type = new ResourceType();
+                    type.setId(results.getString("id"));
+                    type.setDescription(results.getString("description"));
+                    type.setStatus(results.getInt("status"));
                     types.add(type);
                 }
             }

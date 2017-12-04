@@ -13,6 +13,7 @@ public class Subtopic {
     private String id;
     private String name;
     private String topic;
+    private int status;
 
     public Subtopic(String id, String name, String topic){
         this.id = id;
@@ -73,5 +74,19 @@ public class Subtopic {
      */
     public void setTopic(String topic) {
         this.topic = topic;
+    }
+
+    /**
+     * @return the status
+     */
+    public int getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

@@ -63,7 +63,7 @@
                                 </ul>
                                 <h3>Recursos</h3>
                                 <ul class="catagorie-list">
-                                    <li><a href="#">Recursos</a></li>
+                                    <li><a href="#" id="resources" class="adminBtn" data-params='resources'>Recursos</a></li>
                                     <li><a href="#">Tipos</a></li>
                                     <li><a href="#">Niveles</a></li>
                                 </ul>
@@ -113,4 +113,21 @@
             });
         });
     </c:forEach>
+</script>
+<script>
+    $(function () {
+            $("#resources").click(function () {
+                $.get("/CienciasBasicas/DataServlet",
+                        {
+                            items: "resources",
+                            area: "",
+                            mode: "show",
+                            newTopic: ""
+                        },
+                        function (data, status) {
+                            $("#cont2").html(data);
+                        });
+                $("#cont1").hide();
+            });
+        });
 </script>

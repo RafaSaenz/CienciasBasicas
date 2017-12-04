@@ -12,6 +12,7 @@ package business;
 public class ResourceType {
     private String id;
     private String description;
+    private int status;
     
     public ResourceType(){
         
@@ -52,5 +53,19 @@ public class ResourceType {
      */
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    /**
+     * @return the status
+     */
+    public int getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

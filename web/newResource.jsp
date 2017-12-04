@@ -60,19 +60,19 @@
                                                 <div class="input-filde">   
                                                     <div class="input-box">
                                                         <label>Título:</label>
-                                                        <input type="text" name="title" required maxlength="255" placeholder="Ingrese título del recurso">
+                                                        <input type="text" name="title" value="${resource.title}" required maxlength="255" placeholder="Ingrese título del recurso">
                                                     </div>
                                                     <div class="input-box">
                                                         <label>Descripción:</label>
-                                                        <textarea rows="5" cols="35" name="description" maxlength="1000" required form="addForm" placeholder="Descripción detallada del recurso"></textarea>
+                                                        <textarea rows="5" cols="35" name="description"  maxlength="1000" required form="addForm" placeholder="Descripción detallada del recurso">${resource.description}</textarea>
                                                     </div>
                                                     <div class="input-box">
                                                         <label>Referencias</label>
-                                                        <input type="text" maxlength="255" name="references">
+                                                        <input type="text" maxlength="255" name="references" value="${resource.references}">
                                                     </div>
                                                     <div class="input-box">
                                                         <label>Hipervínculos: </label>
-                                                        <input type="text" maxlength="255" name="link">
+                                                        <input type="text" maxlength="255" value="${resource.link}" name="link">
                                                     </div>
 
                                                 </div>
@@ -126,7 +126,7 @@
                                             </div>
                                         </div>
                                         <div class="add-btn">
-                                            <button class="btn" form="addForm" type="submit"><i class="fa fa-plus"></i>Cargar</button>                                    
+                                            <button class="btn" form="addForm" type="submit"><i class="fa fa-save"></i>Guardar</button>                                    
                                         </div>
                                     </form>
                                 </div>            

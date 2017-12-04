@@ -7,39 +7,23 @@ package servlets;
 
 import business.*;
 import dataAccess.*;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.List;
 import java.sql.Connection;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.servlet.http.Part;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileItemIterator;
-import org.apache.commons.fileupload.FileItemStream;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.commons.fileupload.util.Streams;
 
 /**
  *
@@ -74,64 +58,70 @@ public class ResourceListServlet extends HttpServlet {
         String url = "/index.jsp";
         String mode = request.getParameter("mode");
         String action = request.getParameter("action");
-        if (action.equals("view")) {
-            try {
-                ConnectionDB connectionDB = new ConnectionDB();
-                Connection connection = connectionDB.getConnection();
-                ResourceDAO resourceDao = new ResourceDAO(connection);
-                if (!resourceDao.getResources().isEmpty()) {
-                    request.setAttribute("resources", resourceDao.getResources());
-                    switch (mode) {
-                        case "grid":
-                            url = "/courses-gride.jsp";
-                            break;
-                        case "list":
-                            url = "/courses-list.jsp";
-                            break;
-                        case "detail":
-                            if (resourceDao.getById(request.getParameter("id")).getId() != null) {
-                                request.setAttribute("resource", resourceDao.getById(
-                                        request.getParameter("id")));
-                                url = "/course-detail.jsp";
-                            } else {
+        
+        ConnectionDB connectionDB = new ConnectionDB();
+        Connection connection = connectionDB.getConnection();
+        
+        ResourceDAO resourceDao;
+        ResourceTypeDAO typeDao;
+        AreaDAO areaDao;
+        
+        switch (action) {
+            case "view":
+                try {
+                    resourceDao = new ResourceDAO(connection);
+                    if (!resourceDao.getResources().isEmpty()) {
+                        request.setAttribute("resources", resourceDao.getEnabledResources());
+                        switch (mode) {
+                            case "grid":
+                                url = "/courses-gride.jsp";
+                                break;
+                            case "list":
+                                url = "/courses-list.jsp";
+                                break;
+                            case "detail":
+                                if (resourceDao.getById(request.getParameter("id")).getId() != null) {
+                                    request.setAttribute("resource", resourceDao.getById(
+                                            request.getParameter("id")));
+                                    url = "/course-detail.jsp";
+                                } else {
+                                    url = "/page-404.jsp";
+                                }
+                                break;
+                            default:
                                 url = "/page-404.jsp";
-                            }
-                            break;
-                        default:
-                            url = "/page-404.jsp";
+                        }
                     }
-                }
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-        } else if (action.equals("add")) {
-            try {
-                ConnectionDB connectionDB = new ConnectionDB();
-                Connection connection = connectionDB.getConnection();
-                /*Types for the select box*/
-                ResourceTypeDAO typeDao = new ResourceTypeDAO(connection);
-                request.setAttribute("types", typeDao.getTypes());
-                /*Areas for the select box*/
-                AreaDAO areaDao = new AreaDAO(connection);
-                request.setAttribute("areas", areaDao.getAreas());
-                url = "/newResource.jsp";
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-        } else if (action.equals("manage")) {
-            try {
-                ConnectionDB connectionDB = new ConnectionDB();
-                Connection connection = connectionDB.getConnection();
-                /*Types for the select box
-                ResourceTypeDAO typeDao = new ResourceTypeDAO(connection);
-                request.setAttribute("types", typeDao.getTypes());
-                /*Areas for the select box*/
-                AreaDAO areaDao = new AreaDAO(connection);
-                request.setAttribute("areas", areaDao.getAreas());
-                url = "/adminPanel.jsp";
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }   break;
+            case "add":
+                String r_id = request.getParameter("r_id");
+                try {           
+                    /*Types for the select box*/
+                    typeDao = new ResourceTypeDAO(connection);
+                    resourceDao = new ResourceDAO(connection);
+                    request.setAttribute("types", typeDao.getEnabledTypes());
+                    /*Areas for the select box*/
+                    areaDao = new AreaDAO(connection);
+                    request.setAttribute("areas", areaDao.getEnabledAreas());                    
+                    if (r_id != null) {
+                        request.setAttribute("resource", resourceDao.getById(r_id));
+                    }
+                    url = "/newResource.jsp";
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }   break;
+            case "manage":
+                try {
+                    areaDao = new AreaDAO(connection);
+                    request.setAttribute("areas", areaDao.getAreas());
+                    url = "/adminPanel.jsp";
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }   break;
+            default:
+                break;
         }
         getServletContext().getRequestDispatcher(url).forward(request, response);
     }
@@ -241,7 +231,7 @@ public class ResourceListServlet extends HttpServlet {
                 }
             }
             resource.setId(resource.getSubtopic().getId() + "_R" + String.format("%03d",
-                                                (resourceDao.getCountBySubtopic(resource.getSubtopic())+1)));
+                    (resourceDao.getCountBySubtopic(resource.getSubtopic()) + 1)));
             //Aqui procesar los archivos
             uploadPath += "\\" + resource.getArea().getId() + "\\" + resource.getId();
             // creates the directory if it does not exist

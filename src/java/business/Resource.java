@@ -25,6 +25,7 @@ public class Resource {
     private Instructor instructor;
     private String references;
     private int review;
+    private int status;
     private Date addedDate;
     
     public Resource(){
@@ -225,5 +226,19 @@ public class Resource {
      */
     public void setTopic(Topic topic) {
         this.topic = topic;
+    }
+
+    /**
+     * @return the status
+     */
+    public int getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

@@ -10,6 +10,7 @@ import business.Subtopic;
 import business.Topic;
 import dataAccess.AreaDAO;
 import dataAccess.ConnectionDB;
+import dataAccess.ResourceDAO;
 import dataAccess.SubtopicDAO;
 import dataAccess.TopicDAO;
 import java.io.IOException;
@@ -46,17 +47,18 @@ public class DataServlet extends HttpServlet {
         ConnectionDB connectionDB = new ConnectionDB();
         Connection connection = connectionDB.getConnection();
 
-        String area, topic, mode, newTopic, items = request.getParameter("items");
+        String area = null, topic, mode = null, newTopic = null, items = request.getParameter("items");
         String data = "<option style=\"display:none\"></option>";
 
         TopicDAO topicDao;
         AreaDAO areaDao;
         SubtopicDAO subtopicDao;
+        ResourceDAO resourceDao;
         switch (items) {
             case "topics":
                 area = request.getParameter("area");
                 topicDao = new TopicDAO(connection);
-                for (Topic topic1 : topicDao.findByArea(area)) {
+                for (Topic topic1 : topicDao.getEnabledByArea(area)) {
                     data += "<option value='" + topic1.getId() + "'>"
                             + topic1.getName() + "</option>";
                 }
@@ -64,7 +66,7 @@ public class DataServlet extends HttpServlet {
             case "subtopics":
                 topic = request.getParameter("topic");
                 subtopicDao = new SubtopicDAO(connection);
-                for (Subtopic subtopic : subtopicDao.findByTopic(topic)) {
+                for (Subtopic subtopic : subtopicDao.getEnabledByTopic(topic)) {
                     data += "<option value='" + subtopic.getId() + "'>"
                             + subtopic.getName() + "</option>";
                 }
@@ -80,7 +82,7 @@ public class DataServlet extends HttpServlet {
                 switch (mode) {
                     case "show":
                         request.setAttribute("area", areaDao.getById(area));
-                        request.setAttribute("topics", topicDao.findByArea(area));
+                        request.setAttribute("topics", topicDao.getByArea(area));
                         getServletContext().getRequestDispatcher("/table.jsp").forward(request, response);
                         break;
                     case "input":
@@ -92,24 +94,71 @@ public class DataServlet extends HttpServlet {
                                 new Topic(area + "_T"
                                         + String.format("%03d",
                                                 (topicDao.getCountByArea(new Area(area)) + 1)),
-                                        newTopic, area));
+                                        newTopic, area, 1));
                         request.setAttribute("area", areaDao.getById(area));
-                        request.setAttribute("topics", topicDao.findByArea(area));
+                        request.setAttribute("topics", topicDao.getByArea(area));
                         getServletContext().getRequestDispatcher("/table.jsp").forward(request, response);
                         break;
-                    case "delete":
+                    case "disable":
                         try {
-                            topicDao.delete(newTopic);
+                            topicDao.disable(newTopic);
                             request.setAttribute("area", areaDao.getById(area));
-                            request.setAttribute("topics", topicDao.findByArea(area));
+                            request.setAttribute("topics", topicDao.getByArea(area));
                             getServletContext().getRequestDispatcher("/table.jsp").forward(request, response);
                         } catch (Exception e) {
                             request.setAttribute("message", "Error, registros de subtemas asociados.");
                             getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
                         }
                         break;
+                    case "enable":
+                        try {
+                            topicDao.enable(newTopic);
+                            request.setAttribute("area", areaDao.getById(area));
+                            request.setAttribute("topics", topicDao.getByArea(area));
+                            getServletContext().getRequestDispatcher("/table.jsp").forward(request, response);
+                        } catch (Exception e) {
+                            request.setAttribute("message", "Error, registros de subtemas asociados.");
+                            getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
+                        }
+                        break;
+                    case "edit":
+                        request.setAttribute("area", area);
+                        request.setAttribute("topic", topicDao.getById(newTopic));
+                        getServletContext().getRequestDispatcher("/updating.jsp").forward(request, response);
+                        break;
+                    case "update":
+
+                        topicDao.update(new Topic(request.getParameter("newId"), newTopic));
+                        request.setAttribute("area", areaDao.getById(area));
+                        request.setAttribute("topics", topicDao.getByArea(area));
+                        getServletContext().getRequestDispatcher("/table.jsp").forward(request, response);
+                        break;
                 }
                 break;
+            case "resources":
+                resourceDao = new ResourceDAO(connection);
+
+                mode = request.getParameter("mode");
+                area = request.getParameter("area");
+                newTopic = request.getParameter("newTopic");
+                switch (mode) {
+                    case "show":
+                        request.setAttribute("resources", resourceDao.getResources());
+                        getServletContext().getRequestDispatcher("/table_r.jsp").forward(request, response);
+                        break;
+                    case "delete":
+                        try {
+                            resourceDao.delete(newTopic);
+                            //request.setAttribute("area", areaDao.getById(area));
+                            request.setAttribute("resources", resourceDao.getResources());
+                            getServletContext().getRequestDispatcher("/table_r.jsp").forward(request, response);
+                        } catch (Exception e) {
+                            request.setAttribute("message", "Error, registros de subtemas asociados.");
+                            getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
+                        }
+                        System.out.println(mode + "" + area + newTopic);
+                        break;
+                }
         }
         out.print(data);
     }
@@ -152,5 +201,4 @@ public class DataServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }
