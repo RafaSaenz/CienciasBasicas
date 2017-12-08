@@ -6,19 +6,15 @@
         <!-- Meta information -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"><!-- Mobile Specific Metas -->
-
         <!-- Title -->
         <title>Academy</title>
-
         <!-- favicon icon -->
         <link rel="shortcut icon" href="images/Favicon.ico">
-
         <!-- CSS Stylesheet -->
         <link href="css/bootstrap.css" rel="stylesheet"><!-- bootstrap css -->
         <link href="css/owl.carousel.css" rel="stylesheet"><!-- carousel Slider -->
         <link href="css/font-awesome.css" rel="stylesheet"><!-- font awesome -->
         <link href="css/docs.css" rel="stylesheet"><!--  template structure css -->
-
         <link href="https://fonts.googleapis.com/css?family=Arima+Madurai:100,200,300,400,500,700,800,900%7CPT+Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -61,28 +57,28 @@
                                                     <div class="input-box">
                                                         <label>Título:</label>
                                                         <input type="text" name="title" value="${resource.title}" required maxlength="255" placeholder="Ingrese título del recurso">
-                                                    </div>
-                                                    <div class="input-box">
-                                                        <label>Descripción:</label>
-                                                        <textarea rows="5" cols="35" name="description"  maxlength="1000" required form="addForm" placeholder="Descripción detallada del recurso">${resource.description}</textarea>
-                                                    </div>
-                                                    <div class="input-box">
-                                                        <label>Referencias</label>
-                                                        <input type="text" maxlength="255" name="references" value="${resource.references}">
-                                                    </div>
-                                                    <div class="input-box">
-                                                        <label>Hipervínculos: </label>
-                                                        <input type="text" maxlength="255" value="${resource.link}" name="link">
-                                                    </div>
-
                                                 </div>
+                                                <div class="input-box">
+                                                    <label>Descripción:</label>
+                                                    <textarea rows="5" cols="35" name="description"  maxlength="1000" required form="addForm" placeholder="Descripción detallada del recurso">${resource.description}</textarea>
+                                                </div>
+                                                <div class="input-box">
+                                                    <label>Referencia</label>
+                                                    <input type="text" maxlength="255" name="references" value="${resource.references}">
+                                                </div>
+                                                <div class="input-box">
+                                                    <label>Hipervínculo: </label>
+                                                    <input type="text" maxlength="255" value="${resource.link}" name="link">
+                                                </div>
+
                                             </div>
-                                            <div class="col-sm-6">
-                                                <div class="input-filde">
-                                                    <div class="input-box">
-                                                        <label>Tipo de recurso: </label>
-                                                        <select  required name="type">
-                                                            <option style="display:none"></option>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="input-filde">
+                                                <div class="input-box">
+                                                    <label>Tipo de recurso: </label>
+                                                    <select  required id="type" name="type">
+                                                        <option style="display:none"></option>
                                                         <c:forEach var="type" items="${types}">
                                                             <option value="${type.id}">${type.description}</opt>
                                                             </c:forEach>
@@ -122,18 +118,47 @@
                                                     <label>Imagen: </label>
                                                     <input id="file" required type="file" name="file" size="50"/>
                                                 </div>
-                                                    
                                             </div>
                                         </div>
-                                        <div class="add-btn">
-                                            <button class="btn" form="addForm" type="submit"><i class="fa fa-save"></i>Guardar</button>                                    
+                                </div>            
+                            </div>
+                        </div>
+                    </div>
+                    <div class="step-box">
+                        <div class="title">Material Asociado</div>
+                        <div class="step2 step-content">
+                            <div class="fill-address">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="input-filde">   
+                                            <div class="input-box">
+                                                <label>Tipo: </label>
+                                                <select required id="fileType">
+                                                    <option style="display:none"></option>
+                                                    <option value="vid">Video(YouTube)</opt>
+                                                    <option selected value="doc">Documento(PDF)</opt>
+                                                    <option value="img">Imagen(PNG/JGP)</opt>
+                                                </select>
+                                            </div>
                                         </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="input-filde">
+                                            <div class="input-box file" id="material">
+                                                <label id="file2lbl">Archivo (Max 40MB): </label>
+                                                <input id="file2" type="file" name="document" size="50" required/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="add-btn">
+                                        <button class="btn" form="addForm" type="submit"><i class="fa fa-upload"></i>Cargar Recurso</button>                                    
+                                    </div>
                                     </form>
                                 </div>            
                             </div>
                         </div>
                     </div>
-                        
+
                 </div>
             </section>
             <jsp:include page="footer.jsp" flush="true"></jsp:include>
@@ -152,54 +177,6 @@
         <script type="text/javascript" src="js/jquery.form-validator.min.js"></script>
         <script type="text/javascript" src="js/placeholder.js"></script>
         <script type="text/javascript" src="js/coustem.js"></script>
-        <script type="text/javascript">
-            $area = $('#area');
-            $area.change(
-                    function () {
-                        $.ajax({
-                            type: "GET",
-                            url: "/CienciasBasicas/DataServlet?items=topics",
-                            data: {area: $area.val()},
-                            success: function (data) {
-                                $("#topic").html(data),
-                                        $("#topic").focus(),
-                                        $("#topic").select()
-                            }
-                        });
-                    }
-            );
-        </script>
-        <script type="text/javascript">
-            $topic = $('#topic');
-            $topic.change(
-                    function () {
-                        $.ajax({
-                            type: "GET",
-                            url: "/CienciasBasicas/DataServlet?items=subtopics",
-                            data: {topic: $topic.val()},
-                            success: function (data) {
-                                $("#subtopic").html(data),
-                                        $("#subtopic").focus(),
-                                        $("#subtopic").select()
-                            }
-                        });
-                    }
-            );
-        </script>
-        <script type="text/javascript">
-            function checkFile() {
-                var fileElement = document.getElementById("file");
-                var fileExtension = "";
-                if (fileElement.value.lastIndexOf(".") > 0) {
-                    fileExtension = fileElement.value.substring(fileElement.value.lastIndexOf(".") + 1, fileElement.value.length);
-                }
-                if (fileExtension.toLowerCase() == "jpg" || fileExtension.toLowerCase() == "png") {
-                    return true;
-                } else {
-                    alert("You must select a JPG or PNG file for upload");
-                    return false;
-                }
-            }
-        </script>
+        <script type="text/javascript" src="js/newResource.js"></script>
     </body>
 </html>

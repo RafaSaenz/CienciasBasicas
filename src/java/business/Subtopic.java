@@ -34,6 +34,13 @@ public class Subtopic {
         
     }
 
+    public Subtopic(String id, String name, String topic, int status){
+        this.id = id;
+        this.name = name;
+        this.topic = topic;
+        this.status = status;
+    }
+
     /**
      * @return the id
      */

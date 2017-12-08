@@ -30,8 +30,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author gerar
  */
-@WebServlet(name = "ResourceListServlet", urlPatterns = ("/Resources"))
-public class ResourceListServlet extends HttpServlet {
+@WebServlet(name = "ResourcesServlet", urlPatterns = ("/Resources"))
+public class ResourcesServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     // location to store file uploaded
@@ -56,63 +56,69 @@ public class ResourceListServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        ConnectionDB connectionDB = new ConnectionDB();
+        Connection connection = connectionDB.getConnection();
+
+        ResourceDAO resourceDao = new ResourceDAO(connection);
+        ResourceTypeDAO typeDao = new ResourceTypeDAO(connection);
+        AreaDAO areaDao = new AreaDAO(connection);
+        FileDAO fileDao = new FileDAO(connection);
+
         String url = "/index.jsp";
         String mode = request.getParameter("mode");
         String action = request.getParameter("action");
-        
-        ConnectionDB connectionDB = new ConnectionDB();
-        Connection connection = connectionDB.getConnection();
-        
-        ResourceDAO resourceDao;
-        ResourceTypeDAO typeDao;
-        AreaDAO areaDao;
-        
+
         switch (action) {
             case "view":
-                try {
-                    resourceDao = new ResourceDAO(connection);
-                    if (!resourceDao.getResources().isEmpty()) {
-                        request.setAttribute("resources", resourceDao.getEnabledResources());
-                        switch (mode) {
-                            case "grid":
-                                url = "/courses-gride.jsp";
-                                break;
-                            case "list":
-                                url = "/courses-list.jsp";
-                                break;
-                            case "detail":
-                                if (resourceDao.getById(request.getParameter("id")).getId() != null) {
-                                    request.setAttribute("resource", resourceDao.getById(
-                                            request.getParameter("id")));
-                                    url = "/course-detail.jsp";
-                                } else {
-                                    url = "/page-404.jsp";
-                                }
-                                break;
-                            default:
-                                url = "/page-404.jsp";
+                switch (mode) {
+                    case "table":
+                        request.setAttribute("resources", resourceDao.getResources());
+                        url = "/tables/resources_table.jsp";
+                        break;
+                    case "grid":
+                        request.setAttribute("resources", resourceDao.getResources());
+                        request.setAttribute("areas", areaDao.getEnabledAreas());
+                        url = "/grid.jsp";
+                        break;
+                    case "list":
+                        request.setAttribute("resources", resourceDao.getResources());
+                        request.setAttribute("areas", areaDao.getEnabledAreas());
+                        url = "/list.jsp";
+                        break;
+                    case "detail":
+                        if (resourceDao.getById(request.getParameter("id")).getId() != null) {
+                            System.out.println(fileDao.getByResource(request.getParameter("id")).get(0).getType());
+                            request.setAttribute("file", fileDao.getByResource(request.getParameter("id")).get(0));
+                            request.setAttribute("resource", resourceDao.getById(
+                                    request.getParameter("id")));
+                            url = "/course-detail.jsp";
+                        } else {
+                            url = "/page-404.jsp";
                         }
-                    }
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                }   break;
+                        break;
+                    default:
+                        url = "/page-404.jsp";
+                }
+                break;
             case "add":
                 String r_id = request.getParameter("r_id");
-                try {           
+                try {
                     /*Types for the select box*/
                     typeDao = new ResourceTypeDAO(connection);
                     resourceDao = new ResourceDAO(connection);
                     request.setAttribute("types", typeDao.getEnabledTypes());
                     /*Areas for the select box*/
                     areaDao = new AreaDAO(connection);
-                    request.setAttribute("areas", areaDao.getEnabledAreas());                    
+                    request.setAttribute("areas", areaDao.getEnabledAreas());
                     if (r_id != null) {
                         request.setAttribute("resource", resourceDao.getById(r_id));
                     }
                     url = "/newResource.jsp";
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
-                }   break;
+                }
+                break;
             case "manage":
                 try {
                     areaDao = new AreaDAO(connection);
@@ -120,7 +126,8 @@ public class ResourceListServlet extends HttpServlet {
                     url = "/adminPanel.jsp";
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
-                }   break;
+                }
+                break;
             default:
                 break;
         }
@@ -177,13 +184,16 @@ public class ResourceListServlet extends HttpServlet {
             Connection connection = connectionDB.getConnection();
 
             ResourceDAO resourceDao = new ResourceDAO(connection);
-
-            Resource resource = new Resource();
-            SubtopicDAO subtopicDao = new SubtopicDAO(connection);
-            Date date = new Date();
             
+            Date date = new Date();
+
             HttpSession session = request.getSession();
             User currentUser = (User) session.getAttribute("currentSessionUser");
+            
+            FileObj fileObj = new FileObj();
+            FileDAO fileDao = new FileDAO(connection);
+            
+            Resource resource = new Resource();
             resource.setInstructor(new Instructor(currentUser.getId()));
             resource.setAddedDate(new java.sql.Date(date.getTime()));
 
@@ -227,6 +237,10 @@ public class ResourceListServlet extends HttpServlet {
                             case "subtopic":
                                 resource.setSubtopic(new Subtopic(fieldValue));
                                 break;
+                            case "video":
+                                fileObj.setFilepath(fieldValue);
+                                fileObj.setType("video");
+                                break;
                         }
                     } else {
                         fileItems.add(item);
@@ -235,6 +249,10 @@ public class ResourceListServlet extends HttpServlet {
             }
             resource.setId(resource.getSubtopic().getId() + "_R" + String.format("%03d",
                     (resourceDao.getCountBySubtopic(resource.getSubtopic()) + 1)));
+            fileObj.setId(resource.getId() + "." + String.valueOf(fileDao.countByResource(resource.getId())+1));
+            fileObj.setStatus(1);
+            fileObj.setResource(new Resource(resource.getId()));
+            
             //Aqui procesar los archivos
             uploadPath += "\\" + resource.getArea().getId() + "\\" + resource.getId();
             // creates the directory if it does not exist
@@ -246,11 +264,17 @@ public class ResourceListServlet extends HttpServlet {
                 String fileName = new File(item.getName()).getName();
                 String filePath = uploadPath + File.separator + fileName;
                 File storeFile = new File(filePath);
+                if (item.getFieldName().equals("file")){
+                    resource.setFilePath(resource.getArea().getId() + "/" + resource.getId() + "/" + fileName);
+                } else {
+                    fileObj.setFilepath(resource.getArea().getId() + "/" + resource.getId() + "/" + fileName);
+                    fileObj.setType(item.getFieldName());
+                }
                 // saves the file on diskfile
                 item.write(storeFile);
-                resource.setFilePath(resource.getArea().getId() + "/" + resource.getId() + "/" + fileName);
             }
             resourceDao.add(resource);
+            fileDao.add(fileObj);
             request.setAttribute("message",
                     "Recurso guardado con éxito.");
             request.setAttribute("resource", resource.getId());

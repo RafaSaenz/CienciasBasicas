@@ -20,8 +20,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author gerar
  */
-@WebServlet(name = "DataServlet", urlPatterns = {"/DataServlet"})
-public class DataServlet extends HttpServlet {
+@WebServlet(name = "TypesServlet", urlPatterns = {"/Types"})
+public class TypesServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,41 +34,28 @@ public class DataServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        String data = "<option style=\"display:none\"></option>";
 
         ConnectionDB connectionDB = new ConnectionDB();
         Connection connection = connectionDB.getConnection();
 
-        String mode = null, newTopic = null, items = request.getParameter("items");
+        ResourceTypeDAO typeDao = new ResourceTypeDAO(connection);
+
+        String action = request.getParameter("action");
         
-        ResourceDAO resourceDao;
-        switch (items) {
-            case "resources":
-                resourceDao = new ResourceDAO(connection);
-                mode = request.getParameter("action");
-                newTopic = request.getParameter("id");
-                switch (mode) {
-                    case "show":
-                        request.setAttribute("resources", resourceDao.getResources());
-                        getServletContext().getRequestDispatcher("/tables/resources_table.jsp").forward(request, response);
-                        break;
-                    case "enable":
-                        try {
-                            resourceDao.enable(newTopic);
-                        } catch (Exception e) {
-                            request.setAttribute("message", e.getMessage());
-                            getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
-                        }
-                        break;
-                    case "disable":
-                        try {
-                            resourceDao.disable(newTopic);
-                        } catch (Exception e) {
-                            request.setAttribute("message", e.getMessage());
-                            getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
-                        }
-                        break;
+        switch (action) {
+            case "select":
+                for (ResourceType type1 : typeDao.getEnabledTypes()) {
+                    data += "<option value='" + type1.getId() + "'>"
+                            + type1.getDescription()+ "</option>";
                 }
+                out.print(data);
+                break;
         }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -109,4 +96,5 @@ public class DataServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 }

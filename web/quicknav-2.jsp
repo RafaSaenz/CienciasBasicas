@@ -39,9 +39,8 @@
                     Bienvenido <%=currentUser.getFirstName() + " " + currentUser.getLastName1()%>
                 </a>
                 <ul class="accout-link">
-                    <li><a href="account-settings.html">Mi cuenta</a></li>
-                    <li><a href="my-courses.html">Mi Dashboard</a></li>
-                    <li><a href="logout">Cerrar sesión</a></li>
+                    <li><a href="#"><i class="fa fa-cog"></i>Mi cuenta</a></li>
+                    <li><a href="logout"><i class="fa fa-sign-out"></i>Cerrar sesión</a></li>
                 </ul>
             </div>
             <%

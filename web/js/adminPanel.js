@@ -1,99 +1,229 @@
 /* 
  * AJAX functions for AdminPanel JSP and DataServlet
  */
-// Show input for new topic
-$(document).on("click", '#addNew', function (event) {
-    $.get("/CienciasBasicas/DataServlet",
+/*
+ **** ------ TOPICS ------ ****
+ */
+//Boostrap topics table filtering
+$(document).on("keyup", '#myTopic', function (event) {
+    var value = $(this).val().toLowerCase();
+    $("#myTopicTbl tr").filter(function () {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+    });
+});
+//Show topics table
+function showTopics(area) {
+    $.get("/CienciasBasicas/Topics",
             {
-                items: "topics_table",
-                area: $("#addNew").attr('name'),
-                mode: "input",
-                newTopic: ""
+                action: "show",
+                area: area
             },
             function (data, status) {
-                $("#cont1").html(data);
+                $("#cont2").html(data);
             });
-    $("#cont1").show();
+}
+// Click on area to show topics table
+$(document).on("click", '.area-link', function (event) {
+    event.preventDefault();
+    showTopics(event.target.getAttribute('id'));
 });
-//Click on save
-$(document).on("click", '#addNow', function (event) {
-    if ($("#newTopic").val() != "") {
-        $.get("/CienciasBasicas/DataServlet",
+// Show input for new topic
+$(document).on("click", '#add-topic', function (event) {
+    $("#topic-input").show();
+    $("#topic-edit").hide();
+});
+// Save new topic
+$(document).on("click", '#save-topic', function (event) {
+    event.preventDefault();
+    if ($("#topic").val() !== "") {
+        $.get("/CienciasBasicas/Topics",
                 {
-                    items: "topics_table",
-                    area: $("#area").val(),
-                    mode: "add",
-                    newTopic: $("#newTopic").val()
+                    area: $("#add-topic").attr('name'),
+                    action: "add",
+                    id: $("#topic").val()
                 },
                 function (data, status) {
-                    $("#newTopic").val("");
-                    $("#cont2").html(data);
+                    $("#topic").val("");
+                    showTopics($("#add-topic").attr('name'));
+                    $("#topic-input").show();
+                    $("#topic-edit").hide();
+                });
+    } else {
+        alert("Debe escribir el nombre del tema");
+    }
+});
+//Enable/Disable a Topic
+$(document).on("click", '.enable-btn', function (event) {
+    event.preventDefault();
+    $.get("/CienciasBasicas/Topics",
+            {
+                area: $("#add-topic").attr('name'),
+                action: event.target.getAttribute('name'),
+                id: $(event.target).closest('tr').attr('id')
+            },
+            function (data, status) {
+                showTopics($("#add-topic").attr('name'));
+            });
+});
+// Show input for editing a topic
+$(document).on("click", '.edit-btn', function (event) {
+    $("#topic-edit").show();
+    $("#topic-input").hide();
+    var tmp = $(event.target).parent().parent().siblings(":first").text();
+    var tmp2 = $(event.target).parent().parent().siblings(":nth-child(2)").text();
+    $("#edit-topic").val(tmp);
+    $("#update-topic").data("id", tmp2);
+});
+// Update the topic
+$(document).on("click", '#update-topic', function (event) {
+    event.preventDefault();
+    if ($("#edit-topic").val() !== "") {
+        $.get("/CienciasBasicas/Topics",
+                {
+                    area: $("#add-topic").attr('name'),
+                    action: "update",
+                    id: $("#update-topic").data('id'),
+                    name: $("#edit-topic").val()
+                },
+                function (data, status) {
+                    showTopics($("#add-topic").attr('name'));
                 });
     } else {
         alert("Empty");
     }
 });
-//Click on delete
-$(document).on("click", '.delete-row', function (event) {
-    $.get("/CienciasBasicas/DataServlet",
-            {
-                items: event.target.getAttribute('data-items'),
-                area: event.target.getAttribute('data-area'),
-                mode: event.target.getAttribute('data-mode'),
-                newTopic: event.target.getAttribute('data-topic')
-            },
-            function (data, status) {
-                $("#cont2").html(data);
-            });
-});
-//Search table filtering
-$(document).on("keyup", '#myInput', function (event) {
+/*
+ **** ------ END OF TOPICS ------ ****
+ */
+
+/*
+ **** ------ SUBTOPICS ------ ****
+ */
+//Boostrap subtopics table filtering
+$(document).on("keyup", '#mySubtopic', function (event) {
     var value = $(this).val().toLowerCase();
-    $("#myTable tr").filter(function () {
+    $("#mySubtopicTbl tr").filter(function () {
         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
     });
 });
-//Loading content to modal
-$(document).on("click", '.modalBtn', function (event) {
-    $('.modal-body').load("/CienciasBasicas/DataServlet",
+// Function to get subtopics table
+function showSubtopics(topic) {
+    $('.modal-body').load("/CienciasBasicas/Subtopics",
             {
-                items: "topics_table",
-                area: $("#addNew").attr('name'),
-                mode: "edit",
-                newTopic: event.target.getAttribute('data-topic')
+                action: "show",
+                topic: topic
             },
             function () {
                 $('#myModal').modal({show: true});
             });
+}
+// Show subtopics table on modal
+$(document).on("click", '.modalBtn', function (event) {
+    event.preventDefault();
+    var tmp = $(event.target).closest('tr').attr('id');
+    showSubtopics(tmp);
 });
-$(document).on("click", '.adminBtn', function (event) {
-    $.get("/CienciasBasicas/DataServlet",
-            {
-                items: event.target.data('params'),
-                area: "",
-                mode: "",
-                newTopic: ""
-            },
-            function (data, status) {
-                $("#cont2").html(data);
-            });
-    $("#cont1").hide();
+// Show input for new subtopic
+$(document).on("click", '#add-subtopic', function (event) {
+    $("#subtopic-input").show();
+    $("#subtopic-edit").hide();
 });
-$(document).on("click", '#updateNow', function (event) {
-    if ($("#newTopic").val() != "") {
-        $.get("/CienciasBasicas/DataServlet",
+// Save new subtopic
+$(document).on("click", '#save-subtopic', function (event) {
+    event.preventDefault();
+    if ($("#subtopic").val() !== "") {
+        $.get("/CienciasBasicas/Subtopics",
                 {
-                    items: "topics_table",
-                    area: $("#area").val(),
-                    mode: "update",
-                    newTopic: $("#newTopic").val(),
-                    newId: $("#profile").val()
+                    topic: $("#add-subtopic").attr('name'),
+                    action: "add",
+                    id: $("#subtopic").val()
                 },
                 function (data, status) {
-                    $("#cont2").html(data);
-                    $('#myModal').hide();
+                    $("#subtopic").val("");
+                    showSubtopics($("#add-subtopic").attr('name'));
+                    $("#subtopic-input").show();
+                    $("#subtopic-edit").hide();
+                });
+    } else {
+        alert("Debe escribir el nombre del subtema");
+    }
+});
+//Enable/Disable a Subtopic
+$(document).on("click", '.enable-btn2', function (event) {
+    event.preventDefault();
+    $.get("/CienciasBasicas/Subtopics",
+            {
+                topic: $("#add-subtopic").attr('name'),
+                action: event.target.getAttribute('name'),
+                id: $(event.target).closest('tr').attr('id')
+            },
+            function (data, status) {
+                showSubtopics($("#add-subtopic").attr('name'));
+            });
+});
+// Show input for editing a subtopic
+$(document).on("click", '.edit-btn2', function (event) {
+    $("#subtopic-edit").show();
+    $("#subtopic-input").hide();
+    var tmp = $(event.target).parent().parent().siblings(":first").text();
+    var tmp2 = $(event.target).parent().parent().siblings(":nth-child(2)").text();
+    $("#edit-subtopic").val(tmp);
+    $("#update-subtopic").data("id", tmp2);
+});
+// Update the subtopic
+$(document).on("click", '#update-subtopic', function (event) {
+    event.preventDefault();
+    if ($("#edit-subtopic").val() !== "") {
+        $.get("/CienciasBasicas/Subtopics",
+                {
+                    topic: $("#add-subtopic").attr('name'),
+                    action: "update",
+                    id: $("#update-subtopic").data('id'),
+                    name: $("#edit-subtopic").val()
+                },
+                function (data, status) {
+                    showSubtopics($("#add-subtopic").attr('name'));
                 });
     } else {
         alert("Empty");
     }
 });
+/*
+ **** ------ END OF SUBTOPICS ------ ****
+ */
+
+/*
+ **** ------ RESOURCES ------ ****
+ */
+//Show resources table
+function showResources() {
+    $.get("/CienciasBasicas/Resources",
+            {
+                action: "view",
+                mode: "table",
+            },
+            function (data, status) {
+                $("#cont2").html(data);
+            });
+}
+// Click on resources to show reources table
+$(document).on("click", '#man-res', function (event) {
+    event.preventDefault();
+    showResources();
+});
+//Enable/Disable a Resource
+$(document).on("click", '.enable-btn3', function (event) {
+    event.preventDefault();
+    $.get("/CienciasBasicas/DataServlet",
+            {
+                items: "resources",
+                action: event.target.getAttribute('name'),
+                id: $(event.target).closest('tr').attr('id')
+            },
+            function (data, status) {
+                showResources();
+            });
+});
+/*
+ **** ------ END OF RESOURCES ------ ****
+ */

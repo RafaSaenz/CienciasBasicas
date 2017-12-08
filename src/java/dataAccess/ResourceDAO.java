@@ -315,11 +315,23 @@ public class ResourceDAO {
         return count;
     }
     
-    public void delete(String id) {
+    public void disable(String id) {
         try {
-            statement = connection.prepareStatement("DELETE FROM \"Resource\" WHERE id='" + id + "'");
+            statement = connection.prepareStatement("UPDATE \"Resource\" SET status='0' where id='" + id + "';");
             synchronized (statement) {
-                
+                statement.executeUpdate();
+            }
+            statement.close();
+        } catch (SQLException sqle) {
+            logger.log(Level.SEVERE, sqle.toString(), sqle);
+            throw new RuntimeException(sqle);
+        }
+    }
+
+    public void enable(String id) {
+        try {
+            statement = connection.prepareStatement("UPDATE \"Resource\" SET status='1' where id='" + id + "';");
+            synchronized (statement) {
                 statement.executeUpdate();
             }
             statement.close();

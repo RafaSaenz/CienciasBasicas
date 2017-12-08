@@ -387,6 +387,7 @@ input[type="text"]:focus {border:none; outline:none; }
 .courses-view .filter-row .search {float:right; width:100%; max-width:300px; border:solid 1px #e0e0e0; position:relative; margin-top:5px;}
 .courses-view .filter-row .search input[type="text"] {width:100%; background:#fff; height:30px; border:none; line-height:20px; font-size:14px; padding:5px 40px 5px 15px;}
 .courses-view .filter-row .search input[type="submit"]  {position:absolute; top:0px; right:0px; width:30px; height:30px; background:url(../images/search-icon2.png) no-repeat left top; background-size:100% auto; border:none; }
+.courses-view .filter-row select {width:100%; background:#fff; height:30px; border:none; line-height:20px; font-size:14px; padding:5px 40px 5px 15px;}
 .courses-view .course-post {margin-bottom:30px; }
 .courses-view .course-post .img {position:relative; transition:all 0.3s ease-in-out 0s; }
 .courses-view .course-post .img img {width:100%;}
@@ -779,7 +780,9 @@ input[type="text"]:focus {border:none; outline:none; }
 .cart-page .table-view {border:solid 1px #e0e0e0; }
 .cart-page .cart-table table { width:100%;}
 .cart-page .cart-table th {border-bottom:solid 1px #e0e0e0; padding:12px 8px; line-height:20px; font-size:14px; font-weight:bold; text-align:center; background:#f1f1f1;}
+.cart-page .cart-table th:first-child {text-align:left; padding-left:15px; }
 .cart-page .cart-table td {border-bottom:solid 1px #e0e0e0; padding:15px 0; line-height:20px; font-size:14px; font-weight:normal; text-align:center;}
+.cart-page .cart-table td:first-child {text-align:left; padding-left:15px; }
 .cart-page .cart-table .small-text {display:none; }
 .cart-page .cart-table .product-details {position:relative; padding-left:100px; text-align:left; min-height:62px;}
 .cart-page .cart-table .product-details .img {position:absolute; left:15px; top:0px; }
