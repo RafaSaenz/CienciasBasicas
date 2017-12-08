@@ -38,8 +38,8 @@
                 <div class="container">
                     <ul>
                         <li><a href="/CienciasBasicas/">Inicio</a></li>
-                        <li><a href="Instructors?id=L00000002">Instructores</a></li>
-                        <li><a href="Instructors?id=${instructor.id}">${instructor.firstName} ${instructor.lastName1}</a></li>
+                        <li><a href="/CienciasBasicas/Instructors?action=view&mode=grid">Instructores</a></li>
+                        <li><a href="/CienciasBasicas/Instructor?action=view&mode=detail&id=${instructor.id}">${instructor.firstName} ${instructor.lastName1}</a></li>
                     </ul>
                 </div>
             </section>
@@ -51,9 +51,11 @@
                     </div>
                     <div class="row">
                         <div class="col-md-8">
-                            <div class="img"><img src="images/team-member/member-img7.jpg" alt=""></div>
+                            <div class="img">
+                            
+                            <img src="${pageContext.request.contextPath}/image/${instructor.picPath}" alt="No Image Available" height="315px" width="270px"></div>
                             <div class="teacher-info">
-                                <p>Breve CV del profesor</p>
+                            <!--<p>Breve CV del profesor</p>-->
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -65,7 +67,7 @@
                                 </div>
                                 <div class="details-slide">
                                     <span>Teléfono:</span>
-                                    <p>123 4564 1234</p>
+                                    <p>${instructor.tel}</p>
                                 </div>
                                 <div class="details-slide">
                                     <span>Correo electrónico:</span>
@@ -75,6 +77,10 @@
                                     <span>Me gusta:</span>
                                     <p><i class="fa fa-heart-o"></i> 5 Like</p>
                                 </div>
+                                <h4>Redes sociales</h4>
+                                <ul>
+                                <li><a href="${instructor.linkedin}"><i class="fa fa-linkedin"></i></a></li>   
+                                </ul>
                             </div>
                         </div>
                     </div>

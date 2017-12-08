@@ -40,8 +40,8 @@
                     <div class="container">
                         <ul>
                             <li><a href="/CienciasBasicas/">Inicio</a></li>
-                            <li><a href="Resources?action=view&mode=grid">Recursos</a></li>
-                            <li><a href="Resources?action=add&mode=">Registrar</a></li>
+                            <li><a href="Instructors?action=view&mode=grid">Instructores</a></li>
+                            <li><a href="Instructors?action=add&mode=">Registrar</a></li>
                         </ul>
                     </div>
                 </section>
@@ -55,7 +55,7 @@
                             <div class="step2 step-content">
                                 <div class="fill-address">
                                     <div class="row">
-                                        <form action="Instructor" method="post" id="addForm" onsubmit="return checkFile();" enctype="multipart/form-data">
+                                        <form action="Instructors" method="post" id="addForm" onsubmit="return checkFile();" enctype="multipart/form-data">
                                             <div class="col-sm-6">
                                                 <div class="input-filde">
                                                     <div class="input-box">
@@ -75,9 +75,21 @@
                                                         <input type="text" name="lastname2" required maxlength="255" placeholder="Apellido Materno">
                                                     </div>
                                                     <div class="input-box">
+                                                        <label>LinkedIn:</label>
+                                                        <input type="text" name="linkedin" required maxlength="255" placeholder="https://www.linkedin.com/">
+                                                    </div>
+                                                    <div class="input-box">
+                                                        <label>Teléfono:</label>
+                                                        <input type="text" name="tel" required maxlength="255" placeholder="01 871 729 63 00 ext. 001">
+                                                    </div>
+                                                    <div class="input-box">
                                                         <label>Email: </label>
                                                         <input type="email" maxlength="255" name="email" placeholder="Correo electrónico">
                                                     </div>
+                                                    <div class="input-box">
+                                                        <label>Password: </label>
+                                                        <input type="password" name="password" required placeholder="Password">
+                                                        </div>
                                                     <div class="input-box file">
                                                         <label>Foto de perfil: </label>
                                                         <input id="file" required type="file" name="picPath     " size="50"/>

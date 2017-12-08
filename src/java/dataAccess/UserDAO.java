@@ -6,11 +6,17 @@
 package dataAccess;
 
 
+import business.Area;
 import static business.Hashing.SALT;
 import static business.Hashing.generateHash;
+import business.Info;
 import business.Student;
 import business.User;
 import business.Instructor;
+import business.Resource;
+import business.ResourceType;
+import business.Subtopic;
+import business.Topic;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -22,7 +28,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -142,7 +150,7 @@ public class UserDAO {
         
         try { 
             con = new ConnectionDB();
-            statement = connection.prepareStatement("INSERT INTO public.\"User\" VALUES (?,?,?,?,?,?,?,?,?,?)");
+            statement = connection.prepareStatement("INSERT INTO public.\"User\" VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
             synchronized(statement) {
                 statement.setString(1, user.getId());
                 statement.setString(2, user.getFirstName());
@@ -154,6 +162,31 @@ public class UserDAO {
                 statement.setString(8, user.getMajor());
                 statement.setObject(9, user.getJoinDate());
                 statement.setObject(10, user.getRole());
+                //statement.setInt(11, user.getStatus());
+                statement.setString(11, user.getTel());
+                statement.setString(12, user.getLinkedin());
+                statement.executeUpdate();
+            }
+            statement.close();
+            return "SUCCESS";
+        }
+
+        catch (SQLException sqle) {
+            logger.log(Level.SEVERE, sqle.toString(), sqle);
+            throw new RuntimeException(sqle);
+        }
+        
+    }
+    public String registerInfoInstructor(Info info){
+        ConnectionDB con = null;
+           
+        try { 
+            con = new ConnectionDB();
+            statement = connection.prepareStatement("INSERT INTO public.\"Info\" VALUES (?,?,?)");
+            synchronized(statement) {
+                statement.setString(1, info.getId());
+                statement.setString(2, info.getTel());
+                statement.setString(3, info.getLinkedin());
                 statement.executeUpdate();
             }
             statement.close();
@@ -167,4 +200,82 @@ public class UserDAO {
         
     }
     
+    public List<User> getInstructors(){
+        ConnectionDB con = null;
+        
+        List<User> instructors = new ArrayList<>();
+        User instructor = null;
+        try { 
+            con = new ConnectionDB();
+            statement = connection.prepareStatement("SELECT * FROM public." + "\"User\"" +  " WHERE role='2'");
+            synchronized(statement) {
+            ResultSet results = statement.executeQuery();
+            while (results.next()) {
+                    instructor = new User();
+                    instructor.setId(results.getString("id"));
+                    instructor.setFirstName(results.getString("firstName"));
+                    instructor.setLastName1(results.getString("lastName1"));
+                    instructor.setLastName2(results.getString("lastName2"));
+                    instructor.setEmail(results.getString("email"));
+                    instructor.setPassword(results.getString("password"));
+                    instructor.setPicPath(results.getString("picPath"));
+                    instructor.setMajor(results.getString("major"));
+                    
+                    Date date = results.getDate("joinDate");
+                    LocalDate joinDate = date.toLocalDate();
+                    
+                    instructor.setJoinDate(joinDate);
+                    instructor.setRole(results.getString("role"));
+                    
+                    instructor.setTel(results.getString("tel"));
+                    instructor.setLinkedin(results.getString("linkedin"));
+                    instructor.setStatus(results.getInt("status"));
+                   
+                    instructors.add(instructor);
+                }
+            }
+            statement.close();
+        }catch (SQLException e) {
+            System.err.println(e);
+        }
+        return instructors;
+    }
+    
+        public User getInstructorsById(String id){
+        ConnectionDB con = null;
+        
+        User instructor = new User();
+        try { 
+            con = new ConnectionDB();
+            statement = connection.prepareStatement("SELECT * FROM public." + "\"User\"" +  " WHERE id ='" + id + "'");
+            synchronized(statement) {
+            ResultSet results = statement.executeQuery();
+            while (results.next()) {
+                    instructor.setId(results.getString("id"));
+                    instructor.setFirstName(results.getString("firstName"));
+                    instructor.setLastName1(results.getString("lastName1"));
+                    instructor.setLastName2(results.getString("lastName2"));
+                    instructor.setEmail(results.getString("email"));
+                    instructor.setPassword(results.getString("password"));
+                    instructor.setPicPath(results.getString("picPath"));
+                    instructor.setMajor(results.getString("major"));
+                    
+                    Date date = results.getDate("joinDate");
+                    LocalDate joinDate = date.toLocalDate();
+                    
+                    instructor.setJoinDate(joinDate);
+                    instructor.setRole(results.getString("role"));
+                    
+                    instructor.setTel(results.getString("tel"));
+                    instructor.setLinkedin(results.getString("linkedin"));
+                    instructor.setStatus(results.getInt("status"));
+                }
+            }
+            statement.close();
+        }catch (SQLException e) {
+            System.err.println(e);
+        }
+        return instructor;
+    }
+      
 }

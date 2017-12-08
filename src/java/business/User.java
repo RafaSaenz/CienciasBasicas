@@ -7,12 +7,12 @@ import java.time.LocalDate;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Rafa S
  */
 public class User {
+
     private String id;
     private String firstName;
     private String lastName1;
@@ -23,6 +23,9 @@ public class User {
     private String major;
     private LocalDate joinDate;
     private String role;
+    private int status;
+    private String tel;
+    private String linkedin;
     public boolean valid;
 
     public String getId() {
@@ -112,5 +115,30 @@ public class User {
     public void setRole(String role) {
         this.role = role;
     }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
     
+    
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    public String getLinkedin() {
+        return linkedin;
+    }
+
+    public void setLinkedin(String linkedin) {
+        this.linkedin = linkedin;
+    }
+
 }

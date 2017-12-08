@@ -48,7 +48,17 @@
         	<div class="container">
                 <div class="section-title">
                     <h2>${message}</h2>
-                <p>Para consultarlo click <a href="Resources?action=view&mode=detail&id=${resource}">AQUÍ</a></p>
+                <%
+                if (request.getAttribute("message").equals("Recurso guardado con éxito.")){
+                %>
+                    <p>Para consultarlo click <a href="Resources?action=view&mode=detail&id=${resource}">AQUÍ</a></p>
+                <%
+                }if (request.getAttribute("message").equals("Instructor guardado con éxito.")){
+                %>
+                    <p>Para consultarlo click <a href="Instructors?action=view&mode=detail&id=${resource}">AQUÍ</a></p>
+                <%
+                }
+                %>
                 </div>
                 <div class="thankYou-msg">
                 	<p>${information}</p>
