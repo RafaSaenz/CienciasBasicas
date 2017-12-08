@@ -32,6 +32,9 @@
                 <li class="sub-menu">
                     <a href="resources.jsp">Recursos</a>
                 </li>
+                <li class="sub-menu">
+                    <a href="Instructors?action=view&mode=grid">Instructores</a>
+                </li>
                 <%                    if (currentUser.getRole().equals("3")) { //An Instructor is logged in
                 %>
                 <li class="sub-menu">
@@ -58,7 +61,6 @@
                     <a href="#">Materiales</a>
                     <ul>
                         <li><a href="Resources?action=add&mode=">Agregar Recurso</a></li>
-                        <li><a href="Instructors?id=L00000002">Ver instructor</li></a>
                         <li><a href="Resources?action=manage">Recursos</a></li>
                     </ul>
                 </li>
@@ -72,7 +74,7 @@
                         <li><a href="Resources?action=add&mode=">Agregar Recurso</a></li>
                         <li><a href="Resources?action=manage">Recursos</a></li>
                         <li><a href="newInstructor.jsp">Agregar Instructor</a></li>
-                        <li><a href="newInstructor.jsp">Usuarios</a></li>
+                        <li><a href="#">Usuarios</a></li>
                     </ul>
                 </li>
                 <%
