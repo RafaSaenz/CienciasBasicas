@@ -31,6 +31,11 @@ public class Resource {
     public Resource(){
         
     }
+
+    public Resource(String id) {
+        this.id = id;
+    }
+    
     
     /**
      * @return the id

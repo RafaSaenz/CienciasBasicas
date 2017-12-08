@@ -5,11 +5,8 @@
  */
 package servlets;
 
-import business.*;
-import dataAccess.*;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author gerar
  */
-@WebServlet(name = "DataServlet", urlPatterns = {"/DataServlet"})
-public class DataServlet extends HttpServlet {
+@WebServlet(name = "AreaServlet", urlPatterns = {"/Areas"})
+public class AreaServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,40 +31,18 @@ public class DataServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        ConnectionDB connectionDB = new ConnectionDB();
-        Connection connection = connectionDB.getConnection();
-
-        String mode = null, newTopic = null, items = request.getParameter("items");
-        
-        ResourceDAO resourceDao;
-        switch (items) {
-            case "resources":
-                resourceDao = new ResourceDAO(connection);
-                mode = request.getParameter("action");
-                newTopic = request.getParameter("id");
-                switch (mode) {
-                    case "show":
-                        request.setAttribute("resources", resourceDao.getResources());
-                        getServletContext().getRequestDispatcher("/tables/resources_table.jsp").forward(request, response);
-                        break;
-                    case "enable":
-                        try {
-                            resourceDao.enable(newTopic);
-                        } catch (Exception e) {
-                            request.setAttribute("message", e.getMessage());
-                            getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
-                        }
-                        break;
-                    case "disable":
-                        try {
-                            resourceDao.disable(newTopic);
-                        } catch (Exception e) {
-                            request.setAttribute("message", e.getMessage());
-                            getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
-                        }
-                        break;
-                }
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet AreaServlet</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet AreaServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
@@ -109,4 +84,5 @@ public class DataServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 }

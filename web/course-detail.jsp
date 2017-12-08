@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix ="c" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -38,21 +39,39 @@
                 <section class="breadcrumb">
                     <div class="container">
                         <ul>
-                            <li><a href="/CienciasBasicas/">Inicio</a></li>
-                            <li><a href="/CienciasBasicas/Resources?action=view&mode=grid">Recursos</a></li>
+                            <li><a href="index.jsp">Inicio</a></li>
+                            <li><a href="resources.jsp">Recursos</a></li>
                             <li><a href="/CienciasBasicas/Resources?action=view&mode=detail&id=${resource.id}">${resource.title}</a></li>
-                        </ul>
-                    </div>
-                </section>
-                <section class="teacher-profile">
-                    <div class="container">
-                        <div class="teacher-name">
-                            <h3>${resource.title}</h3>
+                    </ul>
+                </div>
+            </section>
+            <section class="teacher-profile">
+                <div class="container">
+                    <div class="teacher-name">
+                        <h3>${resource.title}</h3>
                         <span>${resource.area.area}</span>
                     </div>
                     <div class="row">
                         <div class="col-md-8">
-                            <div class="img"><img src="${pageContext.request.contextPath}/image/${resource.filePath}" alt="" height="275" width="570"></div>
+                            <div class="img">
+                                    <c:if test="${file.type == 'video'}">
+                                        <iframe width="640" height="360"
+                                                src="${file.filepath}" allowfullscreen>
+                                        </iframe>
+                                    </c:if>
+                                    <c:if test="${file.type == 'document'}">
+                                        <object data="${pageContext.request.contextPath}/Document/${file.filepath}" type="application/pdf" width="740" height="520">
+                                            <a href="${pageContext.request.contextPath}/Document/${file.filepath}">Download file.pdf</a>
+                                        </object>
+                                        <br>
+                                        <a href="${pageContext.request.contextPath}/Document/${file.filepath}" target="_blank"><i class="fa fa-file-pdf-o"></i> Descargar archivo</a>
+                                    </c:if>
+                                    <c:if test="${file.type == 'image'}">
+                                        <img src="${pageContext.request.contextPath}/image/${file.filepath}" alt="" height="520" width="740">
+                                        <br>
+                                        <a href="${pageContext.request.contextPath}/image/${file.filepath}" target="_blank"><i class="fa fa-file-image-o"></i> Descargar imagen</a>
+                                    </c:if>
+                            </div>
                             <div class="teacher-info">
                                 <p>${resource.description}</p>
                             </div>
@@ -89,7 +108,7 @@
                                     <p><a href="${resource.link}">${resource.link}</a></p>
                                 </div>
                                 <div class="details-slide last">
-                                   <span>Subido:</span>
+                                    <span>Subido:</span>
                                     <p>${resource.addedDate}</p>
                                 </div>
                             </div>

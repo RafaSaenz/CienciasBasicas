@@ -6,7 +6,7 @@
 <%@ page language="java" 
          import="business.User"
          import="javax.servlet.http.HttpSession"
-%>
+         %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     User currentUser = (User) session.getAttribute("currentSessionUser");
@@ -23,39 +23,16 @@
                 <span class="icon-bar"></span>
             </button>
         </div>
-        
+
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li class="active sub-menu">
                     <a href="index.jsp">Inicio </a>
                 </li>
-                <li class="mega-menu sub-menu">
-                    <a href="Resources?action=view&mode=grid">Recursos</a>
-                    <div class="menu-view">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <div class="menu-title">Física</div>
-                                <ul>
-                                    <li><a href="#">--</a></li>
-                                </ul>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="menu-title">Matemáticas</div>
-                                <ul>
-                                    <li><a href="#">--</a></li>
-                                </ul>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="menu-title">Programación</div>
-                                <ul>
-                                    <li><a href="#">--</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                <li class="sub-menu">
+                    <a href="resources.jsp">Recursos</a>
                 </li>
-                <%
-                if ( currentUser.getRole().equals("3")) { //An Instructor is logged in
+                <%                    if (currentUser.getRole().equals("3")) { //An Instructor is logged in
                 %>
                 <li class="sub-menu">
                     <a href="#">Dashboard</a>
@@ -66,7 +43,8 @@
                     </ul>
                 </li>
                 <%
-                }if ( currentUser.getRole().equals("2")) { //An Instructor is logged in
+                    }
+                    if (currentUser.getRole().equals("2")) { //An Instructor is logged in
                 %>
                 <li class="sub-menu">
                     <a href="#">Reportes</a>
@@ -81,26 +59,23 @@
                     <ul>
                         <li><a href="Resources?action=add&mode=">Agregar Recurso</a></li>
                         <li><a href="Instructors?id=L00000002">Ver instructor</li></a>
+                        <li><a href="Resources?action=manage">Recursos</a></li>
                     </ul>
                 </li>
                 <%
-                }if(currentUser.getRole().equals("1")) { //An admin is logged in
+                    }
+                    if (currentUser.getRole().equals("1")) { //An admin is logged in
                 %>
                 <li class="sub-menu">
-                    <a href="#">Materiales</a>
+                    <a href="#">Administración</a>
                     <ul>
                         <li><a href="Resources?action=add&mode=">Agregar Recurso</a></li>
-                        <li><a href="Instructors?id=L00000002">Ver instructor</li></a>
-                    </ul>
-                </li>
-                <li class="sub-menu">
-                    <a href="#">Administrar</a>
-                    <ul>
+                        <li><a href="Resources?action=manage">Recursos</a></li>
                         <li><a href="newInstructor.jsp">Agregar Instructor</a></li>
-                        <li><a href="Resources?action=manage">Admin Panel</a></li>
+                        <li><a href="newInstructor.jsp">Usuarios</a></li>
                     </ul>
                 </li>
-                <%  
+                <%
                     }
                 %>
             </ul>

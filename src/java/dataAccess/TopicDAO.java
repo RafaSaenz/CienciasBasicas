@@ -149,10 +149,11 @@ public class TopicDAO {
     public void update(Topic topic) {
         try {
             statement = connection.prepareStatement("UPDATE public.\"Topic\"\n"
-                    + "	SET name='" + topic.getName() + "'\n"
-                    + "	WHERE id='" + topic.getId() + "';");
+                    + "	SET name=?\n"
+                    + "	WHERE id=?;");
             synchronized (statement) {
-
+                statement.setString(1, topic.getName());
+                statement.setString(2, topic.getId());
                 statement.executeUpdate();
             }
             statement.close();
@@ -174,7 +175,7 @@ public class TopicDAO {
             throw new RuntimeException(sqle);
         }
     }
-    
+
     public void enable(String id) {
         try {
             statement = connection.prepareStatement("UPDATE \"Topic\" SET status='1' where id='" + id + "';");
