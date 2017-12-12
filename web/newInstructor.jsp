@@ -58,41 +58,59 @@
                                         <form action="Instructors" method="post" id="addForm" onsubmit="return checkFile();" enctype="multipart/form-data">
                                             <div class="col-sm-6">
                                                 <div class="input-filde">
+                                                    
                                                     <div class="input-box">
+                                                        
                                                         <label>Nómina: </label>
+                                                        
+                                                    <c:if test="${not empty user.id}">
+                                                        <input type="text" name="id" required maxlength="10" placeholder="L00000000" value="${user.id}"
+                                                           readonly="readonly">  
+                                                    </c:if>
+                                                    <c:if test="${empty user.id}">
                                                         <input type="text" name="id" required maxlength="10" placeholder="L00000000">
-                                                    </div>
+                                                    </c:if>
+                                                    </div>    
+                                                    
+                                                    
+                                                    
                                                     <div class="input-box">
                                                         <label>Nombre:</label>
-                                                        <input type="text" name="firstname" required maxlength="255" placeholder="Nombre(s)">
+                                                        <input type="text" name="firstname" required maxlength="255" placeholder="Nombre(s)" value="${user.firstName}">
                                                     </div>
                                                     <div class="input-box">
                                                         <label>Apellido Paterno:</label>
-                                                        <input type="text" name="lastname1" required maxlength="255" placeholder="Apellido Paterno">
+                                                        <input type="text" name="lastname1" required maxlength="255" placeholder="Apellido Paterno" value="${user.lastName1}">
                                                     </div>
                                                     <div class="input-box">
                                                         <label>Apellido Materno:</label>
-                                                        <input type="text" name="lastname2" required maxlength="255" placeholder="Apellido Materno">
+                                                        <input type="text" name="lastname2" required maxlength="255" placeholder="Apellido Materno" value="${user.lastName2}">
                                                     </div>
                                                     <div class="input-box">
                                                         <label>LinkedIn:</label>
-                                                        <input type="text" name="linkedin" required maxlength="255" placeholder="https://www.linkedin.com/">
+                                                        <input type="text" name="linkedin" required maxlength="255" placeholder="https://www.linkedin.com/" value="${user.linkedin}">
                                                     </div>
                                                     <div class="input-box">
                                                         <label>Teléfono:</label>
-                                                        <input type="text" name="tel" required maxlength="255" placeholder="01 871 729 63 00 ext. 001">
+                                                        <input type="text" name="tel" required maxlength="255" placeholder="01 871 729 63 00 ext. 001" value="${user.tel}">
                                                     </div>
                                                     <div class="input-box">
                                                         <label>Email: </label>
-                                                        <input type="email" maxlength="255" name="email" placeholder="Correo electrónico">
+                                                        <input type="email" maxlength="255" name="email" placeholder="Correo electrónico" value="${user.email}">
                                                     </div>
                                                     <div class="input-box">
                                                         <label>Password: </label>
-                                                        <input type="password" name="password" required placeholder="Password">
+                                                        <c:if test="${not empty user.id}">
+                                                        <input type="password" name="password" required placeholder="Password" value="${user.password}"
+                                                           readonly="readonly">  
+                                                        </c:if>
+                                                        <c:if test="${empty user.id}">
+                                                        <input type="password" name="password" required placeholder="Password" >
+                                                        </c:if>
                                                         </div>
                                                     <div class="input-box file">
                                                         <label>Foto de perfil: </label>
-                                                        <input id="file" required type="file" name="picPath     " size="50"/>
+                                                        <input id="file" required type="file" name="picPath     " size="50" value="${user.picPath}">
                                                     </div>
                                                 </div>
                                             </div>

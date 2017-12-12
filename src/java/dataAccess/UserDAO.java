@@ -9,7 +9,6 @@ package dataAccess;
 import business.Area;
 import static business.Hashing.SALT;
 import static business.Hashing.generateHash;
-import business.Info;
 import business.Student;
 import business.User;
 import business.Instructor;
@@ -177,30 +176,49 @@ public class UserDAO {
         }
         
     }
-    public String registerInfoInstructor(Info info){
-        ConnectionDB con = null;
-           
-        try { 
-            con = new ConnectionDB();
-            statement = connection.prepareStatement("INSERT INTO public.\"Info\" VALUES (?,?,?)");
-            synchronized(statement) {
-                statement.setString(1, info.getId());
-                statement.setString(2, info.getTel());
-                statement.setString(3, info.getLinkedin());
-                statement.executeUpdate();
-            }
-            statement.close();
-            return "SUCCESS";
-        }
-
-        catch (SQLException sqle) {
-            logger.log(Level.SEVERE, sqle.toString(), sqle);
-            throw new RuntimeException(sqle);
-        }
-        
-    }
     
     public List<User> getInstructors(){
+        ConnectionDB con = null;
+        
+        List<User> instructors = new ArrayList<>();
+        User instructor = null;
+        try { 
+            con = new ConnectionDB();
+            statement = connection.prepareStatement("SELECT * FROM public." + "\"User\"" +  " WHERE role='2' AND status ='1'");
+            synchronized(statement) {
+            ResultSet results = statement.executeQuery();
+            while (results.next()) {
+                    instructor = new User();
+                    instructor.setId(results.getString("id"));
+                    instructor.setFirstName(results.getString("firstName"));
+                    instructor.setLastName1(results.getString("lastName1"));
+                    instructor.setLastName2(results.getString("lastName2"));
+                    instructor.setEmail(results.getString("email"));
+                    instructor.setPassword(results.getString("password"));
+                    instructor.setPicPath(results.getString("picPath"));
+                    instructor.setMajor(results.getString("major"));
+                    
+                    Date date = results.getDate("joinDate");
+                    LocalDate joinDate = date.toLocalDate();
+                    
+                    instructor.setJoinDate(joinDate);
+                    instructor.setRole(results.getString("role"));
+                    
+                    instructor.setTel(results.getString("tel"));
+                    instructor.setLinkedin(results.getString("linkedin"));
+                    instructor.setStatus(results.getInt("status"));
+                   
+                    instructors.add(instructor);
+                }
+            }
+            statement.close();
+        }catch (SQLException e) {
+            System.err.println(e);
+        }
+        return instructors;
+    }
+    
+    public List<User> getAllInstructors(){
         ConnectionDB con = null;
         
         List<User> instructors = new ArrayList<>();
@@ -276,6 +294,93 @@ public class UserDAO {
             System.err.println(e);
         }
         return instructor;
+    }
+        
+        public void disable(String id) {
+        try {
+            statement = connection.prepareStatement("UPDATE \"User\" SET status='0' where id='" + id + "';");
+            synchronized (statement) {
+                statement.executeUpdate();
+            }
+            statement.close();
+        } catch (SQLException sqle) {
+            logger.log(Level.SEVERE, sqle.toString(), sqle);
+            throw new RuntimeException(sqle);
+        }
+    }
+
+    public void enable(String id) {
+        try {
+            statement = connection.prepareStatement("UPDATE \"User\" SET status='1' where id='" + id + "';");
+            synchronized (statement) {
+                statement.executeUpdate();
+            }
+            statement.close();
+        } catch (SQLException sqle) {
+            logger.log(Level.SEVERE, sqle.toString(), sqle);
+            throw new RuntimeException(sqle);
+        }
+    }
+    
+    public String updateUser(User user){
+        ConnectionDB con = null;
+        
+        //Hash password before INSERT to the DB
+        String saltedPassword = SALT + user.getPassword();
+	String hashedPassword = generateHash(saltedPassword);
+        
+        try { 
+            con = new ConnectionDB();
+            statement = connection.prepareStatement("UPDATE public.\"User\" SET \"firstName\" = '" + 
+                    user.getFirstName() + "'," +
+                    "\"lastName1\" = '" + 
+                    user.getLastName1() + "'," +
+                    "\"lastName2\" = '" + 
+                    user.getLastName2() + "'," +
+                    "\"email\" = '" +  
+                    user.getEmail() + "'," +
+                    "\"picPath\" = '" + 
+                    user.getPicPath() + "'," +
+                    "\"tel\" = '" + 
+                    user.getTel()+ "'," +
+                    "\"linkedin\" = '" + 
+                    user.getLinkedin() +
+                    "' WHERE id='"+ user.getId() + "';");
+            synchronized(statement) {
+                statement.executeUpdate();
+            }
+            statement.close();
+            return "SUCCESS";
+        }
+
+        catch (SQLException sqle) {
+            logger.log(Level.SEVERE, sqle.toString(), sqle);
+            throw new RuntimeException(sqle);
+        }
+        
+    }
+    
+    //This method checks if the user exist in the DB
+        public boolean validUser(String id){
+        ConnectionDB con = null;
+
+        try { 
+            con = new ConnectionDB();
+            statement = connection.prepareStatement("SELECT id FROM public.\"User\" WHERE id = '" + 
+                    id + "';");
+            synchronized(statement) {
+                statement.executeQuery();
+                
+            }
+            statement.close();
+            return true;
+        }
+
+        catch (SQLException sqle) {
+            logger.log(Level.SEVERE, sqle.toString(), sqle);
+            throw new RuntimeException(sqle);
+        }
+        
     }
       
 }

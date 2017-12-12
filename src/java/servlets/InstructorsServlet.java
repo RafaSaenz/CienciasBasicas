@@ -7,7 +7,6 @@ package servlets;
 
 import business.Area;
 import business.EmailValidator;
-import business.Info;
 import business.Instructor;
 import business.Resource;
 import business.ResourceType;
@@ -20,6 +19,7 @@ import dataAccess.InstructorDAO;
 import dataAccess.ResourceDAO;
 import dataAccess.ResourceTypeDAO;
 import dataAccess.SubtopicDAO;
+import dataAccess.TopicDAO;
 import dataAccess.UserDAO;
 import java.io.File;
 import java.io.IOException;
@@ -70,6 +70,7 @@ public class InstructorsServlet extends HttpServlet {
         String url = "/index.jsp";
         String mode = request.getParameter("mode");
         String action = request.getParameter("action");
+        String id = request.getParameter("id");
         
         ConnectionDB connectionDB = new ConnectionDB();
         Connection connection = connectionDB.getConnection();
@@ -78,7 +79,7 @@ public class InstructorsServlet extends HttpServlet {
         ResourceTypeDAO typeDao;
         AreaDAO areaDao;
         
-        UserDAO userDAO;
+        UserDAO userDAO = new UserDAO(connection);
         
         switch (action) {
             case "view":
@@ -102,6 +103,10 @@ public class InstructorsServlet extends HttpServlet {
                                     url = "/page-404.jsp";
                                 }
                                 break;
+                            case "table":
+                                request.setAttribute("users", userDAO.getAllInstructors());
+                                url = "/tables/instructors_table.jsp";
+                                break;
                             default:
                                 url = "/page-404.jsp";
                         }
@@ -111,22 +116,23 @@ public class InstructorsServlet extends HttpServlet {
                 }   break;
             
             case "add":
-                String r_id = request.getParameter("r_id");
-                try {           
-                    /*Types for the select box*/
-                    typeDao = new ResourceTypeDAO(connection);
-                    resourceDao = new ResourceDAO(connection);
-                    request.setAttribute("types", typeDao.getEnabledTypes());
+                    String i_id = request.getParameter("i_id");
+                    try {
+                    /*firstName*/
+                    userDAO = new UserDAO(connection);
+                    //resourceDao = new ResourceDAO(connection);
+                    //request.setAttribute("name", typeDao.getEnabledTypes());
                     /*Areas for the select box*/
-                    areaDao = new AreaDAO(connection);
-                    request.setAttribute("areas", areaDao.getEnabledAreas());                    
-                    if (r_id != null) {
-                        request.setAttribute("resource", resourceDao.getById(r_id));
+                    //areaDao = new AreaDAO(connection);
+                    //request.setAttribute("areas", areaDao.getEnabledAreas());
+                    if (i_id != null) {
+                        request.setAttribute("user", userDAO.getInstructorsById(i_id));
                     }
-                    url = "/newResource.jsp";
+                    url = "/newInstructor.jsp";
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
-                }   break;
+                }
+                break;
             case "manage":
                 try {
                     areaDao = new AreaDAO(connection);
@@ -134,7 +140,24 @@ public class InstructorsServlet extends HttpServlet {
                     url = "/adminPanel.jsp";
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
-                }   break;
+                }
+                break;
+            case "disable":
+                try {
+                    userDAO.disable(id);;
+                } catch (Exception e) {
+                    request.setAttribute("message", e.getMessage());
+                    getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
+                }
+                break;
+            case "enable":
+                try {
+                    userDAO.enable(id);
+                } catch (Exception e) {
+                    request.setAttribute("message", e.getMessage());
+                    getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
+                }
+                break;
             default:
                 break;
         }
@@ -286,12 +309,25 @@ public class InstructorsServlet extends HttpServlet {
             }
             
             //Call the method from StudentDAO to register a new student
-            String userRegistered = userDAO.registerUser(newInstructor);
+            String userUpdate = null;
+            String userRegistered = null;
+            
+            if(userDAO.validUser(newInstructor.getId())){
+                userUpdate = userDAO.updateUser(newInstructor);
+                request.setAttribute("message", "Instructor guardado con éxito.");
+                request.setAttribute("resource", newInstructor.getId());
+                getServletContext()
+                .getRequestDispatcher("/uploaded.jsp").forward(
+                request, response);
+            }
+            else{
+                userRegistered = userDAO.registerUser(newInstructor);
+            }
             
             request.setAttribute("message", "Instructor guardado con éxito.");
             request.setAttribute("resource", newInstructor.getId());
             
-            if(userRegistered.equals("SUCCESS"))//On SUCCESS, it means that the registration was successful
+            if(userRegistered.equals("SUCCESS") || userUpdate.equals("SUCCESS"))//On SUCCESS, it means that the registration was successful
             {
                 getServletContext()
                 .getRequestDispatcher("/uploaded.jsp").forward(

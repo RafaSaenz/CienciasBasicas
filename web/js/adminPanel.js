@@ -227,3 +227,57 @@ $(document).on("click", '.enable-btn3', function (event) {
 /*
  **** ------ END OF RESOURCES ------ ****
  */
+
+
+/*
+ **** ------ INSTRUCTORS ------ ****
+ */
+//Show instructors table
+function showInstructors() {
+    $.get("/CienciasBasicas/Instructors",
+            {
+                action: "view",
+                mode: "table",
+            },
+            function (data, status) {
+                $("#cont2").html(data);
+            });
+}
+// Click on instructors to show instructors table
+$(document).on("click", '#man-ins', function (event) {
+    event.preventDefault();
+    showInstructors();
+});
+//Enable/Disable an Instructor
+$(document).on("click", '.enable-btn4', function (event) {
+    event.preventDefault();
+    $.get("/CienciasBasicas/Instructors",
+            {
+                action: event.target.getAttribute('name'),
+                id: $(event.target).closest('tr').attr('id')
+            },
+            function (data, status) {
+                showInstructors();
+            });
+});
+//Modify an Instructor
+/*
+$(document).on("click", '#edit-btn4', function (event) {
+    event.preventDefault();
+        $.get("/CienciasBasicas/Instructors",
+                {
+                    action: "add",
+                    id: $("#edit-btn4").data('id'),
+                    //name: $("#edit-subtopic").val()
+                },
+                function (data, status) {
+                    showInstructors();
+                });
+
+});*/
+
+/*
+ **** ------ END OF INSTRUCTORS ------ ****
+ */
+
+

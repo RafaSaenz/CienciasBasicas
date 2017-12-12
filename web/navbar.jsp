@@ -73,8 +73,8 @@
                     <ul>
                         <li><a href="Resources?action=add&mode=">Agregar Recurso</a></li>
                         <li><a href="Resources?action=manage">Recursos</a></li>
-                        <li><a href="newInstructor.jsp">Agregar Instructor</a></li>
-                        <li><a href="#">Usuarios</a></li>
+                        <li><a href="Instructors?action=add">Agregar Instructor</a></li>
+                        <li><a href="Instructors?action=manage">Usuarios</a></li>
                     </ul>
                 </li>
                 <%

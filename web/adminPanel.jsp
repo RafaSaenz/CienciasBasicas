@@ -1,7 +1,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix ="c" %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page language="java" 
+         import="business.User"
+         import="javax.servlet.http.HttpSession"
+         %>
+<%
+    User currentUser = (User) session.getAttribute("currentSessionUser");
 
+%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -64,6 +71,16 @@
                                     <li><a href="#" id="${area.id}" class="area-link">${area.area}</a></li>
                                 </c:forEach>
                                 </ul>
+                                <%                    if (currentUser.getRole().equals("1")) { //An admin is logged in
+                                %>
+                                <h3>Usuarios</h3>
+                                <ul class="catagorie-list">
+                                    <li><a href="#" id="man-ins">Instructores</a></li>
+                                    <li><a href="#" id="man-stu">Estudiantes</a></li>
+                                </ul>
+                                <% }
+                                %>
+                                
                             </div>
                         </div>
                         <div class="col-md-9" style="border: #001489 solid thick">
