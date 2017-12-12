@@ -34,7 +34,7 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "ResourcesServlet", urlPatterns = ("/Resources"))
 public class ResourcesServlet extends HttpServlet {
-    
+
     private static final long serialVersionUID = 1L;
     // location to store file uploaded
     private static final String UPLOAD_DIRECTORY = "C:\\data";
@@ -58,19 +58,20 @@ public class ResourcesServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         ConnectionDB connectionDB = new ConnectionDB();
         Connection connection = connectionDB.getConnection();
-        
+
         ResourceDAO resourceDao = new ResourceDAO(connection);
         ResourceTypeDAO typeDao = new ResourceTypeDAO(connection);
         AreaDAO areaDao = new AreaDAO(connection);
         FileDAO fileDao = new FileDAO(connection);
-        
+
         String url = "/index.jsp";
         String mode = request.getParameter("mode");
         String action = request.getParameter("action");
-        
+        String area = request.getParameter("area");
+
         switch (action) {
             case "view":
                 switch (mode) {
@@ -79,12 +80,20 @@ public class ResourcesServlet extends HttpServlet {
                         url = "/tables/resources_table.jsp";
                         break;
                     case "grid":
-                        request.setAttribute("resources", resourceDao.getResources());
+                        if (area != null) {
+                            request.setAttribute("resources", resourceDao.getByArea(area));
+                        } else {
+                            request.setAttribute("resources", resourceDao.getEnabledResources());
+                        }
                         request.setAttribute("areas", areaDao.getEnabledAreas());
                         url = "/grid.jsp";
                         break;
                     case "list":
-                        request.setAttribute("resources", resourceDao.getResources());
+                        if (area != null) {
+                            request.setAttribute("resources", resourceDao.getByArea(area));
+                        } else {
+                            request.setAttribute("resources", resourceDao.getEnabledResources());
+                        }
                         request.setAttribute("areas", areaDao.getEnabledAreas());
                         url = "/list.jsp";
                         break;
@@ -135,7 +144,7 @@ public class ResourcesServlet extends HttpServlet {
         }
         getServletContext().getRequestDispatcher(url).forward(request, response);
     }
-    
+
     private String youtube_id(String url) {
         String youtube_id = "";
         String regExp = "/.*(?:youtu.be\\/|v\\/|u/\\w/|embed\\/|watch\\?.*&?v=)";
@@ -174,47 +183,47 @@ public class ResourcesServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         if (!ServletFileUpload.isMultipartContent(request)) {
             PrintWriter writer = response.getWriter();
             writer.println("Error: Form must has enctype=multipart/form-data.");
             writer.flush();
             return;
         }
-        
+
         DiskFileItemFactory factory = new DiskFileItemFactory();
         factory.setSizeThreshold(MEMORY_THRESHOLD);
         factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
-        
+
         ServletFileUpload upload = new ServletFileUpload(factory);
         upload.setHeaderEncoding("UTF-8");
         upload.setFileSizeMax(MAX_FILE_SIZE);
         upload.setSizeMax(MAX_REQUEST_SIZE);
-        
+
         String uploadPath = UPLOAD_DIRECTORY;
-        
+
         try {
             ConnectionDB connectionDB = new ConnectionDB();
             Connection connection = connectionDB.getConnection();
-            
+
             ResourceDAO resourceDao = new ResourceDAO(connection);
-            
+
             Date date = new Date();
-            
+
             HttpSession session = request.getSession();
             User currentUser = (User) session.getAttribute("currentSessionUser");
-            
+
             FileObj fileObj = new FileObj();
             FileDAO fileDao = new FileDAO(connection);
-            
+
             Resource resource = new Resource();
             resource.setInstructor(new Instructor(currentUser.getId()));
             resource.setAddedDate(new java.sql.Date(date.getTime()));
-            
+
             @SuppressWarnings("unchecked")
             List<FileItem> formItems = upload.parseRequest(request);
             List<FileItem> fileItems = new ArrayList<>();
-            
+
             if (formItems != null && formItems.size() > 0) {
                 // iterates over form's fields
                 for (FileItem item : formItems) {
@@ -292,7 +301,7 @@ public class ResourcesServlet extends HttpServlet {
             request.setAttribute("message",
                     "Recurso guardado con éxito.");
             request.setAttribute("resource", resource.getId());
-            
+
         } catch (Exception ex) {
             request.setAttribute("message", "Hubo un problema...");
             request.setAttribute("information",

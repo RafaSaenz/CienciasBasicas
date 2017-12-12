@@ -26,6 +26,10 @@
 
             </select>
         </div>
+        &nbsp;
+        <div style="display:inline-block">
+            <input type="reset" id="res-filtering" hidden value="Restablecer">
+        </div>
         <div class="search">
             <input type="text" placeholder="Search">
             <input type="submit" value="">
