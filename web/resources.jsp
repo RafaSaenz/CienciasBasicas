@@ -57,46 +57,73 @@
     </body>
 </html>
 <script>
-    $(document).on("ready", function (event) {
+    function gridView(filter, _callback) {
         $.get("/CienciasBasicas/Resources",
                 {
                     action: "view",
-                    mode: "grid"
+                    mode: "grid",
+                    area: filter
                 },
                 function (data, status) {
                     $("#displaySection").removeClass("list-view");
                     $("#displaySection").html(data);
                     $("a[name='list-view']").removeClass("active");
                     $("a[name='grid-view']").addClass("active");
+                    if (_callback) {
+                        _callback();
+                    }
                 });
-    });
-
-</script>
-<script>
-    $(document).on("click", "a[name='list-view']", function (event) {
+    }
+    function listView(filter, _callback) {
         $.get("/CienciasBasicas/Resources",
                 {
                     action: "view",
-                    mode: "list"
+                    mode: "list",
+                    area: filter
                 },
                 function (data, status) {
                     $("#displaySection").addClass("list-view");
+                    $("#displaySection").html(data);
                     $("a[name='list-view']").addClass("active");
                     $("a[name='grid-view']").removeClass("active");
-                    $("#displaySection").html(data);
+                    if (_callback) {
+                        _callback();
+                    }
                 });
+    }
+    $(document).on("ready", function (event) {
+        gridView();
     });
     $(document).on("click", "a[name='grid-view']", function (event) {
-        $.get("/CienciasBasicas/Resources",
-                {
-                    action: "view",
-                    mode: "grid"
-                },
-                function (data, status) {
-                    $("a[name='grid-view']").addClass("active");
-                    $("#displaySection").removeClass("list-view");
-                    $("a[name='list-view']").removeClass("active");
-                    $("#displaySection").html(data);
-                });
-    }); 
+        gridView();
+    });
+    $(document).on("click", "a[name='list-view']", function (event) {
+        listView();
+    });
+    $(document).on("change", "#area", function (event) {
+        event.preventDefault();
+        var area = $("#area");
+        var areatxt = area.val();
+        if ($("#displaySection").hasClass("list-view")) { //means is a list view
+            listView(areatxt, function () {
+                area.val(areatxt);
+                $("#area option[value='" + areatxt + "']").attr("selected", true);
+                $("#res-filtering").show();
+            });
+        } else {
+            gridView(areatxt, function () {
+                area.val(areatxt);
+                $("#area option[value='" + areatxt + "']").attr("selected", true);
+                $("#res-filtering").show();
+            });
+        }
+    });
+    $(document).on("click", "#res-filtering", function (event) {
+        $("option:selected").removeAttr("selected");
+        if ($("#displaySection").hasClass("list-view")) { //means is a list view
+            listView();
+        } else {
+            gridView();
+        }
+    });
 </script>
