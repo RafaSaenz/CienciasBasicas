@@ -18,6 +18,8 @@ public class ConnectionDB {
     private static Logger logger = Logger.getLogger(ConnectionDB.class.getName());
     
     public ConnectionDB() {
+        /*String dbms="postgresql", host = "200.34.109.174", database = "cienciasbasicas", 
+                port = "5432", user = "adminnovus", password = "Ahibrido2017";*/
         String dbms="postgresql", host = "localhost", database = "cbasicas", 
                 port = "5432", user = "postgres", password = "test1234";
         try {

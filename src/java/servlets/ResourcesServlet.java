@@ -73,6 +73,7 @@ public class ResourcesServlet extends HttpServlet {
         String mode = request.getParameter("mode");
         String action = request.getParameter("action");
         String area = request.getParameter("area");
+        String id = request.getParameter("id");
 
         switch (action) {
             case "view":
@@ -141,6 +142,22 @@ public class ResourcesServlet extends HttpServlet {
                 request.setAttribute("resource", res);
                 request.setAttribute("file", fileDao.getByResource(request.getParameter("r_id")).get(0));
                 url = "/forms/updateFile.jsp";
+                break;
+            case "enable":
+                try {
+                    resourceDao.enable(id);
+                } catch (Exception e) {
+                    request.setAttribute("message", e.getMessage());
+                    getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
+                }
+                break;
+            case "disable":
+                try {
+                    resourceDao.disable(id);
+                } catch (Exception e) {
+                    request.setAttribute("message", e.getMessage());
+                    getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
+                }
                 break;
             default:
                 break;

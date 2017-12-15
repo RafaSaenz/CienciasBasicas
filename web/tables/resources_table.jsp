@@ -48,17 +48,17 @@
                             <c:if test="${resource.instructor.id == currentSessionUser.id or currentSessionUser.role == '1'}">
                             &nbsp;  
                             &nbsp;
-                            <span class="small-text">Modificar:</span><a href="#" class="close-icon"><span class="small-text">Editar</span><i class="fa fa-pencil edit-btn-r"></i></a>                            
+                            <span class="small-text">Modificar:</span><a href="#" class="close-icon"><span class="small-text">Editar</span><i class="fa fa-pencil edit-r"></i></a>                            
                             &nbsp;  
                             &nbsp;
-                            <span class="small-text">Material:</span><a href="#" class="close-icon"><span class="small-text">Archivos</span><i class="fa fa-files-o edit-btn-f"></i></a>                            
+                            <span class="small-text">Material:</span><a href="#" class="close-icon"><span class="small-text">Archivos</span><i class="fa fa-files-o edit-f"></i></a>                            
                             &nbsp;
                             &nbsp;
                             <c:if test="${resource.status eq 1}">
-                                <span class="small-text">Estatus:</span><a href="#" class="close-icon"><span class="small-text">Deshabilitar</span><i name="disable" class="fa fa-toggle-on enable-btn3"></i></a>
+                                <span class="small-text">Estatus:</span><a href="#" class="close-icon"><span class="small-text">Deshabilitar</span><i name="disable" class="fa fa-toggle-on enable-r"></i></a>
                                 </c:if>
                                 <c:if test="${resource.status eq 0}">
-                                <span class="small-text">Estatus:</span><a href="#" class="close-icon"><span class="small-text">Habilitar</span><i name="enable" class="fa fa-toggle-off enable-btn3"></i></a>
+                                <span class="small-text">Estatus:</span><a href="#" class="close-icon"><span class="small-text">Habilitar</span><i name="enable" class="fa fa-toggle-off enable-r"></i></a>
                                 </c:if>   
                                 </c:if>
                         </td>

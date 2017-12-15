@@ -35,14 +35,14 @@
                         <td>${area.area}</td>
                         <td>${area.id}</td>
                         <td>
-                            <span class="small-text">Modificar:</span><a href="#" class="close-icon"><span class="small-text">Editar</span><i class="fa fa-pencil edit-btn3"></i></a>                            
+                            <span class="small-text">Modificar:</span><a href="#" class="close-icon"><span class="small-text">Editar</span><i class="fa fa-pencil edit-a"></i></a>                            
                             &nbsp;
                             &nbsp;
                             <c:if test="${area.status eq 1}">
-                                <span class="small-text">Estatus:</span><a href="#" class="close-icon"><span class="small-text">Deshabilitar</span><i name="disable" class="fa fa-toggle-on enable-btn5"></i></a>
+                                <span class="small-text">Estatus:</span><a href="#" class="close-icon"><span class="small-text">Deshabilitar</span><i name="disable" class="fa fa-toggle-on enable-a"></i></a>
                                 </c:if>
                                 <c:if test="${area.status eq 0}">
-                                <span class="small-text">Estatus:</span><a href="#" class="close-icon"><span class="small-text">Habilitar</span><i name="enable" class="fa fa-toggle-off enable-btn5"></i></a>
+                                <span class="small-text">Estatus:</span><a href="#" class="close-icon"><span class="small-text">Habilitar</span><i name="enable" class="fa fa-toggle-off enable-a"></i></a>
                                 </c:if>
                         </td>
                     </tr>

@@ -40,40 +40,34 @@
                     <div class="container">
                         <ul>
                             <li><a href="/CienciasBasicas/">Inicio</a></li>
-                            <li><a href="Instructors?action=view&mode=grid">Instructores</a></li>
-                            <li><a href="Instructors?action=add&mode=">Registrar</a></li>
+                            <li><a href="Instructors?action=manage">Estudiantes</a></li>
+                            <li><a href="Instructors?action=addStudent">Registrar</a></li>
                         </ul>
                     </div>
                 </section>
                 <section class="checkout-content">
                     <div class="container">
                         <div class="step-box fill">
-                            <div class="title"><span>Registrar nuevo instructor</span> </div>
+                            <div class="title"><span>Agregar estudiante</span> </div>
                         </div>
                         <div class="step-box">
-                            <div class="title">Datos del instructor</div>
+                            <div class="title">Datos del estudiante</div>
                             <div class="step2 step-content">
                                 <div class="fill-address">
                                     <div class="row">
-                                        <form action="Instructors" method="post" id="addForm" onsubmit="return checkFile();" enctype="multipart/form-data">
+                                        <form action="Students" method="post" id="addForm" onsubmit="return checkFile();" enctype="multipart/form-data">
                                             <div class="col-sm-6">
                                                 <div class="input-filde">
-                                                    
                                                     <div class="input-box">
-                                                        
-                                                        <label>Nómina: </label>
-                                                        
+                                                        <label>Matrícula </label>
                                                     <c:if test="${not empty user.id}">
-                                                        <input type="text" name="id" required maxlength="10" placeholder="L00000000" value="${user.id}"
+                                                        <input type="text" name="id" required maxlength="10" placeholder="A00000000" value="${user.id}"
                                                            readonly="readonly">  
                                                     </c:if>
                                                     <c:if test="${empty user.id}">
-                                                        <input type="text" name="id" required maxlength="10" placeholder="L00000000">
+                                                        <input type="text" name="id" required maxlength="10" placeholder="A00000000">
                                                     </c:if>
                                                     </div>    
-                                                    
-                                                    
-                                                    
                                                     <div class="input-box">
                                                         <label>Nombre:</label>
                                                         <input type="text" name="firstname" required maxlength="255" placeholder="Nombre(s)" value="${user.firstName}">
@@ -87,14 +81,6 @@
                                                         <input type="text" name="lastname2" required maxlength="255" placeholder="Apellido Materno" value="${user.lastName2}">
                                                     </div>
                                                     <div class="input-box">
-                                                        <label>LinkedIn:</label>
-                                                        <input type="text" name="linkedin" required maxlength="255" placeholder="https://www.linkedin.com/" value="${user.linkedin}">
-                                                    </div>
-                                                    <div class="input-box">
-                                                        <label>Teléfono:</label>
-                                                        <input type="text" name="tel" required maxlength="255" placeholder="01 871 729 63 00 ext. 001" value="${user.tel}">
-                                                    </div>
-                                                    <div class="input-box">
                                                         <label>Email: </label>
                                                         <input type="email" maxlength="255" name="email" placeholder="Correo electrónico" value="${user.email}">
                                                     </div>
@@ -102,9 +88,14 @@
                                                         <label>Password: </label>
                                                         <input type="password" name="password" required placeholder="Password" value="${user.password}">  
                                                         </div>
-                                                    <div class="input-box file">
-                                                        <label>Foto de perfil: </label>
-                                                        <input id="file" required type="file" name="picPath     " size="50" value="${user.picPath}">
+                                                    <div class="input-box select">
+                                                        <label>Carrera: </label>
+                                                    <select class="select" name = "major" value="${user.major}">
+                                                        <option>ITIC</option>
+                                                        <option>IIS</option>
+                                                        <option>IBN</option>
+                                                        <option>IMT</option>
+                                                    </select>
                                                     </div>
                                                 </div>
                                             </div>

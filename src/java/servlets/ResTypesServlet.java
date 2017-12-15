@@ -5,10 +5,9 @@
  */
 package servlets;
 
+import business.*;
 import com.google.gson.Gson;
-import dataAccess.AreaDAO;
-import dataAccess.ConnectionDB;
-import dataAccess.ResourceTypeDAO;
+import dataAccess.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -43,9 +42,10 @@ public class ResTypesServlet extends HttpServlet {
         ConnectionDB connectionDB = new ConnectionDB();
         Connection connection = connectionDB.getConnection();
 
-        ResourceTypeDAO resTypeDao  = new ResourceTypeDAO(connection);
+        ResourceTypeDAO resTypeDao = new ResourceTypeDAO(connection);
 
         String action = request.getParameter("action");
+        String description = request.getParameter("description");
         String id = request.getParameter("id");
 
         switch (action) {
@@ -58,6 +58,38 @@ public class ResTypesServlet extends HttpServlet {
             case "show":
                 request.setAttribute("types", resTypeDao.getTypes());
                 getServletContext().getRequestDispatcher("/tables/res_types_table.jsp").forward(request, response);
+                break;
+            case "add":
+                try {
+                    resTypeDao.add(new ResourceType(String.valueOf(resTypeDao.getCount()+1), description, 1));
+                } catch (Exception e) {
+                    request.setAttribute("message", e.getMessage());
+                    getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
+                }
+                break;
+            case "disable":
+                try {
+                    resTypeDao.disable(id);
+                } catch (Exception e) {
+                    request.setAttribute("message", e.getMessage());
+                    getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
+                }
+                break;
+            case "enable":
+                try {
+                    resTypeDao.enable(id);
+                } catch (Exception e) {
+                    request.setAttribute("message", e.getMessage());
+                    getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
+                }
+                break;
+            case "update":
+                try {
+                    resTypeDao.update(new ResourceType(id, description));
+                } catch (Exception e) {
+                    request.setAttribute("message", e.getMessage());
+                    getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
+                }
                 break;
         }
     }

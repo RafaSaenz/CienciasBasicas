@@ -91,6 +91,7 @@ public class RegisterServlet extends HttpServlet {
                 return;
             }
             
+            
             //Call the method from StudentDAO to register a new student
             UserDAO userDAO = new UserDAO(connection);
             String userRegistered = userDAO.registerUser(newStudent);

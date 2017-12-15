@@ -22,6 +22,12 @@ public class ResourceType {
         this.id = id;
         this.description = description;
     }
+
+    public ResourceType(String id, String description, int status) {
+        this.id = id;
+        this.description = description;
+        this.status = status;
+    }
     
     public ResourceType(String id){
         this.id = id;

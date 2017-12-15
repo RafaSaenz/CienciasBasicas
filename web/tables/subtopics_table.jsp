@@ -35,17 +35,17 @@
                         <td>${topic.name}</td>
                         <td>${topic.id}</td>
                         <td>
-                            <span class="small-text">Modificar:</span><a href="#" class="close-icon"><span class="small-text">Editar</span><i class="fa fa-pencil edit-btn2"></i></a>
+                            <span class="small-text">Modificar:</span><a href="#" class="close-icon"><span class="small-text">Editar</span><i class="fa fa-pencil edit-s"></i></a>
                             <%
                                 if (currentUser.getRole().equals("1")) { //An Instructor is logged in
                             %>
                             &nbsp;
                             &nbsp;
                             <c:if test="${topic.status eq 1}">
-                                <span class="small-text">Estatus:</span><a href="#" class="close-icon"><span class="small-text">Deshabilitar</span><i name="disable" class="fa fa-toggle-on enable-btn2"></i></a>
+                                <span class="small-text">Estatus:</span><a href="#" class="close-icon"><span class="small-text">Deshabilitar</span><i name="disable" class="fa fa-toggle-on enable-s"></i></a>
                                 </c:if>
                                 <c:if test="${topic.status eq 0}">
-                                <span class="small-text">Estatus:</span><a href="#" class="close-icon"><span class="small-text">Habilitar</span><i name="enable" class="fa fa-toggle-off enable-btn2"></i></a>
+                                <span class="small-text">Estatus:</span><a href="#" class="close-icon"><span class="small-text">Habilitar</span><i name="enable" class="fa fa-toggle-off enable-s"></i></a>
                                 </c:if>
                             <%
                                 } //An Instructor is logged in

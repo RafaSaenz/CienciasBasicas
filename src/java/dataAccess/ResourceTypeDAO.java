@@ -8,12 +8,14 @@ package dataAccess;
 import business.Instructor;
 import business.Resource;
 import business.ResourceType;
+import business.Topic;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -47,7 +49,7 @@ public class ResourceTypeDAO {
         List<ResourceType> types = new ArrayList<>();
         ResourceType type = null;
         try {
-            statement = connection.prepareStatement("select * from \"ResourceType\";");            
+            statement = connection.prepareStatement("select * from \"ResourceType\" order by id;");            
             synchronized (statement) {
                 ResultSet results = statement.executeQuery();
 
@@ -70,7 +72,7 @@ public class ResourceTypeDAO {
         List<ResourceType> types = new ArrayList<>();
         ResourceType type = null;
         try {
-            statement = connection.prepareStatement("select * from \"ResourceType\" where status='1';");            
+            statement = connection.prepareStatement("select * from \"ResourceType\" where status='1' order by id;");            
             synchronized (statement) {
                 ResultSet results = statement.executeQuery();
 
@@ -87,5 +89,81 @@ public class ResourceTypeDAO {
             System.err.println(e);
         }
         return types;
+    }
+    
+    public int getCount() {
+        int count = 0;
+        try {
+            statement = connection.prepareStatement("select count(*) from \"ResourceType\";");
+            ResultSet results = statement.executeQuery();
+            while (results.next()) {
+                count = results.getInt("count");
+            }
+        } catch (SQLException sqle) {
+            logger.log(Level.SEVERE, sqle.toString(), sqle);
+            throw new RuntimeException(sqle);
+        }
+        return count;
+    }
+    
+    public void add(ResourceType resType) {
+        try {
+            statement = connection.prepareStatement("INSERT INTO public.\"ResourceType\"(\n"
+                    + "	id, description, status)\n"
+                    + "	VALUES (?, ?, ?);");
+            synchronized (statement) {
+                statement.setString(1, resType.getId());
+                statement.setString(2, resType.getDescription());
+                statement.setInt(3, resType.getStatus());
+                statement.executeUpdate();
+            }
+            statement.close();
+        } catch (SQLException sqle) {
+            logger.log(Level.SEVERE, sqle.toString(), sqle);
+            throw new RuntimeException(sqle);
+        }
+    }
+    
+    public void update(ResourceType resType) {
+        try {
+            statement = connection.prepareStatement("UPDATE public.\"ResourceType\"\n"
+                    + "	SET description=?\n"
+                    + "	WHERE id=?;");
+            synchronized (statement) {
+                statement.setString(1, resType.getDescription());
+                statement.setString(2, resType.getId());
+                statement.executeUpdate();
+            }
+            statement.close();
+        } catch (SQLException sqle) {
+            logger.log(Level.SEVERE, sqle.toString(), sqle);
+            throw new RuntimeException(sqle);
+        }
+    }
+    
+    public void disable(String id) {
+        try {
+            statement = connection.prepareStatement("UPDATE \"ResourceType\" SET status='0' where id='" + id + "';");
+            synchronized (statement) {
+                statement.executeUpdate();
+            }
+            statement.close();
+        } catch (SQLException sqle) {
+            logger.log(Level.SEVERE, sqle.toString(), sqle);
+            throw new RuntimeException(sqle);
+        }
+    }
+
+    public void enable(String id) {
+        try {
+            statement = connection.prepareStatement("UPDATE \"ResourceType\" SET status='1' where id='" + id + "';");
+            synchronized (statement) {
+                statement.executeUpdate();
+            }
+            statement.close();
+        } catch (SQLException sqle) {
+            logger.log(Level.SEVERE, sqle.toString(), sqle);
+            throw new RuntimeException(sqle);
+        }
     }
 }
