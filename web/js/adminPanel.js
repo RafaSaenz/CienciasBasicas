@@ -280,4 +280,39 @@ $(document).on("click", '#edit-btn4', function (event) {
  **** ------ END OF INSTRUCTORS ------ ****
  */
 
+/*
+ **** ------ STUDENTS ------ ****
+ */
+//Show students table
+function showStudents() {
+    $.get("/CienciasBasicas/Students",
+            {
+                action: "view",
+                mode: "tableStudents",
+            },
+            function (data, status) {
+                $("#cont2").html(data);
+            });
+}
+// Click on students to show students table
+$(document).on("click", '#man-stu', function (event) {
+    event.preventDefault();
+    showStudents();
+});
+//Enable/Disable an Student
+$(document).on("click", '.enable-btn5', function (event) {
+    event.preventDefault();
+    $.get("/CienciasBasicas/Students",
+            {
+                action: event.target.getAttribute('name'),
+                id: $(event.target).closest('tr').attr('id')
+            },
+            function (data, status) {
+                showStudents();
+            });
+});
+/*
+ **** ------ END OF INSTRUCTORS ------ ****
+ */
+
 

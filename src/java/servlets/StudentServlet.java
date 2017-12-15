@@ -44,8 +44,8 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
  *
  * @author gerar
  */
-@WebServlet(name = "InstructorsServlet", urlPatterns = {"/Instructors"})
-public class InstructorsServlet extends HttpServlet {
+@WebServlet(name = "StudentsServlet", urlPatterns = {"/Students"})
+public class StudentServlet extends HttpServlet {
     
     private static final long serialVersionUID = 1L;
     // location to store file uploaded
@@ -76,8 +76,6 @@ public class InstructorsServlet extends HttpServlet {
         ConnectionDB connectionDB = new ConnectionDB();
         Connection connection = connectionDB.getConnection();
         
-        ResourceDAO resourceDao;
-        ResourceTypeDAO typeDao;
         AreaDAO areaDao;
         
         UserDAO userDAO = new UserDAO(connection);
@@ -121,18 +119,6 @@ public class InstructorsServlet extends HttpServlet {
                     System.out.println(e.getMessage());
                 }   break;
             
-            case "add":
-                    String i_id = request.getParameter("i_id");
-                    try {
-                    userDAO = new UserDAO(connection);
-                    if (i_id != null) {
-                        request.setAttribute("user", userDAO.getInstructorsById(i_id));
-                    }
-                    url = "/newInstructor.jsp";
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                }
-                break;
             case "manage":
                 try {
                     areaDao = new AreaDAO(connection);
@@ -159,7 +145,7 @@ public class InstructorsServlet extends HttpServlet {
                 }
                 break;
                 
-            case "addStudent":
+            case "add":
                     String stu_id = request.getParameter("stu_id");
                     try {
                     userDAO = new UserDAO(connection);
@@ -255,7 +241,7 @@ public class InstructorsServlet extends HttpServlet {
             //HttpSession session = request.getSession();
             //User currentUser = (User) session.getAttribute("currentSessionUser");
             
-            User newInstructor = new User();
+            User newStudent = new User();
 
             @SuppressWarnings("unchecked")
             List<FileItem> formItems = upload.parseRequest(request);
@@ -271,76 +257,54 @@ public class InstructorsServlet extends HttpServlet {
                         String fieldValue = item.getString("UTF-8");
                         switch (fieldName) {
                             case "id":
-                                newInstructor.setId(fieldValue);
+                                newStudent.setId(fieldValue);
                                 break;
                             case "firstname":
-                                newInstructor.setFirstName(fieldValue);
+                                newStudent.setFirstName(fieldValue);
                                 break;
                             case "lastname1":
-                                newInstructor.setLastName1(fieldValue);
+                                newStudent.setLastName1(fieldValue);
                                 break;
                             case "lastname2":
-                                newInstructor.setLastName2(fieldValue);
+                                newStudent.setLastName2(fieldValue);
                                 break;
                             case "email":
-                                newInstructor.setEmail(fieldValue);
+                                newStudent.setEmail(fieldValue);
                                 break;
                             case "password":
-                                newInstructor.setPassword(fieldValue);
+                                newStudent.setPassword(fieldValue);
                                 break;
-                            case "tel":
-                                newInstructor.setTel(fieldValue);
+                            case "major":
+                                newStudent.setMajor(fieldValue);
                                 break;
-                            case "linkedin":
-                                newInstructor.setLinkedin(fieldValue);
-                                break;
-                            
                         }
-                        newInstructor.setMajor(" ");
                         LocalDate joinDate = LocalDate.now( ZoneId.of( "America/Montreal" ) );
-                        newInstructor.setJoinDate(joinDate);
-                        newInstructor.setRole("2");
-                        //newInstructor.setStatus(1);
-                        
+                        newStudent.setJoinDate(joinDate);
+                        newStudent.setRole("3");
                     } else {
                         fileItems.add(item);
                     }
                 }
-            }            //Aqui procesar los archivos
-            uploadPath += "\\" + newInstructor.getId();
-            // creates the directory if it does not exist
-            File uploadDir = new File(uploadPath);
-            if (!uploadDir.exists()) {
-                uploadDir.mkdir();
             }
-            for (FileItem item : fileItems) {
-                String fileName = new File(item.getName()).getName();
-                String filePath = uploadPath + File.separator + fileName;
-                File storeFile = new File(filePath);
-                // saves the file on diskfile
-                item.write(storeFile);
-                newInstructor.setPicPath(newInstructor.getId() + "/" + fileName);
-            }
-            
             //Call the method from StudentDAO to register a new student
             String userUpdate = null;
             String userRegistered = null;
             
-            if(userDAO.validUser(newInstructor.getId())){
+            if(userDAO.validUser(newStudent.getId())){
                 //Check if the user updated the password or not
                 
-                if(newInstructor.getPassword().equals(userDAO.passwordModified(newInstructor.getId()))){
-                    userUpdate = userDAO.updateUser(newInstructor);
-                    request.setAttribute("message", "Instructor guardado con éxito.");
-                    request.setAttribute("resource", newInstructor.getId());
+                if(newStudent.getPassword().equals(userDAO.passwordStudentModified(newStudent.getId()))){
+                    userUpdate = userDAO.updateStudent(newStudent);
+                    request.setAttribute("message", "Estudiante guardado con éxito.");
+                    request.setAttribute("resource", newStudent.getId());
                     getServletContext()
                     .getRequestDispatcher("/uploaded.jsp").forward(
                     request, response);
                 }
                 else{
-                    userUpdate = userDAO.updateUserPassword(newInstructor);
-                    request.setAttribute("message", "Instructor guardado con éxito.");
-                    request.setAttribute("resource", newInstructor.getId());
+                    userUpdate = userDAO.updateStudentPassword(newStudent);
+                    request.setAttribute("message", "Estudiante guardado con éxito.");
+                    request.setAttribute("resource", newStudent.getId());
                     getServletContext()
                     .getRequestDispatcher("/uploaded.jsp").forward(
                     request, response);
@@ -348,13 +312,12 @@ public class InstructorsServlet extends HttpServlet {
                 
             }
             else{
-                userRegistered = userDAO.registerUser(newInstructor);
+                userRegistered = userDAO.registerUser(newStudent);
             }
+            request.setAttribute("message", "Estudiante guardado con éxito.");
+            request.setAttribute("resource", newStudent.getId());
             
-            request.setAttribute("message", "Instructor guardado con éxito.");
-            request.setAttribute("resource", newInstructor.getId());
-            
-            if(userRegistered.equals("SUCCESS") || userUpdate.equals("SUCCESS"))//On SUCCESS, it means that the registration was successful
+            if(userUpdate.equals("SUCCESS"))//On SUCCESS, it means that the registration was successful
             {
                 getServletContext()
                 .getRequestDispatcher("/uploaded.jsp").forward(

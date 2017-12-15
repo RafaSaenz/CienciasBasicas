@@ -84,7 +84,7 @@ public class UserDAO {
                         + id
                         + "' AND password='"
                         + hashedPassword
-                        + "'";
+                        + "' AND status='1'";
 	    
       // "System.out.println"  used to trace the process of the input
       System.out.println("Your id is " + id);          
@@ -296,6 +296,47 @@ public class UserDAO {
         return instructor;
     }
         
+        public List<User> getAllStudents(){
+        ConnectionDB con = null;
+        
+        List<User> students = new ArrayList<>();
+        User student = null;
+        try { 
+            con = new ConnectionDB();
+            statement = connection.prepareStatement("SELECT * FROM public." + "\"User\"" +  " WHERE role='3'");
+            synchronized(statement) {
+            ResultSet results = statement.executeQuery();
+            while (results.next()) {
+                    student = new User();
+                    student.setId(results.getString("id"));
+                    student.setFirstName(results.getString("firstName"));
+                    student.setLastName1(results.getString("lastName1"));
+                    student.setLastName2(results.getString("lastName2"));
+                    student.setEmail(results.getString("email"));
+                    student.setPassword(results.getString("password"));
+                    student.setPicPath(results.getString("picPath"));
+                    student.setMajor(results.getString("major"));
+                    
+                    Date date = results.getDate("joinDate");
+                    LocalDate joinDate = date.toLocalDate();
+                    
+                    student.setJoinDate(joinDate);
+                    student.setRole(results.getString("role"));
+                    
+                    student.setTel(results.getString("tel"));
+                    student.setLinkedin(results.getString("linkedin"));
+                    student.setStatus(results.getInt("status"));
+                   
+                    students.add(student);
+                }
+            }
+            statement.close();
+        }catch (SQLException e) {
+            System.err.println(e);
+        }
+        return students;
+    }
+          
         public void disable(String id) {
         try {
             statement = connection.prepareStatement("UPDATE \"User\" SET status='0' where id='" + id + "';");
@@ -322,12 +363,32 @@ public class UserDAO {
         }
     }
     
+   public String passwordModified(String id){
+        ConnectionDB con = null;
+        String password = null;
+        try { 
+            con = new ConnectionDB();
+            statement = connection.prepareStatement("SELECT password FROM public.\"User\" WHERE id = '" + 
+                    id + "';");
+            synchronized(statement) {
+                ResultSet rs = statement.executeQuery();
+                rs.next();
+                password = rs.getString("password");
+                
+            }
+            statement.close();
+            return password;
+        }
+
+        catch (SQLException sqle) {
+            logger.log(Level.SEVERE, sqle.toString(), sqle);
+            throw new RuntimeException(sqle);
+        }
+        
+    }
+    
     public String updateUser(User user){
         ConnectionDB con = null;
-        
-        //Hash password before INSERT to the DB
-        String saltedPassword = SALT + user.getPassword();
-	String hashedPassword = generateHash(saltedPassword);
         
         try { 
             con = new ConnectionDB();
@@ -351,6 +412,136 @@ public class UserDAO {
             }
             statement.close();
             return "SUCCESS";
+        }
+
+        catch (SQLException sqle) {
+            logger.log(Level.SEVERE, sqle.toString(), sqle);
+            throw new RuntimeException(sqle);
+        }
+        
+    }
+    
+    public String updateUserPassword(User user){
+        ConnectionDB con = null;
+        
+        //Hash password before INSERT to the DB
+        String saltedPassword = SALT + user.getPassword();
+	String hashedPassword = generateHash(saltedPassword);
+        
+        try { 
+            con = new ConnectionDB();
+            statement = connection.prepareStatement("UPDATE public.\"User\" SET \"firstName\" = '" + 
+                    user.getFirstName() + "'," +
+                    "\"lastName1\" = '" + 
+                    user.getLastName1() + "'," +
+                    "\"lastName2\" = '" + 
+                    user.getLastName2() + "'," +
+                    "\"email\" = '" +  
+                    user.getEmail() + "'," +
+                    "\"major\" = '" + 
+                    user.getMajor() + "'," +
+                    "\"password\" = '" + 
+                    hashedPassword+
+                    "' WHERE id='"+ user.getId() + "';");
+            synchronized(statement) {
+                statement.executeUpdate();
+            }
+            statement.close();
+            return "SUCCESS";
+        }
+
+        catch (SQLException sqle) {
+            logger.log(Level.SEVERE, sqle.toString(), sqle);
+            throw new RuntimeException(sqle);
+        }
+        
+    }
+    
+    public String updateStudent(User user){
+        ConnectionDB con = null;
+        
+        try { 
+            con = new ConnectionDB();
+            statement = connection.prepareStatement("UPDATE public.\"User\" SET \"firstName\" = '" + 
+                    user.getFirstName() + "'," +
+                    "\"lastName1\" = '" + 
+                    user.getLastName1() + "'," +
+                    "\"lastName2\" = '" + 
+                    user.getLastName2() + "'," +
+                    "\"email\" = '" +  
+                    user.getEmail() + "'," +
+                    "\"major\" = '" + 
+                    user.getMajor() +
+                    "' WHERE id='"+ user.getId() + "';");
+            synchronized(statement) {
+                statement.executeUpdate();
+            }
+            statement.close();
+            return "SUCCESS";
+        }
+
+        catch (SQLException sqle) {
+            logger.log(Level.SEVERE, sqle.toString(), sqle);
+            throw new RuntimeException(sqle);
+        }
+        
+    }
+    
+    public String updateStudentPassword(User user){
+        ConnectionDB con = null;
+        
+        //Hash password before INSERT to the DB
+        String saltedPassword = SALT + user.getPassword();
+	String hashedPassword = generateHash(saltedPassword);
+        
+        try { 
+            con = new ConnectionDB();
+            statement = connection.prepareStatement("UPDATE public.\"User\" SET \"firstName\" = '" + 
+                    user.getFirstName() + "'," +
+                    "\"lastName1\" = '" + 
+                    user.getLastName1() + "'," +
+                    "\"lastName2\" = '" + 
+                    user.getLastName2() + "'," +
+                    "\"email\" = '" +  
+                    user.getEmail() + "'," +
+                    "\"picPath\" = '" + 
+                    user.getPicPath() + "'," +
+                    "\"tel\" = '" + 
+                    user.getTel()+ "'," +
+                    "\"linkedin\" = '" + 
+                    user.getLinkedin() + "'," +
+                    "\"password\" = '" + 
+                    hashedPassword+
+                    "' WHERE id='"+ user.getId() + "';");
+            synchronized(statement) {
+                statement.executeUpdate();
+            }
+            statement.close();
+            return "SUCCESS";
+        }
+
+        catch (SQLException sqle) {
+            logger.log(Level.SEVERE, sqle.toString(), sqle);
+            throw new RuntimeException(sqle);
+        }
+        
+    }
+    
+    public String passwordStudentModified(String id){
+        ConnectionDB con = null;
+        String password = null;
+        try { 
+            con = new ConnectionDB();
+            statement = connection.prepareStatement("SELECT password FROM public.\"User\" WHERE id = '" + 
+                    id + "';");
+            synchronized(statement) {
+                ResultSet rs = statement.executeQuery();
+                rs.next();
+                password = rs.getString("password");
+                
+            }
+            statement.close();
+            return password;
         }
 
         catch (SQLException sqle) {
