@@ -66,6 +66,8 @@ public class ResourcesServlet extends HttpServlet {
         ResourceTypeDAO typeDao = new ResourceTypeDAO(connection);
         AreaDAO areaDao = new AreaDAO(connection);
         FileDAO fileDao = new FileDAO(connection);
+        TopicDAO topicDao = new TopicDAO(connection);
+        SubtopicDAO subtopicDao = new SubtopicDAO(connection);
 
         String url = "/index.jsp";
         String mode = request.getParameter("mode");
@@ -113,31 +115,32 @@ public class ResourcesServlet extends HttpServlet {
                 }
                 break;
             case "add":
-                String r_id = request.getParameter("r_id");
                 try {
-                    /*Types for the select box*/
-                    typeDao = new ResourceTypeDAO(connection);
-                    resourceDao = new ResourceDAO(connection);
                     request.setAttribute("types", typeDao.getEnabledTypes());
-                    /*Areas for the select box*/
-                    areaDao = new AreaDAO(connection);
                     request.setAttribute("areas", areaDao.getEnabledAreas());
-                    if (r_id != null) {
-                        request.setAttribute("resource", resourceDao.getById(r_id));
-                    }
                     url = "/newResource.jsp";
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
                 break;
-            case "manage":
-                try {
-                    areaDao = new AreaDAO(connection);
-                    request.setAttribute("areas", areaDao.getAreas());
-                    url = "/adminPanel.jsp";
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
+            case "edit-form":
+                String r_id = request.getParameter("r_id");
+                if (r_id != null) {
+                    Resource res = resourceDao.getById(r_id);
+                    request.setAttribute("types", typeDao.getEnabledTypes());
+                    request.setAttribute("areas", areaDao.getEnabledAreas());
+                    request.setAttribute("topics", topicDao.getByArea(res.getArea().getId()));
+                    request.setAttribute("subtopics", subtopicDao.getByTopic(res.getTopic().getId()));
+                    request.setAttribute("resource", res);
+                    url = "/forms/updateResource.jsp";
                 }
+                break;
+            case "edit-form2":
+                r_id = request.getParameter("r_id");
+                Resource res = resourceDao.getById(r_id);
+                request.setAttribute("resource", res);
+                request.setAttribute("file", fileDao.getByResource(request.getParameter("r_id")).get(0));
+                url = "/forms/updateFile.jsp";
                 break;
             default:
                 break;

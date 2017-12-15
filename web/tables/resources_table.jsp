@@ -24,8 +24,6 @@
                 <%
                     }
                 %>
-                <th>ÁREA</th>
-                <th>TEMA</th>
                 <th>SUBTEMA</th>
                 <th>ACCIONES</th>
             </tr></thead>
@@ -36,12 +34,10 @@
                         <%  
                             if (currentUser.getRole().equals("1")) { //An Instructor is logged in
                         %>
-                        <td><span class="small-text">Autor:</span>${resource.instructor.firstName} ${resource.instructor.lastName1}</td>
+                        <td><span class="small-text">Autor:</span>${resource.instructor.id}</td>
                         <%
                             }
                         %>
-                        <td><span class="small-text">Área:</span>${resource.area.area}</td>
-                        <td><span class="small-text">Tema:</span>${resource.topic.name}</td>
                         <td><span class="small-text">Subtema:</span>${resource.subtopic.name}</td>
                         <td>
                             <span class="small-text">Visualizar:</span>
@@ -49,11 +45,13 @@
                                 <span class="small-text">Visualizar:</span>
                                 <i class="fa fa-eye"></i>
                             </a>
-                            <c:if test="${resource.instructor.id == currentSessionUser.id}">
+                            <c:if test="${resource.instructor.id == currentSessionUser.id or currentSessionUser.role == '1'}">
                             &nbsp;  
                             &nbsp;
-                            <span class="small-text">Modificar:</span><a href="Resources?action=add&mode=&r_id=${resource.id}" class="close-icon"><span class="small-text">Editar</span><i class="fa fa-pencil"></i></a>                            
-                            
+                            <span class="small-text">Modificar:</span><a href="#" class="close-icon"><span class="small-text">Editar</span><i class="fa fa-pencil edit-btn-r"></i></a>                            
+                            &nbsp;  
+                            &nbsp;
+                            <span class="small-text">Material:</span><a href="#" class="close-icon"><span class="small-text">Archivos</span><i class="fa fa-files-o edit-btn-f"></i></a>                            
                             &nbsp;
                             &nbsp;
                             <c:if test="${resource.status eq 1}">
@@ -68,23 +66,5 @@
                 </c:forEach>
             </tbody>
         </table>
-    </div>
-</div>
-<div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Editar tema:</h4>
-            </div>
-            <div class="modal-body">
-                
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Guardar</button>
-            </div>
-        </div>
-
     </div>
 </div>

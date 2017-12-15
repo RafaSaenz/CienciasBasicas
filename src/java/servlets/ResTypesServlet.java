@@ -6,8 +6,9 @@
 package servlets;
 
 import com.google.gson.Gson;
-import business.*;
-import dataAccess.*;
+import dataAccess.AreaDAO;
+import dataAccess.ConnectionDB;
+import dataAccess.ResourceTypeDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -21,8 +22,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author gerar
  */
-@WebServlet(name = "AreaServlet", urlPatterns = {"/Areas"})
-public class AreaServlet extends HttpServlet {
+@WebServlet(name = "ResTypesServlet", urlPatterns = {"/ResTypes"})
+public class ResTypesServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,62 +43,21 @@ public class AreaServlet extends HttpServlet {
         ConnectionDB connectionDB = new ConnectionDB();
         Connection connection = connectionDB.getConnection();
 
-        AreaDAO areaDao = new AreaDAO(connection);
+        ResourceTypeDAO resTypeDao  = new ResourceTypeDAO(connection);
 
         String action = request.getParameter("action");
-        String area = request.getParameter("area");
         String id = request.getParameter("id");
 
         switch (action) {
             case "select":
-                String json = new Gson().toJson(areaDao.getEnabledAreas());
+                /*String json = new Gson().toJson(areaDao.getEnabledAreas());
                 response.setContentType("application/json");
                 response.setCharacterEncoding("UTF-8");
-                response.getWriter().write(json);
+                response.getWriter().write(json);*/
                 break;
             case "show":
-                request.setAttribute("areas", areaDao.getAreas());
-                getServletContext().getRequestDispatcher("/tables/areas_table.jsp").forward(request, response);
-                break;
-            case "add":
-                try {
-                    areaDao.add(new Area(id, area, 0));
-                } catch (Exception e) {
-                    request.setAttribute("message", e.getMessage());
-                    getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
-                }
-                break;
-            case "disable":
-                try {
-                    areaDao.disable(area);
-                } catch (Exception e) {
-                    request.setAttribute("message", e.getMessage());
-                    getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
-                }
-                break;
-            case "enable":
-                try {
-                    areaDao.enable(area);
-                } catch (Exception e) {
-                    request.setAttribute("message", e.getMessage());
-                    getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
-                }
-                break;
-            case "update":
-                try {
-                    areaDao.update(new Area(id, area));
-                } catch (Exception e) {
-                    request.setAttribute("message", e.getMessage());
-                    getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
-                }
-                break;
-            case "delete":
-                try {
-                    areaDao.delete(id);
-                } catch (RuntimeException e) {
-                    request.setAttribute("message", e.getMessage());
-                    getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
-                }
+                request.setAttribute("types", resTypeDao.getTypes());
+                getServletContext().getRequestDispatcher("/tables/res_types_table.jsp").forward(request, response);
                 break;
         }
     }

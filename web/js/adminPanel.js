@@ -1,5 +1,136 @@
-/* 
- * AJAX functions for AdminPanel JSP and DataServlet
+$(document).on("click", "#man-tas", function (event) {
+    event.preventDefault();
+    $.get("/CienciasBasicas/Areas",
+            {
+                action: "select"
+            },
+            function (data, status) {
+                var x = "";
+                for (i in data) {
+                    x += "<li><a href=# id='" + data[i].id + "' class='area-link'>" + data[i].area + "</a></li>\n";
+                }
+                $("#top_sub").html(x);
+            });
+});
+/*
+ **** ------ TYPES ------ ****
+ */
+function showTypes() {
+    $.get("/CienciasBasicas/ResTypes",
+            {
+                action: "show"
+            },
+            function (data, status) {
+                $("#cont2").html(data);
+            });
+}
+// Click on area to show topics table
+$(document).on("click", '#man-types', function (event) {
+    event.preventDefault();
+    showTypes();
+});
+/*
+ **** ------ END OF TYPES ------ ****
+ */
+/*
+ **** ------ AREAS ------ ****
+ */
+//Show topics table
+function showAreas() {
+    $.get("/CienciasBasicas/Areas",
+            {
+                action: "show"
+            },
+            function (data, status) {
+                $("#cont2").html(data);
+            });
+}
+// Click on area to show topics table
+$(document).on("click", '#man-area', function (event) {
+    event.preventDefault();
+    showAreas();
+});
+// Show input for new area
+$(document).on("click", '#add-area', function (event) {
+    $("#area-input").show();
+    $("#area-edit").hide();
+});
+// Save new area
+$(document).on("click", '#save-area', function (event) {
+    event.preventDefault();
+    if ($("#area-name").val() !== "" && $("#area-id").val() !== "") {
+        $.get("/CienciasBasicas/Areas",
+                {
+                    action: "add",
+                    area: $("#area-name").val(),
+                    id: $("#area-id").val().toUpperCase()
+                },
+                function (data, status) {
+                    $("#area-name").val("");
+                    $("#area-id").val("");
+                    showAreas();
+                    $("#area-input").show();
+                    $("#area-edit").hide();
+                });
+    } else {
+        alert("Debe escribir el nombre del tema");
+    }
+});
+//Enable/Disable an area
+$(document).on("click", '.enable-btn5', function (event) {
+    event.preventDefault();
+    $.get("/CienciasBasicas/Areas",
+            {
+                area: $(event.target).closest('tr').attr('id'),
+                action: event.target.getAttribute('name')
+            },
+            function (data, status) {
+                showAreas();
+            });
+});
+// Show input for editing an area
+$(document).on("click", '.edit-btn3', function (event) {
+    $("#area-edit").show();
+    $("#area-input").hide();
+    var tmp = $(event.target).parent().parent().siblings(":first").text();
+    var tmp2 = $(event.target).parent().parent().siblings(":nth-child(2)").text();
+    $("#edit-area").val(tmp);
+    $("#update-area").data("id", tmp2);
+});
+// Update the area
+$(document).on("click", '#update-area', function (event) {
+    event.preventDefault();
+    if ($("#edit-area").val() !== "") {
+        $.get("/CienciasBasicas/Areas",
+                {
+                    action: "update",
+                    id: $("#update-area").data('id'),
+                    area: $("#edit-area").val()
+                },
+                function (data, status) {
+                    showAreas()
+                });
+    } else {
+        alert("Empty");
+    }
+});
+// Deletion of an area
+$(document).on("click", '.delete-btn', function (event) {
+    event.preventDefault();
+    var area = $(event.target).parent().parent().siblings(":first").text();
+    if (confirm("¿Está seguro de eliminar el área " + area + "? Dicha acción no podrá revertirse.")) {
+        $.get("/CienciasBasicas/Areas",
+                {
+                    action: "delete",
+                    id: $(event.target).closest('tr').attr('id'),
+                },
+                function (data, status) {
+                    $("#cont2").html(data);
+                });
+    }
+});
+/*
+ **** ------ END OF AREAS ------ ****
  */
 /*
  **** ------ TOPICS ------ ****
@@ -95,7 +226,6 @@ $(document).on("click", '#update-topic', function (event) {
 /*
  **** ------ END OF TOPICS ------ ****
  */
-
 /*
  **** ------ SUBTOPICS ------ ****
  */
@@ -191,7 +321,6 @@ $(document).on("click", '#update-subtopic', function (event) {
 /*
  **** ------ END OF SUBTOPICS ------ ****
  */
-
 /*
  **** ------ RESOURCES ------ ****
  */
@@ -200,7 +329,7 @@ function showResources() {
     $.get("/CienciasBasicas/Resources",
             {
                 action: "view",
-                mode: "table",
+                mode: "table"
             },
             function (data, status) {
                 $("#cont2").html(data);
@@ -223,6 +352,43 @@ $(document).on("click", '.enable-btn3', function (event) {
             function (data, status) {
                 showResources();
             });
+});
+// Updating a resource
+$(document).on("click", '.edit-btn-r', function (event) {
+    event.preventDefault();
+    var tmp = $(event.target).closest('tr').attr('id');
+    $.get("/CienciasBasicas/Resources",
+            {
+                action: "edit-form",
+                r_id: tmp
+            },
+            function (data, status) {
+                $('.modal-body').html(data);
+                $('.modal-title').html('Editar recurso:');
+                $('.btn-default').html('<i class="fa fa-floppy-o"></i> Guardar Cambios');
+                $('#adminModal').modal({show: true});
+            });
+});
+// Updating files
+$(document).on("click", '.edit-btn-f', function (event) {
+    event.preventDefault();
+    var tmp = $(event.target).closest('tr').attr('id');
+    $.get("/CienciasBasicas/Resources",
+            {
+                action: "edit-form2",
+                r_id: tmp
+            },
+            function (data, status) {
+                $('.modal-body').html(data);
+                $('.modal-title').html('Manejo de materiales:');
+                $('.btn-default').html('<i class="fa fa-floppy-o"></i> Guardar Cambios');
+                $('.input-row').hide();
+                $('#adminModal').modal({show: true});
+            });
+});
+$(document).on("click", '#edit-btn-i', function (event) {
+    event.preventDefault();
+    $(event.target).closest('.input-row').show();
 });
 /*
  **** ------ END OF RESOURCES ------ ****
@@ -262,22 +428,52 @@ $(document).on("click", '.enable-btn4', function (event) {
 });
 //Modify an Instructor
 /*
-$(document).on("click", '#edit-btn4', function (event) {
-    event.preventDefault();
-        $.get("/CienciasBasicas/Instructors",
-                {
-                    action: "add",
-                    id: $("#edit-btn4").data('id'),
-                    //name: $("#edit-subtopic").val()
-                },
-                function (data, status) {
-                    showInstructors();
-                });
-
-});*/
+ $(document).on("click", '#edit-btn4', function (event) {
+ event.preventDefault();
+ $.get("/CienciasBasicas/Instructors",
+ {
+ action: "add",
+ id: $("#edit-btn4").data('id'),
+ //name: $("#edit-subtopic").val()
+ },
+ function (data, status) {
+ showInstructors();
+ });
+ 
+ });*/
 
 /*
  **** ------ END OF INSTRUCTORS ------ ****
  */
 
-
+/*
+ **** ------ SELECTS FOR RESOURCE UPDATING ------ ****
+ */
+$(document).on("change", "#area-slct", function (event) {
+    $("#topic-slct").empty();
+    $("#subtopic-slct").empty();
+    $.get("/CienciasBasicas/Topics",
+            {
+                action: "select",
+                area: $("#area-slct").val()
+            },
+            function (data, status) {
+                $("#topic-slct").html(data);
+            }
+    );
+});
+$(document).on("change", "#topic-slct", function (event) {
+    $("#subtopic-slct").empty();
+    $.get("/CienciasBasicas/Subtopics",
+            {
+                action: "select",
+                topic: $("#topic-slct").val()
+            },
+            function (data, status) {
+                $("#subtopic-slct").html(data);
+            }
+    );
+});
+/*
+ **** ------ END OF SELECTS FOR RESOURCE UPDATING ------ ****
+ */

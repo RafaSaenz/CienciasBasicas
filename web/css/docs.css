@@ -848,7 +848,7 @@ input[type="text"]:focus {border:none; outline:none; }
 .checkout-content .input-box.moblieInput .defautl-digits {border-right:solid 1px #d8d8d8; line-height:39px; text-align:center; width:40px; position:absolute; top:32px; left:0px; }
 .checkout-content .input-box .resend-link {display:inline-block; line-height:24px; margin-top:3px; font-size:13px; color:#9979ed; text-decoration:underline; font-weight:500;}
 
-.checkout-content .step2 {padding:22px 0px 30px 0px; border-top:solid 1px #d8d8d8; display:inline-block; width:100%; }
+.checkout-content .step2 {padding:22px 0px 22px 0px; border-top:solid 1px #d8d8d8; display:inline-block; width:100%; }
 .checkout-content .step2 .fill-address {padding:0 20px; }
 .checkout-content .step2 h3 {margin:0px; padding:8px 0 22px; line-height:30px; font-size:18px; color:#333333; font-weight:500; font-family: "Roboto",sans-serif;}
 .checkout-content .step2 .input-box {padding:0 15px 10px 150px;}

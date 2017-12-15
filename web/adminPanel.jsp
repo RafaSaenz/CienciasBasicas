@@ -31,45 +31,34 @@
           <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
           <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
-        <style>
-           .fa-save, .fa-refresh {
-                color: #9ACD32;
-            }
-        </style>
-        </head>
+    </head>
     <body>
         <div class="wapper">
-        <jsp:include page="quicknav-2.jsp" flush="true"></jsp:include>
-            <header id="header">
-                <div class="container">
-                <jsp:include page="navbar.jsp" flush="true"></jsp:include>
-                </div>
-            </header>
-            <section class="breadcrumb">
-                <div class="container">
-                    <ul>
-                        <li><a href="#">Panel administrativo</a></li>
-                        <li><a href="#">Administración de Recursos</a></li>
-                    </ul>
-                </div>
-            </section>
-            <section class="courses-view ">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="right-slide left">
-                                <h3>Administrar</h3>
-                                <ul class="catagorie-list">
-                                    <li><a href="#" id="man-res">Recursos</a></li>
+            <jsp:include page="quicknav-2.jsp" flush="true"></jsp:include>
+                <header id="header">
+                    <div class="container">
+                    <jsp:include page="navbar.jsp" flush="true"></jsp:include>
+                    </div>
+                </header>
+                <section class="courses-view ">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="right-slide left">
+                                    <h3>Recursos</h3>
+                                    <ul class="catagorie-list">
+                                        <li><a href="#" id="man-res">Recursos</a></li>
+                                        <%                    if (currentUser.getRole().equals("1")) { //An admin is logged in
+                                        %>
+                                    <li><a href="#" id="man-types">Tipos</a></li>
                                     <li><a href="#" id="man-area">Áreas</a></li>
-                                    <li><a href="#" id="man-type">Tipos</a></li>
-                                    <li><a href="#" id="man-level">Niveles</a></li>
-                                </ul>
-                                <h3>Temas y Subtemas</h3>
-                                <ul class="catagorie-list">
-                                <c:forEach var="area" items="${areas}" >
-                                    <li><a href="#" id="${area.id}" class="area-link">${area.area}</a></li>
-                                </c:forEach>
+                                        <%
+                                            }
+                                        %>
+                                    <li><a href="#" id="man-tas">Temas/Subtemas</a>
+                                        <ul id="top_sub">
+                                        </ul>
+                                    </li>
                                 </ul>
                                 <%                    if (currentUser.getRole().equals("1")) { //An admin is logged in
                                 %>
@@ -80,21 +69,53 @@
                                 </ul>
                                 <% }
                                 %>
-                                
                             </div>
                         </div>
                         <div class="col-md-9" style="border: #001489 solid thick">
                             <div id="cont2"></div>
                         </div>
+                        <div class="modal fade" id="adminModal" role="dialog">
+                            <div class="modal-dialog modal-lg">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">x</h4>
+                                    </div>
+                                    <div class="modal-body">
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">x</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
-        <jsp:include page="footer.jsp" flush="true"></jsp:include>
+            <jsp:include page="footer.jsp" flush="true"></jsp:include>
         </div>
         <!-- Bootstrap core JavaScript
         ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
-
+        <style>
+            .fa-save, .fa-refresh { color: #9ACD32;}
+            select, textarea {width:100%; max-width:399px; border:solid 1px #d8d8d8; background:#fff; border-radius:5px; height:41px; line-height:29px; padding:5px 10px;}
+            textarea { height: 117px;}
+            .input-box {padding-left: 10px;}
+            .input-box label {position: relative; line-height:35px; font-size:14px; padding:0px; display:block; font-weight:bold; margin:0px; padding-bottom:7px; color:#333333; }
+            .input-box input {width:100%; max-width:399px; border:solid 1px #d8d8d8; background:#fff; border-radius:5px; height:41px; line-height:29px; padding:5px 10px; }
+            .shipping-add {display:inline-block; width:100%; }
+            .address-box {margin:10px; border:solid 1px #d8d8d8; border-radius:5px; padding:10px 0 0 0; width:412px; float:left;}
+            .address-box .name {display:block; border-bottom:solid 1px #d8d8d8; text-align:center; line-height:30px; font-size:18px; color:#333333; font-weight:500; margin-bottom:7px; padding-bottom: 4px; }
+            .address-box .address {min-height:10px; line-height:24px; font-size:14px; color:#666666; text-align:center; display:block; }
+            .address-box .radio-row {display:block; padding:10px; text-align:center;}
+            .address-box .input-row {display:block; padding:10px; text-align:center; border-top: solid 1px #d8d8d8;}
+            .address-box .link-row { background:#f2f0f0; border-radius:0 0 5px 5px; padding:0 15px 0 10px; overflow:hidden;}
+            .address-box .link-row a {line-height:40px; font-size:16px; color:#666666; font-weight:normal; float:left}
+            .address-box .link-row a .fa {padding:0 3px 0 0;}
+        </style>
         <script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
         <script type="text/javascript" src="js/bootstrap.js"></script>
         <script type="text/javascript" src="js/owl.carousel.js"></script>

@@ -58,10 +58,10 @@
                     </ul>
                 </li>
                 <li class="sub-menu">
-                    <a href="#">Materiales</a>
+                    <a href="#">Administración</a>
                     <ul>
-                        <li><a href="Resources?action=add&mode=">Agregar Recurso</a></li>
-                        <li><a href="Resources?action=manage">Recursos</a></li>
+                        <li><a href="Resources?action=add">Agregar Recurso</a></li>
+                        <li><a href="./adminPanel.jsp">Admin Panel</a></li>
                     </ul>
                 </li>
                 <%
@@ -72,9 +72,8 @@
                     <a href="#">Administración</a>
                     <ul>
                         <li><a href="Resources?action=add&mode=">Agregar Recurso</a></li>
-                        <li><a href="Resources?action=manage">Recursos</a></li>
                         <li><a href="Instructors?action=add">Agregar Instructor</a></li>
-                        <li><a href="Instructors?action=manage">Usuarios</a></li>
+                        <li><a href="./adminPanel.jsp">Admin Panel</a></li>
                     </ul>
                 </li>
                 <%

@@ -13,6 +13,12 @@ public class Area {
     private String id;
     private String area;
     private int status;
+
+    public Area(String id, String area, int status) {
+        this.id = id;
+        this.area = area;
+        this.status = status;
+    }
     
     public Area(String id, String area){
         this.id = id;
